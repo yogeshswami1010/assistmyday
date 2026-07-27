@@ -24,6 +24,11 @@ export default function Home() {
 
   useEffect(() => {
     let raf = 0;
+    const clamp = (value: number) => Math.min(1, Math.max(0, value));
+    const ease = (value: number) => {
+      const t = clamp(value);
+      return t * t * (3 - 2 * t);
+    };
     const render = () => {
       document.querySelectorAll<HTMLElement>("[data-scrollscene]").forEach((el) => {
         const span = Math.max(el.offsetHeight - innerHeight, 1);
@@ -31,6 +36,54 @@ export default function Home() {
         el.style.setProperty("--p", String(p));
         el.style.setProperty("--shift", `${p * -226}vw`);
         el.style.setProperty("--labShift", `${(p - 0.5) * 110}vw`);
+      });
+      document.querySelectorAll<HTMLElement>("[data-hero-scroll]").forEach((hero) => {
+        const span = Math.max(hero.offsetHeight - innerHeight, 1);
+        const p = clamp((scrollY - hero.offsetTop) / span);
+        const open = ease((p - 0.14) / 0.55);
+        const pass = ease((p - 0.62) / 0.38);
+        const copyOut = ease(p / 0.18);
+        const worldFade = 1 - ease((p - 0.84) / 0.16);
+        const pivot = p < 0.62 ? (p / 0.62) * 78 : 78 - pass * 40;
+
+        hero.style.setProperty("--hero-p", String(p));
+        hero.style.setProperty("--hero-copy-opacity", String(1 - copyOut));
+        hero.style.setProperty("--hero-copy-y", `${copyOut * -54}px`);
+        hero.style.setProperty("--hero-ui-opacity", String(1 - ease(p / 0.22)));
+        hero.style.setProperty("--hero-world-opacity", String(worldFade));
+        hero.style.setProperty("--hero-world-x", `${(p < 0.5 ? p * 9 : 4.5 - pass * 8)}vw`);
+        hero.style.setProperty("--hero-world-y", `${2 + p * 7 - pass * 11}vh`);
+        hero.style.setProperty("--hero-world-z", `${pass * 410}px`);
+        hero.style.setProperty("--hero-world-ry", `${pivot}deg`);
+        hero.style.setProperty("--hero-world-rz", `${-8 + p * 18}deg`);
+        hero.style.setProperty("--hero-world-scale", String(0.88 + p * 0.2 + pass * 0.62));
+        hero.style.setProperty("--hero-finale-opacity", String(ease((p - 0.76) / 0.16) * worldFade));
+
+        const layers = hero.querySelectorAll<HTMLElement>("[data-a-layer]");
+        layers.forEach((layer, index) => {
+          const center = (layers.length - 1) / 2;
+          const signed = index - center;
+          const direction = signed === 0 ? 0.35 : Math.sign(signed);
+          const x = signed * open * 31 + direction * pass * (96 + Math.abs(signed) * 15);
+          const y = Math.sin(index * 1.7) * open * 17 + direction * pass * 34;
+          const z = signed * 18 + signed * open * 84 + pass * (150 + Math.abs(signed) * 70);
+          const rx = open * signed * 2.4 + pass * (index % 2 ? 18 : -14);
+          const ry = open * signed * 4.2 + pass * direction * 25;
+          const rz = open * signed * 1.2 + pass * (index % 2 ? 7 : -6);
+          layer.style.transform = `translate3d(${x}px, ${y}px, ${z}px) rotateX(${rx}deg) rotateY(${ry}deg) rotateZ(${rz}deg)`;
+          layer.style.opacity = String(worldFade * (0.5 + (1 - Math.abs(signed) / layers.length) * 0.5));
+        });
+
+        const shards = hero.querySelectorAll<HTMLElement>("[data-a-shard]");
+        shards.forEach((shard, index) => {
+          const angle = ((index * 137.5 + 18) * Math.PI) / 180;
+          const radius = open * (62 + (index % 4) * 27) + pass * (260 + (index % 3) * 96);
+          const x = Math.cos(angle) * radius;
+          const y = Math.sin(angle) * radius * 0.72;
+          const z = open * ((index % 5) - 2) * 72 + pass * (210 + (index % 4) * 95);
+          shard.style.transform = `translate3d(${x}px, ${y}px, ${z}px) rotateX(${p * (36 + index * 7)}deg) rotateY(${p * (52 + index * 11)}deg) rotateZ(${p * (18 + index * 9)}deg)`;
+          shard.style.opacity = String((0.05 + open * 0.75) * worldFade);
+        });
       });
       document.documentElement.style.setProperty("--pageProgress", String(scrollY / Math.max(document.documentElement.scrollHeight - innerHeight, 1)));
       raf = 0;
@@ -72,33 +125,45 @@ export default function Home() {
         <p>INDEPENDENT DIGITAL STUDIO<br />INDIA — WORLDWIDE</p>
       </aside>
 
-      <section id="home" className="hero scene-dark">
-        <div className="grain" />
-        <div
-          className="hero-3d"
-          style={{
-            "--hero-rx": `${heroPointerY * -5}deg`,
-            "--hero-ry": `${heroPointerX * 7}deg`,
-            "--hero-x": `${heroPointerX * 14}px`,
-            "--hero-y": `${heroPointerY * 10}px`,
-          } as React.CSSProperties}
-        >
-          <div className="hero-3d-glow" />
-          <div className="hero-3d-core" />
-          <div className="hero-3d-echo echo-one" />
-          <div className="hero-3d-echo echo-two" />
-          <div className="hero-shards" aria-hidden="true">
-            <i /><i /><i /><i /><i /><i /><i /><i />
+      <section id="home" className="hero scene-dark" data-hero-scroll>
+        <div className="hero-sticky">
+          <div className="grain" />
+          <div
+            className="hero-3d"
+            style={{
+              "--hero-rx": `${heroPointerY * -4}deg`,
+              "--hero-ry": `${heroPointerX * 6}deg`,
+              "--hero-x": `${heroPointerX * 12}px`,
+              "--hero-y": `${heroPointerY * 9}px`,
+            } as React.CSSProperties}
+            aria-hidden="true"
+          >
+            <div className="hero-3d-glow" />
+            <div className="a-world">
+              {[...Array(9)].map((_, index) => (
+                <div className="a-layer" data-a-layer key={index}>
+                  <i className="a-segment a-left" />
+                  <i className="a-segment a-right" />
+                  <i className="a-segment a-bridge" />
+                </div>
+              ))}
+              <div className="a-shards">
+                {[...Array(14)].map((_, index) => <i data-a-shard key={index} />)}
+              </div>
+            </div>
+            <div className="hero-scanlines" />
           </div>
-          <div className="hero-scanlines" />
+          <div className="hero-lines"><i /><i /><i /><i /><i /><i /><i /></div>
+          <div className="hero-title"><h1>Designed to</h1><h1>mean <em>impact.</em></h1></div>
+          <div className="hero-status">
+            <div className="est"><span>◎</span><small>EST. 2012</small></div>
+            <p>Websites, AI products, brands, and<br />systems built for clarity, scale and impact.</p>
+          </div>
+          <p className="blast">SCROLL TO <b>✹</b> EXPLORE<br /><span>STRUCTURE&nbsp; ⚡ &nbsp;IN MOTION.</span></p>
+          <div className="hero-finale">
+            <span>STRUCTURE</span><i>＋</i><span>SIGNAL</span><i>＋</i><span>IMPACT</span>
+          </div>
         </div>
-        <div className="hero-lines"><i /><i /><i /><i /><i /></div>
-        <div className="hero-title"><h1>Designed to</h1><h1>mean <em>impact.</em></h1></div>
-        <div className="hero-status">
-          <div className="est"><span>◎</span><small>EST. 2012</small></div>
-          <p>Websites, AI products, brands, and<br />systems built for clarity, scale and impact.</p>
-        </div>
-        <p className="blast">HOLD TO <b>✹</b> BLAST<br /><span>DARE&nbsp; ⚡ &nbsp;TOUCH THE LINES.</span></p>
       </section>
 
       <section id="about" className="about scene-dark">
