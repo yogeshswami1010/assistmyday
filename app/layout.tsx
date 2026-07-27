@@ -6,6 +6,7 @@ const geistSans = Geist({ variable: "--font-geist-sans", subsets: ["latin"] });
 const geistMono = Geist_Mono({ variable: "--font-geist-mono", subsets: ["latin"] });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://axiom-motion-studio.onirtechnology.chatgpt.site"),
   title: "Axiom — Independent Creative Technology Studio",
   description: "Strategy, design and technology for ambitious digital brands.",
   openGraph: {
