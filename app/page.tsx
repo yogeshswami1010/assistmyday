@@ -19,6 +19,8 @@ export default function Home() {
   const [menu, setMenu] = useState(false);
   const [sound, setSound] = useState(false);
   const [cursor, setCursor] = useState({ x: -100, y: -100 });
+  const heroPointerX = cursor.x < 0 || typeof window === "undefined" ? 0 : cursor.x / window.innerWidth - 0.5;
+  const heroPointerY = cursor.y < 0 || typeof window === "undefined" ? 0 : cursor.y / window.innerHeight - 0.5;
 
   useEffect(() => {
     let raf = 0;
@@ -72,7 +74,24 @@ export default function Home() {
 
       <section id="home" className="hero scene-dark">
         <div className="grain" />
-        <div className="wire-a"><span>A</span></div>
+        <div
+          className="hero-3d"
+          style={{
+            "--hero-rx": `${heroPointerY * -5}deg`,
+            "--hero-ry": `${heroPointerX * 7}deg`,
+            "--hero-x": `${heroPointerX * 14}px`,
+            "--hero-y": `${heroPointerY * 10}px`,
+          } as React.CSSProperties}
+        >
+          <div className="hero-3d-glow" />
+          <div className="hero-3d-core" />
+          <div className="hero-3d-echo echo-one" />
+          <div className="hero-3d-echo echo-two" />
+          <div className="hero-shards" aria-hidden="true">
+            <i /><i /><i /><i /><i /><i /><i /><i />
+          </div>
+          <div className="hero-scanlines" />
+        </div>
         <div className="hero-lines"><i /><i /><i /><i /><i /></div>
         <div className="hero-title"><h1>Designed to</h1><h1>mean <em>impact.</em></h1></div>
         <div className="hero-status">
