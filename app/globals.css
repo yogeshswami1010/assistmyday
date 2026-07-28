@@ -6,6 +6,8 @@
 .webgl-logo-stage:active{cursor:grabbing}
 .webgl-logo-stage:focus-visible{box-shadow:inset 0 0 0 1px rgba(143,190,255,.45)}
 .webgl-logo-canvas{display:block;width:100%;height:100%;touch-action:none}
+.hero-lines i{background:linear-gradient(90deg,transparent,rgba(190,199,211,.38),rgba(255,255,255,.78) 68%,transparent)!important;box-shadow:0 0 6px rgba(255,255,255,.18)!important}
+.blast b{color:#fff!important}
 
 :root{--dark:#08090b;--light:#d8d8d7;--ink:#131416;--p:0;--shift:0vw;--labShift:0vw;--pageProgress:0}
 *{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--dark);font-family:Arial,Helvetica,sans-serif;color:#eee;overflow-x:hidden}a{color:inherit;text-decoration:none}button{font:inherit;color:inherit;cursor:pointer}::selection{background:#111;color:#fff}
