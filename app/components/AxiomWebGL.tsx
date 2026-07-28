@@ -83,7 +83,7 @@ export default function AxiomWebGL() {
       rotationZ: number,
       scatter: [number, number, number],
       spin: [number, number, number],
-      tone = 0x070a0f,
+      tone = 0x1f2125,
     ) => {
       const geometry = new RoundedBoxGeometry(size[0], size[1], size[2], 5, Math.min(size[0], size[1], size[2]) * 0.11);
       const material = new THREE.MeshPhysicalMaterial({
@@ -117,26 +117,48 @@ export default function AxiomWebGL() {
     // The A is assembled from independent metal rails so the mark can split apart in depth.
     makePiece([0.58, 4.35, 0.62], [-0.82, 0.05, 0], -0.245, [-2.9, 1.8, 3.3], [-0.7, -1.1, -0.35]);
     makePiece([0.58, 4.35, 0.62], [0.82, 0.05, 0.04], 0.245, [3.2, 1.4, 4.2], [0.8, 1.25, 0.42]);
-    makePiece([1.78, 0.5, 0.72], [0, -0.38, 0.16], 0, [-0.5, -2.7, 5.1], [1.1, -0.35, -0.65], 0x0d1118);
-    makePiece([0.38, 3.25, 0.36], [-0.52, 0.15, -0.7], -0.245, [-4.2, -1.1, -2.8], [0.65, 1.45, -0.85], 0x04060a);
-    makePiece([0.38, 3.25, 0.36], [0.52, 0.15, -0.68], 0.245, [4.3, -1.5, -2.2], [-0.8, -1.25, 0.75], 0x05080c);
-    makePiece([1.25, 0.28, 0.42], [0, 0.36, -0.58], 0, [1.4, 3.1, -3.8], [-1.2, 0.7, 0.5], 0x121720);
+    makePiece([1.78, 0.5, 0.72], [0, -0.38, 0.16], 0, [-0.5, -2.7, 5.1], [1.1, -0.35, -0.65], 0x1f2125);
+    makePiece([0.38, 3.25, 0.36], [-0.52, 0.15, -0.7], -0.245, [-4.2, -1.1, -2.8], [0.65, 1.45, -0.85], 0x1f2125);
+    makePiece([0.38, 3.25, 0.36], [0.52, 0.15, -0.68], 0.245, [4.3, -1.5, -2.2], [-0.8, -1.25, 0.75], 0x1f2125);
+    makePiece([1.25, 0.28, 0.42], [0, 0.36, -0.58], 0, [1.4, 3.1, -3.8], [-1.2, 0.7, 0.5], 0x1f2125);
+
+    // A layered outline remains assembled during the exploded scroll phase.
+    const ghostMark = new THREE.Group();
+    const ghostMaterials: THREE.LineBasicMaterial[] = [];
+    for (let layer = 0; layer < 3; layer += 1) {
+      pieces.slice(0, 6).forEach((piece) => {
+        const material = new THREE.LineBasicMaterial({
+          color: layer === 0 ? 0x3a3f49 : 0x242932,
+          transparent: true,
+          opacity: 0,
+          depthWrite: false,
+        });
+        const outline = new THREE.LineSegments(new THREE.EdgesGeometry(piece.mesh.geometry, 32), material);
+        outline.position.copy(piece.base);
+        outline.position.z -= 0.18 + layer * 0.28;
+        outline.rotation.z = piece.rotationZ;
+        outline.scale.setScalar(1 - layer * 0.025);
+        ghostMark.add(outline);
+        ghostMaterials.push(material);
+      });
+    }
+    mark.add(ghostMark);
 
     const random = seededRandom(4129);
-    for (let index = 0; index < 18; index += 1) {
-      const w = 0.08 + random() * 0.2;
-      const h = 0.32 + random() * 0.86;
-      const geometry = new RoundedBoxGeometry(w, h, 0.12 + random() * 0.18, 3, 0.025);
+    for (let index = 0; index < 44; index += 1) {
+      const w = 0.035 + random() * 0.16;
+      const h = 0.16 + random() * 1.25;
+      const geometry = new RoundedBoxGeometry(w, h, 0.05 + random() * 0.16, 3, 0.018);
       const material = new THREE.MeshPhysicalMaterial({
-        color: index % 6 === 0 ? 0x1a0b07 : 0x05080d,
+        color: 0x1f2125,
         metalness: 0.92,
         roughness: 0.3,
-        emissive: index % 6 === 0 ? 0x170500 : 0x010204,
-        emissiveIntensity: 0.35,
+        emissive: index % 9 === 0 ? 0x291006 : 0x010204,
+        emissiveIntensity: index % 9 === 0 ? 0.7 : 0.28,
         transparent: true,
       });
       const angle = random() * Math.PI * 2;
-      const radius = 0.6 + random() * 1.35;
+      const radius = 0.7 + random() * 2.5;
       const mesh = new THREE.Mesh(geometry, material);
       mesh.position.set(Math.cos(angle) * radius, Math.sin(angle) * radius, -0.8 + random() * 1.3);
       mesh.rotation.set(random() * 1.2, random() * 1.2, angle);
@@ -146,9 +168,9 @@ export default function AxiomWebGL() {
         base: mesh.position.clone(),
         rotationZ: mesh.rotation.z,
         scatter: new THREE.Vector3(
-          Math.cos(angle) * (3.3 + random() * 4.5),
-          Math.sin(angle) * (2.6 + random() * 3.8),
-          -3 + random() * 9,
+          Math.cos(angle) * (4.5 + random() * 7.5),
+          Math.sin(angle) * (3.2 + random() * 5.8),
+          -5 + random() * 14,
         ),
         spin: new THREE.Vector3((random() - 0.5) * 3, (random() - 0.5) * 3, (random() - 0.5) * 2),
       });
@@ -359,19 +381,24 @@ export default function AxiomWebGL() {
           piece.spin.y * explode,
           piece.rotationZ + piece.spin.z * explode,
         );
-        piece.mesh.material.opacity = visibility * (index > 5 ? 0.75 : 1);
+        piece.mesh.material.opacity = visibility * (index > 5 ? 0.1 + explode * 0.72 : 1);
         piece.mesh.material.emissiveIntensity = 0.42 + blast * 1.65;
         const edge = piece.mesh.children[0] as THREE.LineSegments<THREE.EdgesGeometry, THREE.LineBasicMaterial>;
         if (edge?.material) edge.material.opacity = visibility * (0.16 + blast * 0.4);
       });
+
+      ghostMaterials.forEach((material, index) => {
+        material.opacity = visibility * (0.018 + explode * (index < 6 ? 0.25 : 0.11));
+      });
+      ghostMark.position.z = -flyThrough * 0.8;
 
       camera.position.z = 9.4 - flyThrough * 3.8;
       camera.position.x = pointer.x * 0.22 - flyThrough * 0.65;
       camera.position.y = pointer.y * -0.16 + flyThrough * 0.35;
       camera.lookAt(world.position.x, 0, flyThrough * 1.5);
 
-      ember.intensity = blast * 54 + explode * 4;
-      rim.intensity = 17 + blast * 28;
+      ember.intensity = blast * 54 + explode * 1.5;
+      rim.intensity = 7 + blast * 22;
       coreMaterial.opacity = blast * 0.92;
       core.scale.setScalar(0.7 + blast * (1.5 + Math.sin(elapsed * 18) * 0.2));
       lightningLines.forEach((line) => {
@@ -384,7 +411,12 @@ export default function AxiomWebGL() {
 
       rayGroup.rotation.z = scrollProgress * -0.1;
       rayGroup.position.x = flyThrough * -2;
-      pointMaterial.opacity = 0.22 + explode * 0.2;
+      rayGroup.scale.setScalar(0.86 + explode * 0.48);
+      rayGroup.children.forEach((ray, index) => {
+        const material = (ray as THREE.Line<THREE.BufferGeometry, THREE.LineBasicMaterial>).material;
+        material.opacity = visibility * (0.025 + explode * (index % 7 === 0 ? 0.22 : 0.11));
+      });
+      pointMaterial.opacity = 0.12 + explode * 0.24;
       host.style.opacity = String(visibility);
       renderer.render(scene, camera);
       frame = requestAnimationFrame(render);
