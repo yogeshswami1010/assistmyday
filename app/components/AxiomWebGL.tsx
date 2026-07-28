@@ -244,9 +244,19 @@ export default function AxiomWebGL() {
     const dragRotation = new THREE.Vector2(-0.12, -0.28);
     const dragVelocity = new THREE.Vector2();
     const drag = { active: false, x: 0, y: 0 };
+    const introState = { progress: reducedMotion ? 1 : 0 };
     let scrollProgress = 0;
     let lastLightning = 0;
     let frame = 0;
+
+    const introTween = reducedMotion
+      ? null
+      : gsap.to(introState, {
+          progress: 1,
+          duration: 2.9,
+          delay: 0.12,
+          ease: "power4.out",
+        });
 
     const refreshLightning = () => {
       lightningLines.forEach((line, index) => {
@@ -357,6 +367,10 @@ export default function AxiomWebGL() {
       const explode = smooth((scrollProgress - 0.12) / 0.52);
       const flyThrough = smooth((scrollProgress - 0.58) / 0.36);
       const visibility = 1 - smooth((scrollProgress - 0.88) / 0.12);
+      const intro = clamp01(introState.progress);
+      const assembly = 1 - intro;
+      const assemblyFlash =
+        smooth((intro - 0.72) / 0.13) * (1 - smooth((intro - 0.93) / 0.07));
 
       blastRef.current = THREE.MathUtils.lerp(blastRef.current, blastTargetRef.current, 0.13);
       const blast = blastRef.current;
@@ -367,40 +381,49 @@ export default function AxiomWebGL() {
         dragVelocity.multiplyScalar(0.91);
       }
 
-      mark.rotation.x = dragRotation.x + pointer.y * 0.12 + scrollProgress * 0.35;
-      mark.rotation.y = dragRotation.y + pointer.x * 0.2 + scrollProgress * 1.18;
-      mark.rotation.z = -0.08 + scrollProgress * 0.23;
-      mark.scale.setScalar(0.96 + scrollProgress * 0.12 + flyThrough * 0.52);
+      mark.rotation.x = dragRotation.x + pointer.y * 0.12 + scrollProgress * 0.35 + assembly * 0.48;
+      mark.rotation.y = dragRotation.y + pointer.x * 0.2 + scrollProgress * 1.18 - assembly * 1.05;
+      mark.rotation.z = -0.08 + scrollProgress * 0.23 + assembly * 0.28;
+      mark.scale.setScalar(0.62 + intro * 0.34 + scrollProgress * 0.12 + flyThrough * 0.52);
 
       pieces.forEach((piece, index) => {
         const pulse = 1 + blast * (0.1 + (index % 4) * 0.035);
-        piece.mesh.position.copy(piece.base).addScaledVector(piece.scatter, explode * pulse);
+        const introDistance = index < 6 ? -0.82 : -0.42;
+        piece.mesh.position
+          .copy(piece.base)
+          .addScaledVector(piece.scatter, explode * pulse)
+          .addScaledVector(piece.scatter, assembly * introDistance);
         piece.mesh.position.z += flyThrough * (3.5 + (index % 5) * 0.58);
         piece.mesh.rotation.set(
-          piece.spin.x * explode + Math.sin(elapsed + index) * blast * 0.12,
-          piece.spin.y * explode,
-          piece.rotationZ + piece.spin.z * explode,
+          piece.spin.x * (explode + assembly * 0.86) + Math.sin(elapsed + index) * blast * 0.12,
+          piece.spin.y * (explode + assembly * 0.86),
+          piece.rotationZ + piece.spin.z * (explode + assembly * 0.86),
         );
-        piece.mesh.material.opacity = visibility * (index > 5 ? 0.1 + explode * 0.72 : 1);
+        piece.mesh.material.opacity =
+          visibility *
+          (index > 5
+            ? 0.06 + assembly * 0.42 + explode * 0.72
+            : 0.08 + intro * 0.92);
         piece.mesh.material.emissiveIntensity = 0.42 + blast * 1.65;
         const edge = piece.mesh.children[0] as THREE.LineSegments<THREE.EdgesGeometry, THREE.LineBasicMaterial>;
-        if (edge?.material) edge.material.opacity = visibility * (0.16 + blast * 0.4);
+        if (edge?.material) edge.material.opacity = visibility * intro * (0.16 + blast * 0.4);
       });
 
       ghostMaterials.forEach((material, index) => {
-        material.opacity = visibility * (0.018 + explode * (index < 6 ? 0.25 : 0.11));
+        material.opacity = visibility * intro * (0.018 + explode * (index < 6 ? 0.25 : 0.11));
       });
       ghostMark.position.z = -flyThrough * 0.8;
 
-      camera.position.z = 9.4 - flyThrough * 3.8;
+      camera.position.z = 9.4 + assembly * 3.2 - flyThrough * 3.8;
       camera.position.x = pointer.x * 0.22 - flyThrough * 0.65;
       camera.position.y = pointer.y * -0.16 + flyThrough * 0.35;
       camera.lookAt(world.position.x, 0, flyThrough * 1.5);
 
-      ember.intensity = blast * 54 + explode * 1.5;
-      rim.intensity = 7 + blast * 22;
-      coreMaterial.opacity = blast * 0.92;
-      core.scale.setScalar(0.7 + blast * (1.5 + Math.sin(elapsed * 18) * 0.2));
+      key.intensity = 13 + assemblyFlash * 18;
+      ember.intensity = blast * 54 + explode * 1.5 + assemblyFlash * 24;
+      rim.intensity = 7 + blast * 22 + assemblyFlash * 12;
+      coreMaterial.opacity = Math.max(blast * 0.92, assemblyFlash * 0.66);
+      core.scale.setScalar(0.7 + blast * (1.5 + Math.sin(elapsed * 18) * 0.2) + assemblyFlash * 0.8);
       lightningLines.forEach((line) => {
         line.material.opacity = blast * (0.5 + Math.sin(elapsed * 34) * 0.25);
       });
@@ -425,6 +448,7 @@ export default function AxiomWebGL() {
 
     return () => {
       cancelAnimationFrame(frame);
+      introTween?.kill();
       scrollTrigger.kill();
       observer.disconnect();
       host.removeEventListener("pointerdown", onPointerDown);
