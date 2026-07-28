@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 const work = [
   { title: "Nexora AI", copy: "A platform simplifying work, decisions, and intelligent automation.", kind: "tower" },
@@ -19,6 +19,11 @@ export default function Home() {
   const [menu, setMenu] = useState(false);
   const [sound, setSound] = useState(false);
   const [cursor, setCursor] = useState({ x: -100, y: -100 });
+  const [logoActive, setLogoActive] = useState(false);
+  const logoOrbitRef = useRef<HTMLDivElement>(null);
+  const dragRef = useRef({ active: false, x: 0, y: 0 });
+  const orbitRef = useRef({ rx: -10, ry: -18, vx: 0, vy: 0, last: 0 });
+  const blastTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const heroPointerX = cursor.x < 0 || typeof window === "undefined" ? 0 : cursor.x / window.innerWidth - 0.5;
   const heroPointerY = cursor.y < 0 || typeof window === "undefined" ? 0 : cursor.y / window.innerHeight - 0.5;
 
@@ -102,6 +107,58 @@ export default function Home() {
     };
   }, []);
 
+  useEffect(() => {
+    let frame = 0;
+    const tick = (now: number) => {
+      const motion = orbitRef.current;
+      const elapsed = Math.min(32, motion.last ? now - motion.last : 16);
+      motion.last = now;
+
+      if (!dragRef.current.active) {
+        motion.ry += elapsed * 0.009 + motion.vy;
+        motion.rx += (-10 + Math.sin(now * 0.00055) * 8 - motion.rx) * 0.025 + motion.vx;
+        motion.vx *= 0.91;
+        motion.vy *= 0.91;
+      }
+
+      logoOrbitRef.current?.style.setProperty("--orbit-rx", `${motion.rx}deg`);
+      logoOrbitRef.current?.style.setProperty("--orbit-ry", `${motion.ry}deg`);
+      frame = requestAnimationFrame(tick);
+    };
+    frame = requestAnimationFrame(tick);
+    return () => {
+      cancelAnimationFrame(frame);
+      if (blastTimerRef.current) clearTimeout(blastTimerRef.current);
+    };
+  }, []);
+
+  const startLogoDrag = (event: React.PointerEvent<HTMLDivElement>) => {
+    event.currentTarget.setPointerCapture(event.pointerId);
+    if (blastTimerRef.current) clearTimeout(blastTimerRef.current);
+    dragRef.current = { active: true, x: event.clientX, y: event.clientY };
+    orbitRef.current.vx = 0;
+    orbitRef.current.vy = 0;
+    setLogoActive(true);
+  };
+
+  const moveLogoDrag = (event: React.PointerEvent<HTMLDivElement>) => {
+    if (!dragRef.current.active) return;
+    const dx = event.clientX - dragRef.current.x;
+    const dy = event.clientY - dragRef.current.y;
+    dragRef.current.x = event.clientX;
+    dragRef.current.y = event.clientY;
+    orbitRef.current.ry += dx * 0.48;
+    orbitRef.current.rx = Math.min(82, Math.max(-82, orbitRef.current.rx - dy * 0.42));
+    orbitRef.current.vy = dx * 0.055;
+    orbitRef.current.vx = -dy * 0.045;
+  };
+
+  const stopLogoDrag = () => {
+    dragRef.current.active = false;
+    if (blastTimerRef.current) clearTimeout(blastTimerRef.current);
+    blastTimerRef.current = setTimeout(() => setLogoActive(false), 450);
+  };
+
   return (
     <main>
       <div className="cursor-dot" style={{ transform: `translate(${cursor.x}px,${cursor.y}px)` }} />
@@ -136,19 +193,53 @@ export default function Home() {
               "--hero-x": `${heroPointerX * 12}px`,
               "--hero-y": `${heroPointerY * 9}px`,
             } as React.CSSProperties}
-            aria-hidden="true"
           >
             <div className="hero-3d-glow" />
-            <div className="a-world">
-              {[...Array(9)].map((_, index) => (
-                <div className="a-layer" data-a-layer key={index}>
-                  <i className="a-segment a-left" />
-                  <i className="a-segment a-right" />
-                  <i className="a-segment a-bridge" />
+            <div
+              className={`a-world ${logoActive ? "is-blasting" : ""}`}
+              role="button"
+              tabIndex={0}
+              aria-label="Interactive 3D Axiom logo. Drag to rotate and hold to energize."
+              onPointerDown={startLogoDrag}
+              onPointerMove={moveLogoDrag}
+              onPointerUp={stopLogoDrag}
+              onPointerCancel={stopLogoDrag}
+              onLostPointerCapture={stopLogoDrag}
+              onClick={() => {
+                if (blastTimerRef.current) clearTimeout(blastTimerRef.current);
+                setLogoActive(true);
+                blastTimerRef.current = setTimeout(() => setLogoActive(false), 900);
+              }}
+              onKeyDown={(event) => {
+                if (event.key === " " || event.key === "Enter") {
+                  event.preventDefault();
+                  if (blastTimerRef.current) clearTimeout(blastTimerRef.current);
+                  setLogoActive(true);
+                }
+              }}
+              onKeyUp={(event) => {
+                if (event.key === " " || event.key === "Enter") stopLogoDrag();
+              }}
+            >
+              <div className="logo-orbit" ref={logoOrbitRef}>
+                {[...Array(9)].map((_, index) => (
+                  <div className="a-layer" data-a-layer key={index}>
+                    <i className="a-segment a-left" />
+                    <i className="a-segment a-right" />
+                    <i className="a-segment a-bridge" />
+                  </div>
+                ))}
+                <div className="a-shards">
+                  {[...Array(14)].map((_, index) => <i data-a-shard key={index} />)}
                 </div>
-              ))}
-              <div className="a-shards">
-                {[...Array(14)].map((_, index) => <i data-a-shard key={index} />)}
+                <div className="energy-field">
+                  <i className="thermal-glow" />
+                  {[...Array(4)].map((_, arc) => (
+                    <span className={`electric-arc arc-${arc + 1}`} key={arc}>
+                      {[...Array(7)].map((__, spark) => <i key={spark} />)}
+                    </span>
+                  ))}
+                </div>
               </div>
             </div>
             <div className="hero-scanlines" />
@@ -159,7 +250,7 @@ export default function Home() {
             <div className="est"><span>◎</span><small>EST. 2012</small></div>
             <p>Websites, AI products, brands, and<br />systems built for clarity, scale and impact.</p>
           </div>
-          <p className="blast">SCROLL TO <b>✹</b> EXPLORE<br /><span>STRUCTURE&nbsp; ⚡ &nbsp;IN MOTION.</span></p>
+          <p className="blast">HOLD TO <b>✹</b> BLAST<br /><span>DRAG&nbsp; ⚡ &nbsp;TO ROTATE THE MARK.</span></p>
           <div className="hero-finale">
             <span>STRUCTURE</span><i>＋</i><span>SIGNAL</span><i>＋</i><span>IMPACT</span>
           </div>
