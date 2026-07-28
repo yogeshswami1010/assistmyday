@@ -59,20 +59,20 @@ export default function AxiomWebGL() {
     renderer.setPixelRatio(Math.min(devicePixelRatio, 1.75));
     renderer.outputColorSpace = THREE.SRGBColorSpace;
     renderer.toneMapping = THREE.ACESFilmicToneMapping;
-    renderer.toneMappingExposure = 1.12;
+    renderer.toneMappingExposure = 0.82;
 
     const world = new THREE.Group();
     const mark = new THREE.Group();
     world.add(mark);
     scene.add(world);
 
-    const ambient = new THREE.HemisphereLight(0xffffff, 0x101114, 1.18);
-    const key = new THREE.SpotLight(0xffffff, 34, 28, Math.PI / 5, 0.7, 1.7);
+    const ambient = new THREE.HemisphereLight(0x334158, 0x020304, 0.42);
+    const key = new THREE.SpotLight(0xdce6f3, 13, 28, Math.PI / 5, 0.7, 1.7);
     key.position.set(-5.5, 7, 7);
     key.target = mark;
-    const rim = new THREE.PointLight(0xffffff, 22, 17, 1.8);
+    const rim = new THREE.PointLight(0x263c5b, 7, 17, 1.8);
     rim.position.set(4.5, -1.5, 3.2);
-    const ember = new THREE.PointLight(0xffffff, 0, 12, 2);
+    const ember = new THREE.PointLight(0xff4b12, 0, 12, 2);
     ember.position.set(0, -0.2, 1.25);
     scene.add(ambient, key, rim, ember);
 
@@ -83,17 +83,17 @@ export default function AxiomWebGL() {
       rotationZ: number,
       scatter: [number, number, number],
       spin: [number, number, number],
-      tone = 0xe8ebef,
+      tone = 0x070a0f,
     ) => {
       const geometry = new RoundedBoxGeometry(size[0], size[1], size[2], 5, Math.min(size[0], size[1], size[2]) * 0.11);
       const material = new THREE.MeshPhysicalMaterial({
         color: tone,
-        metalness: 0.78,
-        roughness: 0.18,
+        metalness: 0.96,
+        roughness: 0.24,
         clearcoat: 1,
         clearcoatRoughness: 0.14,
-        emissive: 0x16181b,
-        emissiveIntensity: 0.34,
+        emissive: 0x020306,
+        emissiveIntensity: 0.2,
         transparent: true,
       });
       const mesh = new THREE.Mesh(geometry, material);
@@ -101,7 +101,7 @@ export default function AxiomWebGL() {
       mesh.rotation.z = rotationZ;
       const edges = new THREE.LineSegments(
         new THREE.EdgesGeometry(geometry, 32),
-        new THREE.LineBasicMaterial({ color: 0xffffff, transparent: true, opacity: 0.34 }),
+        new THREE.LineBasicMaterial({ color: 0x526078, transparent: true, opacity: 0.16 }),
       );
       mesh.add(edges);
       mark.add(mesh);
@@ -117,10 +117,10 @@ export default function AxiomWebGL() {
     // The A is assembled from independent metal rails so the mark can split apart in depth.
     makePiece([0.58, 4.35, 0.62], [-0.82, 0.05, 0], -0.245, [-2.9, 1.8, 3.3], [-0.7, -1.1, -0.35]);
     makePiece([0.58, 4.35, 0.62], [0.82, 0.05, 0.04], 0.245, [3.2, 1.4, 4.2], [0.8, 1.25, 0.42]);
-    makePiece([1.78, 0.5, 0.72], [0, -0.38, 0.16], 0, [-0.5, -2.7, 5.1], [1.1, -0.35, -0.65], 0xf7f8fa);
-    makePiece([0.38, 3.25, 0.36], [-0.52, 0.15, -0.7], -0.245, [-4.2, -1.1, -2.8], [0.65, 1.45, -0.85], 0xbfc5cc);
-    makePiece([0.38, 3.25, 0.36], [0.52, 0.15, -0.68], 0.245, [4.3, -1.5, -2.2], [-0.8, -1.25, 0.75], 0xcbd0d6);
-    makePiece([1.25, 0.28, 0.42], [0, 0.36, -0.58], 0, [1.4, 3.1, -3.8], [-1.2, 0.7, 0.5], 0xffffff);
+    makePiece([1.78, 0.5, 0.72], [0, -0.38, 0.16], 0, [-0.5, -2.7, 5.1], [1.1, -0.35, -0.65], 0x0d1118);
+    makePiece([0.38, 3.25, 0.36], [-0.52, 0.15, -0.7], -0.245, [-4.2, -1.1, -2.8], [0.65, 1.45, -0.85], 0x04060a);
+    makePiece([0.38, 3.25, 0.36], [0.52, 0.15, -0.68], 0.245, [4.3, -1.5, -2.2], [-0.8, -1.25, 0.75], 0x05080c);
+    makePiece([1.25, 0.28, 0.42], [0, 0.36, -0.58], 0, [1.4, 3.1, -3.8], [-1.2, 0.7, 0.5], 0x121720);
 
     const random = seededRandom(4129);
     for (let index = 0; index < 18; index += 1) {
@@ -128,11 +128,11 @@ export default function AxiomWebGL() {
       const h = 0.32 + random() * 0.86;
       const geometry = new RoundedBoxGeometry(w, h, 0.12 + random() * 0.18, 3, 0.025);
       const material = new THREE.MeshPhysicalMaterial({
-        color: index % 6 === 0 ? 0xffffff : 0xc8cdd3,
-        metalness: 0.76,
-        roughness: 0.22,
-        emissive: 0x1c1e21,
-        emissiveIntensity: 0.4,
+        color: index % 6 === 0 ? 0x1a0b07 : 0x05080d,
+        metalness: 0.92,
+        roughness: 0.3,
+        emissive: index % 6 === 0 ? 0x170500 : 0x010204,
+        emissiveIntensity: 0.35,
         transparent: true,
       });
       const angle = random() * Math.PI * 2;
@@ -155,7 +155,7 @@ export default function AxiomWebGL() {
     }
 
     const coreMaterial = new THREE.MeshBasicMaterial({
-      color: 0xffffff,
+      color: 0xff5720,
       transparent: true,
       opacity: 0,
       blending: THREE.AdditiveBlending,
@@ -172,7 +172,7 @@ export default function AxiomWebGL() {
       const line = new THREE.Line(
         new THREE.BufferGeometry(),
         new THREE.LineBasicMaterial({
-          color: index % 2 ? 0xd8ecff : 0xffffff,
+          color: index % 2 ? 0x6db9ff : 0xeaf6ff,
           transparent: true,
           opacity: 0,
           blending: THREE.AdditiveBlending,
@@ -190,7 +190,7 @@ export default function AxiomWebGL() {
     const pointGeometry = new THREE.BufferGeometry();
     pointGeometry.setAttribute("position", new THREE.Float32BufferAttribute(pointPositions, 3));
     const pointMaterial = new THREE.PointsMaterial({
-      color: 0xffffff,
+      color: 0x66758a,
       size: 0.026,
       transparent: true,
       opacity: 0.34,
@@ -209,7 +209,7 @@ export default function AxiomWebGL() {
         new THREE.Vector3(startX + Math.cos(angle) * length, startY + Math.sin(angle) * length, -4 - random() * 9),
       ]);
       const rayMaterial = new THREE.LineBasicMaterial({
-        color: index % 7 === 0 ? 0xffffff : 0x929ba7,
+        color: index % 7 === 0 ? 0x8f3218 : 0x1d2938,
         transparent: true,
         opacity: 0.12 + random() * 0.18,
       });
