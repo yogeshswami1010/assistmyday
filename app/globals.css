@@ -57,9 +57,9 @@
 .service-card-mark::before{inset:10px}.service-card-mark::after{inset:21px}
 .service-detail article:nth-child(2n) .service-card-mark{border-radius:50% 10% 50% 50%;transform:rotate(-45deg)}
 .service-detail article:nth-child(3) .service-card-mark{border-radius:18% 50% 50%;transform:rotate(135deg)}
-.detail-0{--serviceStart:.32;left:6%!important;top:15%!important;transform:translate3d(calc((1 - var(--serviceReveal))*-72vw),0,0)}
-.detail-1{--serviceStart:.46;right:6%!important;top:15%!important;transform:translate3d(calc((1 - var(--serviceReveal))*72vw),0,0)}
-.detail-2{--serviceStart:.60;left:6%!important;bottom:14%!important;transform:translate3d(calc((1 - var(--serviceReveal))*-72vw),0,0)}
-.detail-3{--serviceStart:.74;right:6%!important;bottom:14%!important;transform:translate3d(calc((1 - var(--serviceReveal))*72vw),0,0)}
+.detail-0{--serviceStart:.34;left:6%!important;top:15%!important;transform:translate3d(0,calc((1 - var(--serviceReveal))*105vh),0)}
+.detail-1{--serviceStart:.34;right:6%!important;top:15%!important;transform:translate3d(0,calc((1 - var(--serviceReveal))*105vh),0)}
+.detail-2{--serviceStart:.64;left:6%!important;bottom:14%!important;transform:translate3d(0,calc((1 - var(--serviceReveal))*105vh),0)}
+.detail-3{--serviceStart:.64;right:6%!important;bottom:14%!important;transform:translate3d(0,calc((1 - var(--serviceReveal))*105vh),0)}
 @media(max-width:760px){.service-detail article{width:43vw!important;height:220px;padding:16px}.service-detail article h3{width:72%;font-size:18px!important}.service-detail article p{left:16px;bottom:16px;width:80%;font-size:10px!important}.service-card-mark{top:16px;right:16px;width:44px;height:44px}.service-card-mark::before{inset:6px}.service-card-mark::after{inset:13px}}
 @media(prefers-reduced-motion:reduce){*{animation:none!important;scroll-behavior:auto!important}.work-track,.floating-grid,.mantra-track,.work-card,.work-outro,.service-words span,.service-detail article{transform:none!important}.work-card,.work-outro,.service-detail article{opacity:1!important}}
