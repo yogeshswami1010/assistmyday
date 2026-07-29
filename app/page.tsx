@@ -88,12 +88,16 @@ export default function Home() {
         <p>INDEPENDENT DIGITAL STUDIO<br />INDIA — WORLDWIDE</p>
       </aside>
 
+      <div className="hero-about scene-dark">
+        <div className="hero-canvas-shell">
+          <AxiomWebGL />
+        </div>
+
       <section id="home" className="hero scene-dark" data-hero-scroll>
         <div className="hero-sticky">
           <div className="grain" />
           <div className="hero-3d">
             <div className="hero-3d-glow" />
-            <AxiomWebGL />
             <div className="hero-scanlines" />
           </div>
           <div className="hero-lines"><i /><i /><i /><i /><i /><i /><i /></div>
@@ -119,6 +123,7 @@ export default function Home() {
         </div>
         <div className="fragment fragment-a" /><div className="fragment fragment-b" /><div className="fragment fragment-c" />
       </section>
+      </div>
 
       <section className="mantra scene-dark" data-scrollscene>
         <div className="sticky">

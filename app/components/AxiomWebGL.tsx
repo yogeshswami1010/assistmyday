@@ -37,7 +37,7 @@ export default function AxiomWebGL() {
   useEffect(() => {
     const host = hostRef.current;
     const canvas = canvasRef.current;
-    const hero = host?.closest<HTMLElement>("[data-hero-scroll]");
+    const hero = document.querySelector<HTMLElement>("[data-hero-scroll]");
     if (!host || !canvas || !hero) return;
 
     gsap.registerPlugin(ScrollTrigger);
@@ -280,7 +280,7 @@ export default function AxiomWebGL() {
 
     const setHeroProgress = (progress: number) => {
       const copyOut = smooth(progress / 0.17);
-      const worldFade = 1 - smooth((progress - 0.87) / 0.13);
+      const worldFade = 1 - smooth((progress - 0.87) / 0.13) * 0.16;
       hero.style.setProperty("--hero-p", String(progress));
       hero.style.setProperty("--hero-copy-opacity", String(1 - copyOut));
       hero.style.setProperty("--hero-copy-y", `${copyOut * -54}px`);
@@ -366,7 +366,7 @@ export default function AxiomWebGL() {
       const elapsed = clock.elapsedTime;
       const explode = smooth((scrollProgress - 0.12) / 0.52);
       const flyThrough = smooth((scrollProgress - 0.58) / 0.36);
-      const visibility = 1 - smooth((scrollProgress - 0.88) / 0.12);
+      const visibility = 1 - smooth((scrollProgress - 0.88) / 0.12) * 0.16;
       const intro = clamp01(introState.progress);
       const assembly = 1 - intro;
       const assemblyFlash =
