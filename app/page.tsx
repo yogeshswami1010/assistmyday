@@ -23,16 +23,33 @@ export default function Home() {
 
   useEffect(() => {
     let raf = 0;
+    let renderedPageProgress: number | undefined;
+    const renderedProgress = new Map<HTMLElement, number>();
+    const reducedMotion = matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const smoothing = reducedMotion ? 1 : 0.115;
     const render = () => {
+      let keepAnimating = false;
       document.querySelectorAll<HTMLElement>("[data-scrollscene]").forEach((el) => {
         const span = Math.max(el.offsetHeight - innerHeight, 1);
-        const p = Math.min(1, Math.max(0, (scrollY - el.offsetTop) / span));
-        el.style.setProperty("--p", String(p));
-        el.style.setProperty("--shift", `${p * -226}vw`);
-        el.style.setProperty("--labShift", `${(p - 0.5) * 110}vw`);
+        const target = Math.min(1, Math.max(0, (scrollY - el.offsetTop) / span));
+        const previous = renderedProgress.get(el) ?? target;
+        const next = previous + (target - previous) * smoothing;
+        const progress = Math.abs(target - next) < 0.00025 ? target : next;
+        renderedProgress.set(el, progress);
+        el.style.setProperty("--p", String(progress));
+        el.style.setProperty("--shift", `${progress * -226}vw`);
+        el.style.setProperty("--labShift", `${(progress - 0.5) * 110}vw`);
+        if (progress !== target) keepAnimating = true;
       });
-      document.documentElement.style.setProperty("--pageProgress", String(scrollY / Math.max(document.documentElement.scrollHeight - innerHeight, 1)));
-      raf = 0;
+      const targetPageProgress = scrollY / Math.max(document.documentElement.scrollHeight - innerHeight, 1);
+      const previousPageProgress = renderedPageProgress ?? targetPageProgress;
+      const nextPageProgress = previousPageProgress + (targetPageProgress - previousPageProgress) * smoothing;
+      renderedPageProgress = Math.abs(targetPageProgress - nextPageProgress) < 0.00025
+        ? targetPageProgress
+        : nextPageProgress;
+      document.documentElement.style.setProperty("--pageProgress", String(renderedPageProgress));
+      if (renderedPageProgress !== targetPageProgress) keepAnimating = true;
+      raf = keepAnimating ? requestAnimationFrame(render) : 0;
     };
     const onScroll = () => { if (!raf) raf = requestAnimationFrame(render); };
     const onMove = (e: MouseEvent) => setCursor({ x: e.clientX, y: e.clientY });

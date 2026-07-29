@@ -13,7 +13,7 @@
 .mantra-track{position:absolute!important;z-index:2;top:45%;left:0;display:flex;gap:6vw!important;width:max-content;font-size:clamp(92px,11vw,168px)!important;color:#e6e6e4;transform:translate3d(calc(8vw - var(--p)*42vw),calc((1 - min(1,var(--p)*2.4))*76vh),0)!important;will-change:transform}
 .mantra-track b{font-size:.27em!important;color:#777}
 .wipe-bars{z-index:3!important;overflow:hidden}
-.wipe-bars i{--rise:min(1,max(0,calc((var(--p) - var(--delay))*3.6)));height:17.5%!important;background:#d8d8d7!important;transform:translate3d(0,calc((1 - var(--rise))*115vh),0)!important;transform-origin:center!important;will-change:transform}
+.wipe-bars i{--rise:min(1,max(0,calc((var(--p) - var(--delay))*2.6)));height:17.5%!important;background:#d8d8d7!important;transform:translate3d(0,calc((1 - var(--rise))*115vh),0)!important;transform-origin:center!important;will-change:transform}
 .wipe-bars i:nth-child(1){--delay:.36;top:0!important}
 .wipe-bars i:nth-child(2){--delay:.29;top:20%!important}
 .wipe-bars i:nth-child(3){--delay:.22;top:40%!important}
