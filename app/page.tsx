@@ -144,7 +144,7 @@ export default function Home() {
             <small>FEATURED & AWARDS</small>
             <video
               className="fact-video fact-video-loop"
-              src="/rushi.mp4"
+              src="/awards-card-video.mp4"
               autoPlay
               loop
               muted
@@ -164,7 +164,7 @@ export default function Home() {
             <small>OUR TEAM MEMBERS</small>
             <video
               className="fact-video fact-video-hover"
-              src="/awards-card-video.mp4"
+              src="/rushi.mp4"
               muted
               playsInline
               preload="auto"
