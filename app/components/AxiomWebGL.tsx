@@ -52,7 +52,7 @@ export default function AxiomWebGL() {
 
     const reducedMotion = matchMedia("(prefers-reduced-motion: reduce)").matches;
     const scene = new THREE.Scene();
-    scene.fog = new THREE.FogExp2(0x050608, 0.052);
+    scene.fog = new THREE.FogExp2(0x050608, 0.035);
 
     const camera = new THREE.PerspectiveCamera(34, 1, 0.1, 120);
     camera.position.set(0, 0, 9.4);
@@ -67,18 +67,18 @@ export default function AxiomWebGL() {
     renderer.setPixelRatio(Math.min(devicePixelRatio, 1.75));
     renderer.outputColorSpace = THREE.SRGBColorSpace;
     renderer.toneMapping = THREE.ACESFilmicToneMapping;
-    renderer.toneMappingExposure = 0.82;
+    renderer.toneMappingExposure = 0.96;
 
     const world = new THREE.Group();
     const mark = new THREE.Group();
     world.add(mark);
     scene.add(world);
 
-    const ambient = new THREE.HemisphereLight(0x334158, 0x020304, 0.42);
-    const key = new THREE.SpotLight(0xdce6f3, 13, 28, Math.PI / 5, 0.7, 1.7);
+    const ambient = new THREE.HemisphereLight(0x3d4b61, 0x020304, 0.56);
+    const key = new THREE.SpotLight(0xdce6f3, 16, 28, Math.PI / 5, 0.7, 1.7);
     key.position.set(-5.5, 7, 7);
     key.target = mark;
-    const rim = new THREE.PointLight(0x263c5b, 7, 17, 1.8);
+    const rim = new THREE.PointLight(0x304969, 9, 17, 1.8);
     rim.position.set(4.5, -1.5, 3.2);
     const ember = new THREE.PointLight(0xff4b12, 0, 12, 2);
     ember.position.set(0, -0.2, 1.25);
@@ -136,7 +136,7 @@ export default function AxiomWebGL() {
     for (let layer = 0; layer < 3; layer += 1) {
       pieces.slice(0, 6).forEach((piece) => {
         const material = new THREE.LineBasicMaterial({
-          color: layer === 0 ? 0x3a3f49 : 0x242932,
+          color: layer === 0 ? 0x697485 : 0x343b46,
           transparent: true,
           opacity: 0,
           depthWrite: false,
@@ -154,7 +154,7 @@ export default function AxiomWebGL() {
 
     // These are complete copies of the A. They peel away as intact layers on scroll.
     const logoLayers: LogoLayer[] = [];
-    for (let layer = 0; layer < 8; layer += 1) {
+    for (let layer = 0; layer < 6; layer += 1) {
       const group = new THREE.Group();
       const materials: THREE.MeshPhysicalMaterial[] = [];
       const edgeMaterials: THREE.LineBasicMaterial[] = [];
@@ -183,15 +183,15 @@ export default function AxiomWebGL() {
         materials.push(material);
         edgeMaterials.push(edgeMaterial);
       });
-      const signed = layer - 3.5;
+      const signed = layer - 2.5;
       logoLayers.push({
         group,
         materials,
         edgeMaterials,
         direction: new THREE.Vector3(
-          signed * 1.28,
-          Math.sin(layer * 1.72) * (2.1 + Math.abs(signed) * 0.35),
-          signed * 1.55 + (layer % 2 ? 1.7 : -1.2),
+          signed * 1.72,
+          (layer % 2 ? 1 : -1) * (1.35 + Math.abs(signed) * 0.48),
+          signed * 1.95 + (layer % 2 ? 0.7 : -0.7),
         ),
         spin: new THREE.Vector3(
           (layer % 2 ? 1 : -1) * (0.12 + layer * 0.018),
@@ -203,7 +203,7 @@ export default function AxiomWebGL() {
     }
 
     const random = seededRandom(4129);
-    for (let index = 0; index < 44; index += 1) {
+    for (let index = 0; index < 26; index += 1) {
       const w = 0.035 + random() * 0.16;
       const h = 0.16 + random() * 1.25;
       const geometry = new RoundedBoxGeometry(w, h, 0.05 + random() * 0.16, 3, 0.018);
@@ -279,7 +279,7 @@ export default function AxiomWebGL() {
     scene.add(new THREE.Points(pointGeometry, pointMaterial));
 
     const rayGroup = new THREE.Group();
-    for (let index = 0; index < 24; index += 1) {
+    for (let index = 0; index < 16; index += 1) {
       const startX = (random() - 0.5) * 11;
       const startY = (random() - 0.5) * 7;
       const length = 4 + random() * 12;
@@ -440,8 +440,8 @@ export default function AxiomWebGL() {
       }
 
       mark.rotation.x = dragRotation.x + pointer.y * 0.12 + scrollProgress * 0.35 + assembly * 0.48;
-      mark.rotation.y = dragRotation.y + pointer.x * 0.2 + scrollProgress * 1.18 - assembly * 1.05;
-      mark.rotation.z = -0.08 + scrollProgress * 0.23 + assembly * 0.28;
+      mark.rotation.y = dragRotation.y + pointer.x * 0.2 + scrollProgress * 0.72 - assembly * 1.05;
+      mark.rotation.z = -0.08 + scrollProgress * 0.15 + assembly * 0.28;
       mark.scale.setScalar(0.62 + intro * 0.34 + scrollProgress * 0.12 + flyThrough * 0.52);
 
       pieces.forEach((piece, index) => {
@@ -466,7 +466,7 @@ export default function AxiomWebGL() {
           visibility *
           (isLogoPiece
             ? (0.08 + intro * 0.92) * (1 - smooth(explode / 0.34))
-            : 0.06 + assembly * 0.42 + explode * 0.72);
+            : 0.025 + assembly * 0.22 + explode * 0.34);
         piece.mesh.material.emissiveIntensity = 0.42 + blast * 1.65;
         const edge = piece.mesh.children[0] as THREE.LineSegments<THREE.EdgesGeometry, THREE.LineBasicMaterial>;
         if (edge?.material) {
@@ -479,7 +479,7 @@ export default function AxiomWebGL() {
       });
 
       logoLayers.forEach((layer, index) => {
-        const delay = index * 0.035;
+        const delay = index * 0.06;
         const peel = smooth((explode - delay) / Math.max(1 - delay, 0.01));
         layer.group.position.copy(layer.direction).multiplyScalar(peel);
         layer.group.position.z += flyThrough * (2.2 + index * 0.65);
@@ -490,15 +490,15 @@ export default function AxiomWebGL() {
         );
         layer.group.scale.setScalar(1 + peel * (0.025 + index * 0.008));
         layer.materials.forEach((material) => {
-          material.opacity = visibility * peel * (0.08 + (index % 3) * 0.025);
+          material.opacity = visibility * peel * (0.15 + (index % 3) * 0.035);
         });
         layer.edgeMaterials.forEach((material) => {
-          material.opacity = visibility * peel * (0.12 + (index % 2) * 0.06);
+          material.opacity = visibility * peel * (0.24 + (index % 2) * 0.08);
         });
       });
 
       ghostMaterials.forEach((material, index) => {
-        material.opacity = visibility * intro * (0.018 + explode * (index < 6 ? 0.25 : 0.11));
+        material.opacity = visibility * intro * (0.03 + explode * (index < 6 ? 0.48 : 0.18));
       });
       ghostMark.position.z = -flyThrough * 0.8;
 
@@ -507,9 +507,9 @@ export default function AxiomWebGL() {
       camera.position.y = pointer.y * -0.16 + flyThrough * 0.35;
       camera.lookAt(world.position.x, 0, flyThrough * 1.5);
 
-      key.intensity = 13 + assemblyFlash * 18;
+      key.intensity = 16 + assemblyFlash * 18;
       ember.intensity = blast * 54 + explode * 1.5 + assemblyFlash * 24;
-      rim.intensity = 7 + blast * 22 + assemblyFlash * 12;
+      rim.intensity = 9 + blast * 22 + assemblyFlash * 12;
       coreMaterial.opacity = Math.max(blast * 0.92, assemblyFlash * 0.66);
       core.scale.setScalar(0.7 + blast * (1.5 + Math.sin(elapsed * 18) * 0.2) + assemblyFlash * 0.8);
       lightningLines.forEach((line) => {
@@ -525,9 +525,9 @@ export default function AxiomWebGL() {
       rayGroup.scale.setScalar(0.86 + explode * 0.48);
       rayGroup.children.forEach((ray, index) => {
         const material = (ray as THREE.Line<THREE.BufferGeometry, THREE.LineBasicMaterial>).material;
-        material.opacity = visibility * (0.025 + explode * (index % 7 === 0 ? 0.22 : 0.11));
+        material.opacity = visibility * (0.018 + explode * (index % 7 === 0 ? 0.14 : 0.07));
       });
-      pointMaterial.opacity = 0.12 + explode * 0.24;
+      pointMaterial.opacity = 0.08 + explode * 0.14;
       host.style.opacity = String(visibility);
       renderer.render(scene, camera);
       frame = requestAnimationFrame(render);
