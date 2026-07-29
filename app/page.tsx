@@ -142,7 +142,16 @@ export default function Home() {
         <div className="cards">
           <article className="fact award">
             <small>FEATURED & AWARDS</small>
-            <div className="lion-img lion-left" />
+            <video
+              className="fact-video fact-video-loop"
+              src="/rushi.mp4"
+              autoPlay
+              loop
+              muted
+              playsInline
+              preload="auto"
+              aria-label="Featured and awards presentation"
+            />
             <b className="w-dot">W.</b><strong>50+</strong>
             <p>Featured on top design<br />platforms worldwide.</p>
           </article>
@@ -153,7 +162,29 @@ export default function Home() {
           </article>
           <article className="fact team">
             <small>OUR TEAM MEMBERS</small>
-            <div className="lion-img lion-right" />
+            <video
+              className="fact-video fact-video-hover"
+              src="/awards-card-video.mp4"
+              muted
+              playsInline
+              preload="auto"
+              tabIndex={0}
+              aria-label="Team presentation. Hover, focus, or tap to play."
+              onMouseEnter={(event) => { void event.currentTarget.play(); }}
+              onMouseLeave={(event) => {
+                event.currentTarget.pause();
+                event.currentTarget.currentTime = 0;
+              }}
+              onFocus={(event) => { void event.currentTarget.play(); }}
+              onBlur={(event) => {
+                event.currentTarget.pause();
+                event.currentTarget.currentTime = 0;
+              }}
+              onClick={(event) => {
+                if (event.currentTarget.paused) void event.currentTarget.play();
+                else event.currentTarget.pause();
+              }}
+            />
             <strong>20+</strong><p>Different skills.<br />One standard.</p>
           </article>
         </div>
