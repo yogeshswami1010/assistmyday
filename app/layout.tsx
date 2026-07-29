@@ -7,17 +7,17 @@ const geistMono = Geist_Mono({ variable: "--font-geist-mono", subsets: ["latin"]
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://axiom-motion-studio.onirtechnology.chatgpt.site"),
-  title: "Axiom — Independent Creative Technology Studio",
+  title: "Assistmyday — Independent Creative Technology Studio",
   description: "Strategy, design and technology for ambitious digital brands.",
   openGraph: {
-    title: "Axiom — Designed to mean impact.",
+    title: "Assistmyday — Designed to mean impact.",
     description: "An independent creative technology studio.",
     type: "website",
-    images: [{ url: "/og.png", width: 1200, height: 630, alt: "Axiom — Designed to mean impact." }],
+    images: [{ url: "/og.png", width: 1200, height: 630, alt: "Assistmyday — Designed to mean impact." }],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Axiom — Designed to mean impact.",
+    title: "Assistmyday — Designed to mean impact.",
     description: "An independent creative technology studio.",
     images: ["/og.png"],
   },

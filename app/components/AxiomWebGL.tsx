@@ -476,7 +476,7 @@ export default function AxiomWebGL() {
       className="webgl-logo-stage"
       role="application"
       tabIndex={0}
-      aria-label="Interactive 3D Axiom logo. Drag to rotate. Hold to energize. Scroll to move through the mark."
+      aria-label="Interactive 3D Assistmyday logo. Drag to rotate. Hold to energize. Scroll to move through the mark."
     >
       <canvas ref={canvasRef} className="webgl-logo-canvas" />
     </div>

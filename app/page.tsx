@@ -75,7 +75,7 @@ export default function Home() {
       <div className="page-progress" />
 
       <header className="site-header">
-        <a href="#home" className="brand"><i />AXIOM<sup>®</sup></a>
+        <a href="#home" className="brand"><i />Assistmyday<sup>®</sup></a>
         <div className="head-actions">
           <button className="sound" onClick={() => setSound(!sound)} aria-label="Toggle sound">{sound ? "◖))" : "◖×"}</button>
           <a href="#contact" className="talk">LET&apos;S TALK</a>
@@ -119,7 +119,7 @@ export default function Home() {
 
       <section id="about" className="about scene-dark">
         <p className="micro left">ABOUT</p>
-        <h2>Axiom is an independent digital<br />studio crafting meaningful brand<br />experiences through strategy, design,<br />and technology.</h2>
+        <h2>Assistmyday is an independent digital<br />studio crafting meaningful brand<br />experiences through strategy, design,<br />and technology.</h2>
         <p className="about-mantra">WE DESIGN<br />FIRST. CRAFT<br />BUILT &nbsp;&nbsp; SCALE.</p>
         <div className="about-side">
           <p>Our mission is to make technology feel human by designing digital products that are intuitive, purposeful, and meaningful to people.</p>
@@ -250,7 +250,7 @@ export default function Home() {
         <div className="story-body">
           <nav><span>ARC STUDIO</span><b>VERDANT →</b><span>NORTH/ONE</span><span>CREATIVE UNIT</span><span>MONOCLE</span></nav>
           <div className="quote">
-            <h3>“Axiom is extremely reliable, professional and talented. They turn complex ideas into digital work that feels beautifully simple.”</h3>
+            <h3>“Assistmyday is extremely reliable, professional and talented. They turn complex ideas into digital work that feels beautifully simple.”</h3>
             <div className="person"><i>AM</i><p>Amelia Morgan<br /><span>Founder & CEO · USA</span></p></div>
           </div>
         </div>
@@ -272,21 +272,21 @@ export default function Home() {
       <section id="contact" className="footer scene-dark">
         <div className="footer-head">
           <p className="footer-kicker">LET&apos;S BUILD WORK THAT INSPIRES.</p>
-          <a href="mailto:hello@axiom.studio" className="footer-mail">START A PROJECT <span>↗</span></a>
+          <a href="mailto:hello@assistmyday.com" className="footer-mail">START A PROJECT <span>↗</span></a>
         </div>
         <div className="footer-hero">
           <h2>Ready to build<br /><em>something bold?</em></h2>
           <p className="footer-intro">We partner with ambitious teams to shape meaningful brands, products, and digital experiences.</p>
         </div>
         <div className="footer-meta">
-          <div className="footer-brand-lockup"><i />AXIOM<sup>®</sup></div>
+          <div className="footer-brand-lockup"><i />Assistmyday<sup>®</sup></div>
           <div className="footer-info">
-            <div><small>BUSINESS ENQUIRY</small><p><a href="mailto:hello@axiom.studio">hello@axiom.studio</a><br /><a href="tel:+919824182099">+91 98241 82099</a></p></div>
+            <div><small>BUSINESS ENQUIRY</small><p><a href="mailto:hello@assistmyday.com">hello@assistmyday.com</a><br /><a href="tel:+919824182099">+91 98241 82099</a></p></div>
             <div><small>SOCIAL</small><p>LinkedIn&nbsp;&nbsp; Instagram<br />Dribbble&nbsp;&nbsp; Facebook</p></div>
           </div>
         </div>
         <div className="footer-base">
-          <p className="copyright">© AXIOM® 2026</p>
+          <p className="copyright">© ASSISTMYDAY® 2026</p>
           <p>INDIA — WORLDWIDE</p>
           <a href="#home">BACK TO TOP <span>↑</span></a>
         </div>
