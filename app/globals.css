@@ -57,9 +57,9 @@
 .service-card-mark::before{inset:10px}.service-card-mark::after{inset:21px}
 .service-detail article:nth-child(2n) .service-card-mark{border-radius:50% 10% 50% 50%;transform:rotate(-45deg)}
 .service-detail article:nth-child(3) .service-card-mark{border-radius:18% 50% 50%;transform:rotate(135deg)}
-.detail-0{--serviceStart:.20;--serviceEnd:.45;left:6%!important;top:calc(50% - 135px)!important;bottom:auto!important;transform:translate3d(calc(var(--serviceArc)*42vw),calc(105vh - var(--serviceTravel)*210vh),0)}
-.detail-1{--serviceStart:.36;--serviceEnd:.61;right:6%!important;top:calc(50% - 135px)!important;bottom:auto!important;transform:translate3d(calc(var(--serviceArc)*-42vw),calc(-105vh + var(--serviceTravel)*210vh),0)}
-.detail-2{--serviceStart:.52;--serviceEnd:.77;left:6%!important;top:calc(50% - 135px)!important;bottom:auto!important;transform:translate3d(calc(var(--serviceArc)*42vw),calc(105vh - var(--serviceTravel)*210vh),0)}
-.detail-3{--serviceStart:.68;--serviceEnd:.93;right:6%!important;top:calc(50% - 135px)!important;bottom:auto!important;transform:translate3d(calc(var(--serviceArc)*-42vw),calc(-105vh + var(--serviceTravel)*210vh),0)}
+.detail-0{--serviceStart:.18;--serviceEnd:.43;left:6%!important;top:calc(50% - 135px)!important;bottom:auto!important;transform:translate3d(calc(var(--serviceArc)*42vw),calc(105vh - var(--serviceTravel)*210vh),0)}
+.detail-1{--serviceStart:.30;--serviceEnd:.55;right:6%!important;top:calc(50% - 135px)!important;bottom:auto!important;transform:translate3d(calc(var(--serviceArc)*-42vw),calc(-105vh + var(--serviceTravel)*210vh),0)}
+.detail-2{--serviceStart:.42;--serviceEnd:.67;left:6%!important;top:calc(50% - 135px)!important;bottom:auto!important;transform:translate3d(calc(var(--serviceArc)*42vw),calc(105vh - var(--serviceTravel)*210vh),0)}
+.detail-3{--serviceStart:.54;--serviceEnd:.79;right:6%!important;top:calc(50% - 135px)!important;bottom:auto!important;transform:translate3d(calc(var(--serviceArc)*-42vw),calc(-105vh + var(--serviceTravel)*210vh),0)}
 @media(max-width:760px){.service-detail article{top:calc(50% - 110px)!important;width:43vw!important;height:220px;padding:16px}.service-detail article h3{width:72%;font-size:18px!important}.service-detail article p{left:16px;bottom:16px;width:80%;font-size:10px!important}.service-card-mark{top:16px;right:16px;width:44px;height:44px}.service-card-mark::before{inset:6px}.service-card-mark::after{inset:13px}}
 @media(prefers-reduced-motion:reduce){*{animation:none!important;scroll-behavior:auto!important}.work-track,.floating-grid,.mantra-track,.work-card,.work-outro,.service-words span,.service-detail article{transform:none!important}.work-card,.work-outro,.service-detail article{opacity:1!important}}
