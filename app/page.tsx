@@ -37,7 +37,11 @@ export default function Home() {
         const progress = Math.abs(target - next) < 0.00025 ? target : next;
         renderedProgress.set(el, progress);
         el.style.setProperty("--p", String(progress));
-        el.style.setProperty("--shift", `${progress * -226}vw`);
+        const workProgress = el.classList.contains("work")
+          ? Math.min(1, Math.max(0, (progress - 0.14) / 0.86))
+          : progress;
+        el.style.setProperty("--workProgress", String(workProgress));
+        el.style.setProperty("--shift", `${workProgress * -226}vw`);
         el.style.setProperty("--labShift", `${(progress - 0.5) * 110}vw`);
         if (progress !== target) keepAnimating = true;
       });
