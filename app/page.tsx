@@ -270,13 +270,26 @@ export default function Home() {
       </section>
 
       <section id="contact" className="footer scene-dark">
-        <p className="footer-kicker">LET&apos;S BUILD WORK THAT INSPIRES.</p>
-        <h2>Ready to build<br />something bold?</h2>
-        <a href="mailto:hello@axiom.studio" className="collab">START A COLLABORATION <span>→</span></a>
-        <p className="copyright">©AXIOM® 2026</p>
-        <div className="footer-info"><div><small>BUSINESS ENQUIRY</small><p>E. &nbsp;hello@axiom.studio<br />P. &nbsp;+91 98241 82099</p></div><div><small>SOCIAL</small><p>Linkedin&nbsp;&nbsp;&nbsp;&nbsp; Facebook<br />Dribbble&nbsp;&nbsp;&nbsp;&nbsp; Instagram</p></div></div>
-        <p className="sound-line">SOUND ON ♫ HOVER THE LINES.</p>
-        <div className="line-logo" aria-hidden="true">{[...Array(46)].map((_, i) => <i key={i} />)}</div>
+        <div className="footer-head">
+          <p className="footer-kicker">LET&apos;S BUILD WORK THAT INSPIRES.</p>
+          <a href="mailto:hello@axiom.studio" className="footer-mail">START A PROJECT <span>↗</span></a>
+        </div>
+        <div className="footer-hero">
+          <h2>Ready to build<br /><em>something bold?</em></h2>
+          <p className="footer-intro">We partner with ambitious teams to shape meaningful brands, products, and digital experiences.</p>
+        </div>
+        <div className="footer-meta">
+          <div className="footer-brand-lockup"><i />AXIOM<sup>®</sup></div>
+          <div className="footer-info">
+            <div><small>BUSINESS ENQUIRY</small><p><a href="mailto:hello@axiom.studio">hello@axiom.studio</a><br /><a href="tel:+919824182099">+91 98241 82099</a></p></div>
+            <div><small>SOCIAL</small><p>LinkedIn&nbsp;&nbsp; Instagram<br />Dribbble&nbsp;&nbsp; Facebook</p></div>
+          </div>
+        </div>
+        <div className="footer-base">
+          <p className="copyright">© AXIOM® 2026</p>
+          <p>INDIA — WORLDWIDE</p>
+          <a href="#home">BACK TO TOP <span>↑</span></a>
+        </div>
       </section>
     </main>
   );
