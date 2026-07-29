@@ -215,6 +215,18 @@ export default function Home() {
 
       <section id="services" className="services scene-dark" data-scrollscene>
         <div className="sticky service-sticky">
+          <video
+            className="services-bg-video"
+            src="/homepage-services-video_m.mp4"
+            autoPlay
+            loop
+            muted
+            playsInline
+            preload="auto"
+            aria-hidden="true"
+            tabIndex={-1}
+          />
+          <div className="services-bg-overlay" />
           <div className="smoke smoke-one" /><div className="smoke smoke-two" />
           <p className="micro service-label">OUR SERVICES</p>
           <div className="service-words"><span>A.I.</span><span>DESIGN</span><span>DEVELOPMENT</span><span>BRANDING</span></div>
