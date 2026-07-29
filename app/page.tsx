@@ -106,8 +106,8 @@ export default function Home() {
       <section className="mantra scene-dark" data-scrollscene>
         <div className="sticky">
           <p>FOCUSED VISION.<br />MEASURED EXECUTION.</p>
-          <div className="mantra-track"><span>CREATE</span><b>＋</b><span>IMPACT</span><b>＋</b><span>INSPIRE</span><b>＋</b><span>INNOVATE</span></div>
-          <div className="wipe-bars"><i /><i /><i /><i /></div>
+          <div className="mantra-track"><span>CREATE</span><b>＋</b><span>IMPACT</span><b>＋</b><span>INSPIRE</span></div>
+          <div className="wipe-bars"><i /><i /><i /><i /><i /></div>
         </div>
       </section>
 
