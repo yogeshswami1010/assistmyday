@@ -14,14 +14,6 @@ type LogoPiece = {
   spin: THREE.Vector3;
 };
 
-type LogoLayer = {
-  group: THREE.Group;
-  materials: THREE.MeshPhysicalMaterial[];
-  edgeMaterials: THREE.LineBasicMaterial[];
-  direction: THREE.Vector3;
-  spin: THREE.Vector3;
-};
-
 const clamp01 = (value: number) => Math.min(1, Math.max(0, value));
 const smooth = (value: number) => {
   const t = clamp01(value);
@@ -151,56 +143,6 @@ export default function AxiomWebGL() {
       });
     }
     mark.add(ghostMark);
-
-    // These are complete copies of the A. They peel away as intact layers on scroll.
-    const logoLayers: LogoLayer[] = [];
-    for (let layer = 0; layer < 8; layer += 1) {
-      const group = new THREE.Group();
-      const materials: THREE.MeshPhysicalMaterial[] = [];
-      const edgeMaterials: THREE.LineBasicMaterial[] = [];
-      pieces.slice(0, 6).forEach((piece) => {
-        const material = new THREE.MeshPhysicalMaterial({
-          color: 0x1f2125,
-          metalness: 0.94,
-          roughness: 0.28,
-          emissive: layer % 5 === 0 ? 0x120501 : 0x010204,
-          emissiveIntensity: 0.32,
-          transparent: true,
-          opacity: 0,
-          depthWrite: false,
-        });
-        const mesh = new THREE.Mesh(piece.mesh.geometry, material);
-        mesh.position.copy(piece.base);
-        mesh.rotation.z = piece.rotationZ;
-        const edgeMaterial = new THREE.LineBasicMaterial({
-          color: layer % 3 === 0 ? 0x4b5360 : 0x2a3039,
-          transparent: true,
-          opacity: 0,
-          depthWrite: false,
-        });
-        mesh.add(new THREE.LineSegments(new THREE.EdgesGeometry(piece.mesh.geometry, 32), edgeMaterial));
-        group.add(mesh);
-        materials.push(material);
-        edgeMaterials.push(edgeMaterial);
-      });
-      const signed = layer - 3.5;
-      logoLayers.push({
-        group,
-        materials,
-        edgeMaterials,
-        direction: new THREE.Vector3(
-          signed * 1.28,
-          Math.sin(layer * 1.72) * (2.1 + Math.abs(signed) * 0.35),
-          signed * 1.55 + (layer % 2 ? 1.7 : -1.2),
-        ),
-        spin: new THREE.Vector3(
-          (layer % 2 ? 1 : -1) * (0.12 + layer * 0.018),
-          signed * 0.12,
-          (layer % 3 - 1) * 0.16,
-        ),
-      });
-      mark.add(group);
-    }
 
     const random = seededRandom(4129);
     for (let index = 0; index < 44; index += 1) {
@@ -445,56 +387,26 @@ export default function AxiomWebGL() {
       mark.scale.setScalar(0.62 + intro * 0.34 + scrollProgress * 0.12 + flyThrough * 0.52);
 
       pieces.forEach((piece, index) => {
-        const isLogoPiece = index < 6;
         const pulse = 1 + blast * (0.1 + (index % 4) * 0.035);
-        const introDistance = isLogoPiece ? -0.82 : -0.42;
-        const scrollScatter = isLogoPiece ? 0 : explode * pulse;
-        const rotationProgress = isLogoPiece
-          ? assembly * 0.86
-          : explode + assembly * 0.86;
+        const introDistance = index < 6 ? -0.82 : -0.42;
         piece.mesh.position
           .copy(piece.base)
-          .addScaledVector(piece.scatter, scrollScatter)
+          .addScaledVector(piece.scatter, explode * pulse)
           .addScaledVector(piece.scatter, assembly * introDistance);
         piece.mesh.position.z += flyThrough * (3.5 + (index % 5) * 0.58);
         piece.mesh.rotation.set(
-          piece.spin.x * rotationProgress + Math.sin(elapsed + index) * blast * 0.12,
-          piece.spin.y * rotationProgress,
-          piece.rotationZ + piece.spin.z * rotationProgress,
+          piece.spin.x * (explode + assembly * 0.86) + Math.sin(elapsed + index) * blast * 0.12,
+          piece.spin.y * (explode + assembly * 0.86),
+          piece.rotationZ + piece.spin.z * (explode + assembly * 0.86),
         );
         piece.mesh.material.opacity =
           visibility *
-          (isLogoPiece
-            ? (0.08 + intro * 0.92) * (1 - smooth(explode / 0.34))
-            : 0.06 + assembly * 0.42 + explode * 0.72);
+          (index > 5
+            ? 0.06 + assembly * 0.42 + explode * 0.72
+            : 0.08 + intro * 0.92);
         piece.mesh.material.emissiveIntensity = 0.42 + blast * 1.65;
         const edge = piece.mesh.children[0] as THREE.LineSegments<THREE.EdgesGeometry, THREE.LineBasicMaterial>;
-        if (edge?.material) {
-          edge.material.opacity =
-            visibility *
-            intro *
-            (0.16 + blast * 0.4) *
-            (isLogoPiece ? 1 - smooth(explode / 0.34) : 1);
-        }
-      });
-
-      logoLayers.forEach((layer, index) => {
-        const delay = index * 0.035;
-        const peel = smooth((explode - delay) / Math.max(1 - delay, 0.01));
-        layer.group.position.copy(layer.direction).multiplyScalar(peel);
-        layer.group.position.z += flyThrough * (2.2 + index * 0.65);
-        layer.group.rotation.set(
-          layer.spin.x * peel,
-          layer.spin.y * peel,
-          layer.spin.z * peel,
-        );
-        layer.group.scale.setScalar(1 + peel * (0.025 + index * 0.008));
-        layer.materials.forEach((material) => {
-          material.opacity = visibility * peel * (0.08 + (index % 3) * 0.025);
-        });
-        layer.edgeMaterials.forEach((material) => {
-          material.opacity = visibility * peel * (0.12 + (index % 2) * 0.06);
-        });
+        if (edge?.material) edge.material.opacity = visibility * intro * (0.16 + blast * 0.4);
       });
 
       ghostMaterials.forEach((material, index) => {
