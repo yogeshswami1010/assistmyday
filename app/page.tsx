@@ -232,7 +232,13 @@ export default function Home() {
           <div className="service-words"><span>A.I.</span><span>DESIGN</span><span>DEVELOPMENT</span><span>BRANDING</span></div>
           <div className="stone"><i /><i /><i /></div>
           <div className="service-detail">
-            {services.map((s, i) => <article key={s[0]} className={`detail-${i}`}><h3>{s[0]}</h3><p>{s[1]}</p></article>)}
+            {services.map((s, i) => (
+              <article key={s[0]} className={`detail-${i}`}>
+                <h3>{s[0]}</h3>
+                <i className="service-card-mark" aria-hidden="true" />
+                <p>{s[1]}</p>
+              </article>
+            ))}
           </div>
           <p className="discipline">✦ DIFFERENT DISCIPLINES. ONE STANDARD OF CRAFT.</p>
           <a className="view-services" href="#stories">VIEW SERVICES <span>→</span></a>
