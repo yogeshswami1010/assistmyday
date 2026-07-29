@@ -1,11 +1,12 @@
 @import "tailwindcss";
 
 .hero{height:500vh!important;min-height:3300px!important}
-.hero-about{position:relative;isolation:isolate;background:var(--dark)}
+.hero-about{position:relative;isolation:isolate;background:#08090b}
 .hero-canvas-shell{position:absolute;z-index:1;inset:0;pointer-events:none}
 .hero-about>.hero,.hero-about>.about{z-index:2;background:transparent!important;pointer-events:none}
 .hero-about a,.hero-about button{pointer-events:auto}
 .hero-3d{pointer-events:none!important}
+.hero-3d-glow,.hero .grain{display:none}
 .webgl-logo-stage{position:sticky;z-index:0;top:0;width:100%;height:100vh;overflow:hidden;cursor:grab;touch-action:none;outline:none;will-change:opacity;pointer-events:auto}
 .webgl-logo-stage:active{cursor:grabbing}
 .webgl-logo-stage:focus-visible{box-shadow:inset 0 0 0 1px rgba(143,190,255,.45)}
