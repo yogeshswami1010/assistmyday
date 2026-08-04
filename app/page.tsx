@@ -58,44 +58,55 @@ export default function Home() {
         if (el.classList.contains("motion-lab")) {
           const cards = el.querySelectorAll<HTMLElement>(".portfolio-lab-card");
           const mobile = innerWidth <= 760;
-          const columns = mobile ? 2 : 4;
+          const columns = mobile ? 2 : 3;
           const gap = mobile ? 10 : 18;
           const cardWidth = mobile
             ? innerWidth * 0.43
-            : Math.min(360, Math.max(260, innerWidth * 0.22));
+            : Math.min(350, Math.max(250, innerWidth * 0.24));
           const cardHeight = mobile
             ? innerWidth * 0.25
-            : Math.min(220, Math.max(165, innerWidth * 0.13));
+            : cardWidth * 0.56;
           const rows = Math.ceil(cards.length / columns);
           const gridWidth = columns * cardWidth + (columns - 1) * gap;
           const gridHeight = rows * cardHeight + (rows - 1) * gap;
           const gridStartX = (innerWidth - gridWidth) / 2;
           const gridStartY = (innerHeight - gridHeight) / 2;
-          const rawAssemble = Math.min(1, Math.max(0, (progress - 0.04) / 0.42));
+          const trainPhase = Math.min(1, Math.max(0, progress / 0.28));
+          const trainOffset = -0.1 + trainPhase * 0.24;
+          const rawAssemble = Math.min(1, Math.max(0, (progress - 0.28) / 0.32));
           const assemble = 1 - Math.pow(1 - rawAssemble, 3);
 
           cards.forEach((card, index) => {
-            const curve = cards.length > 1 ? index / (cards.length - 1) : 0;
-            const startX = mobile
-              ? innerWidth * (-0.3 + curve * 1.35)
-              : innerWidth * (-0.09 + curve * 1.03);
-            const startY = mobile
-              ? innerHeight * (0.28 - Math.sin(curve * Math.PI) * 0.15)
-              : innerHeight * (0.31 - Math.sin(curve * Math.PI) * 0.25);
-            const startScale = mobile ? 1.16 - curve * 0.4 : 1.48 - curve * 0.93;
-            const startRotation = 11 - curve * 20;
-            const startTilt = mobile ? 8 - curve * 12 : 13 - curve * 20;
-            const startZ = mobile ? 80 - curve * 120 : 220 - curve * 300;
+            const spacing = cards.length > 1 ? index / (cards.length - 1) : 0;
+            const pathT = spacing * 0.88 + trainOffset;
+            const inverseT = 1 - pathT;
+            const p0x = innerWidth * -0.2;
+            const p0y = innerHeight * 1.08;
+            const p1x = innerWidth * 0.03;
+            const p1y = innerHeight * -0.26;
+            const p2x = innerWidth * 1.16;
+            const p2y = innerHeight * 0.06;
+            const trainCenterX = inverseT * inverseT * p0x + 2 * inverseT * pathT * p1x + pathT * pathT * p2x;
+            const trainCenterY = inverseT * inverseT * p0y + 2 * inverseT * pathT * p1y + pathT * pathT * p2y;
+            const visibleT = Math.min(1, Math.max(0, pathT));
+            const trainX = trainCenterX - cardWidth / 2;
+            const trainY = trainCenterY - cardHeight / 2;
+            const trainScale = mobile ? 1.1 - visibleT * 0.3 : 1.35 - visibleT * 0.65;
+            const trainRotation = 10 - visibleT * 18;
+            const trainTilt = mobile ? 8 - visibleT * 12 : 13 - visibleT * 20;
+            const trainZ = mobile ? 90 - visibleT * 150 : 240 - visibleT * 330;
             const column = index % columns;
             const row = Math.floor(index / columns);
-            const endX = gridStartX + column * (cardWidth + gap);
+            const rowCount = Math.min(columns, cards.length - row * columns);
+            const rowOffset = (columns - rowCount) * (cardWidth + gap) / 2;
+            const endX = gridStartX + rowOffset + column * (cardWidth + gap);
             const endY = gridStartY + row * (cardHeight + gap);
-            const x = startX + (endX - startX) * assemble;
-            const y = startY + (endY - startY) * assemble;
-            const scale = startScale + (1 - startScale) * assemble;
-            const rotation = startRotation * (1 - assemble);
-            const tilt = startTilt * (1 - assemble);
-            const z = startZ * (1 - assemble);
+            const x = trainX + (endX - trainX) * assemble;
+            const y = trainY + (endY - trainY) * assemble;
+            const scale = trainScale + (1 - trainScale) * assemble;
+            const rotation = trainRotation * (1 - assemble);
+            const tilt = trainTilt * (1 - assemble);
+            const z = trainZ * (1 - assemble);
 
             card.style.width = `${cardWidth}px`;
             card.style.height = `${cardHeight}px`;
