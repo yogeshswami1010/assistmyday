@@ -17,6 +17,17 @@ const services = [
   ["Social Media", "Consistent content and channel management that builds visibility, engagement, and lasting customer relationships."],
 ];
 
+const portfolio = [
+  { title: "Signarama Brampton", category: "Web design & development", image: "/portfolio-signarama-home.webp" },
+  { title: "Signarama Toronto", category: "Content-led business website", image: "/portfolio-signarama-about.webp" },
+  { title: "Rio Immigration", category: "Immigration consultancy platform", image: "/portfolio-rio-immigration.webp" },
+  { title: "Consortium Staffing", category: "Recruitment website", image: "/portfolio-consortium-staffing.webp" },
+  { title: "The Burke Group", category: "Executive search experience", image: "/portfolio-burke-group.webp" },
+  { title: "AMD Studios", category: "Photography studio website", image: "/portfolio-amd-studios.webp" },
+  { title: "GeoSolar", category: "Sustainable energy website", image: "/portfolio-geosolar.webp" },
+  { title: "Vishal Bangarh", category: "Real estate digital presence", image: "/portfolio-vishal-bangarh.webp" },
+];
+
 export default function Home() {
   const [menu, setMenu] = useState(false);
   const [sound, setSound] = useState(false);
@@ -258,6 +269,38 @@ export default function Home() {
           </div>
         </div>
         <div className="story-actions"><div><button>←</button><button>→</button></div><a href="#contact">BECOME A CLIENT <span>→</span></a></div>
+      </section>
+
+      <section id="portfolio" className="portfolio scene-dark">
+        <div className="portfolio-head">
+          <div>
+            <p className="micro">SELECTED PORTFOLIO / 2026</p>
+            <h2>Digital work made<br /><em>to move business.</em></h2>
+          </div>
+          <p>Websites created across service, recruitment, immigration, photography, sustainability, and real estate.</p>
+        </div>
+        <div className="portfolio-grid">
+          {portfolio.map((project, index) => (
+            <article className="portfolio-card" key={`${project.title}-${index}`}>
+              <div className="portfolio-shot">
+                <Image
+                  src={project.image}
+                  alt={`${project.title} website project`}
+                  width={1904}
+                  height={870}
+                  unoptimized
+                  sizes="(max-width: 760px) 100vw, 50vw"
+                />
+                <span>VIEW PROJECT ↗</span>
+              </div>
+              <div className="portfolio-caption">
+                <h3>{project.title}</h3>
+                <p>{project.category}</p>
+                <small>{String(index + 1).padStart(2, "0")}</small>
+              </div>
+            </article>
+          ))}
+        </div>
       </section>
 
       <section className="motion-lab scene-light" data-scrollscene>
