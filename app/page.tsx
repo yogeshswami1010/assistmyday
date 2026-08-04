@@ -77,7 +77,7 @@ export default function Home() {
 
       <header className="site-header">
         <a href="#home" className="brand" aria-label="Assistmyday home">
-          <Image src="/assistmyday-logo.webp" alt="Assistmyday" width={1827} height={444} priority className="brand-logo" />
+          <Image src="/assistmyday-logo.webp" alt="Assistmyday" width={1827} height={444} priority unoptimized className="brand-logo" />
         </a>
         <div className="head-actions">
           <button className="sound" onClick={() => setSound(!sound)} aria-label="Toggle sound">{sound ? "◖))" : "◖×"}</button>
@@ -282,7 +282,7 @@ export default function Home() {
           <p className="footer-intro">Tell us what is slowing your business down. We&apos;ll shape a flexible digital solution around your team, audience, and goals.</p>
         </div>
         <div className="footer-meta">
-          <div className="footer-brand-lockup"><Image src="/assistmyday-logo.webp" alt="Assistmyday" width={1827} height={444} className="footer-logo" /></div>
+          <div className="footer-brand-lockup"><Image src="/assistmyday-logo.webp" alt="Assistmyday" width={1827} height={444} unoptimized className="footer-logo" /></div>
           <div className="footer-info">
             <div><small>CALL ANYTIME</small><p><a href="tel:+19053748878">+1 (905) 374-8878</a><br />St. Catharines, Ontario</p></div>
             <div><small>VISIT US</small><p>110 James St, Suite 411<br />St. Catharines, ON L2R 7E8</p></div>
