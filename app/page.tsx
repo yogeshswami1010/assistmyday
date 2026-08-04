@@ -271,46 +271,30 @@ export default function Home() {
         <div className="story-actions"><div><button>←</button><button>→</button></div><a href="#contact">BECOME A CLIENT <span>→</span></a></div>
       </section>
 
-      <section id="portfolio" className="portfolio scene-dark">
-        <div className="portfolio-head">
-          <div>
-            <p className="micro">SELECTED PORTFOLIO / 2026</p>
-            <h2>Digital work made<br /><em>to move business.</em></h2>
-          </div>
-          <p>Websites created across service, recruitment, immigration, photography, sustainability, and real estate.</p>
-        </div>
-        <div className="portfolio-grid">
-          {portfolio.map((project, index) => (
-            <article className="portfolio-card" key={`${project.title}-${index}`}>
-              <div className="portfolio-shot">
+      <section className="motion-lab scene-light" data-scrollscene>
+        <div className="sticky lab-sticky">
+          <h2 className="design-in">YOUR DAY</h2><h2 className="motion-word">ASSISTED</h2>
+          <p className="lab-center">SELECTED DIGITAL WORK FOR<br />AMBITIOUS BUSINESSES.</p>
+          <p className="lab-copy">Web design, development, strategy,<br />marketing, and digital growth.</p>
+          <a href="#contact" className="lab-link">TALK TO OUR TEAM <span>→</span></a>
+          <div className="floating-grid portfolio-lab-grid">
+            {portfolio.map((project, index) => (
+              <article className="lab-card portfolio-lab-card" key={`${project.title}-${index}`}>
                 <Image
                   src={project.image}
                   alt={`${project.title} website project`}
                   width={1904}
                   height={870}
                   unoptimized
-                  sizes="(max-width: 760px) 100vw, 50vw"
+                  sizes="(max-width: 760px) 76vw, 25vw"
                 />
-                <span>VIEW PROJECT ↗</span>
-              </div>
-              <div className="portfolio-caption">
-                <h3>{project.title}</h3>
-                <p>{project.category}</p>
-                <small>{String(index + 1).padStart(2, "0")}</small>
-              </div>
-            </article>
-          ))}
-        </div>
-      </section>
-
-      <section className="motion-lab scene-light" data-scrollscene>
-        <div className="sticky lab-sticky">
-          <h2 className="design-in">YOUR DAY</h2><h2 className="motion-word">ASSISTED</h2>
-          <p className="lab-center">SPECIALIZED SUPPORT FOR<br />THE WAY YOUR BUSINESS WORKS.</p>
-          <p className="lab-copy">Transportation, trades, real estate,<br />law, finance, healthcare, retail,<br />fitness, and more.</p>
-          <a href="#contact" className="lab-link">TALK TO OUR TEAM <span>→</span></a>
-          <div className="floating-grid">
-            {[["editorial","LOGISTICS"],["fashion","TRADES"],["culture","REAL ESTATE"],["watch","LAW"],["future","FINANCE"],["pink","HEALTHCARE"]].map(([kind, label], i) => <div className={`lab-card ${kind}`} key={kind}><small>0{i + 1}</small><b>{label}</b><i /></div>)}
+                <div className="portfolio-lab-caption">
+                  <small>{String(index + 1).padStart(2, "0")}</small>
+                  <b>{project.title}</b>
+                  <span>{project.category}</span>
+                </div>
+              </article>
+            ))}
           </div>
         </div>
       </section>
