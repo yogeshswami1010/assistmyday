@@ -5,27 +5,27 @@ import Image from "next/image";
 import AxiomWebGL from "./components/AxiomWebGL";
 
 const work = [
-  { title: "Transportation & Logistics", copy: "Digital systems that keep operations visible, responsive, and moving forward.", kind: "tower" },
-  { title: "Trades & Services", copy: "Clear websites and campaigns designed to turn local demand into qualified leads.", kind: "music" },
-  { title: "Real Estate", copy: "High-impact digital experiences that help properties and professionals stand out.", kind: "house" },
+  { title: "Custom Software Platforms", copy: "Purpose-built portals, dashboards, and workflow systems that simplify operations and support growth.", kind: "tower" },
+  { title: "High-Performance Websites", copy: "Conversion-focused websites and commerce experiences engineered for speed, clarity, and measurable action.", kind: "music" },
+  { title: "Growth Marketing Systems", copy: "Connected SEO, paid media, content, and analytics programs that turn attention into qualified demand.", kind: "house" },
 ];
 
 const services = [
-  ["Website Development", "Fast, functional, SEO-ready websites and applications designed to convert and grow with your business."],
-  ["Marketing & Sales", "Data-informed campaigns, audience targeting, and local growth strategies focused on measurable results."],
-  ["Graphic Designing", "Professional logos, social graphics, website visuals, and marketing collateral that strengthen your identity."],
-  ["Social Media", "Consistent content and channel management that builds visibility, engagement, and lasting customer relationships."],
+  ["Custom Software Development", "Scalable web applications, business portals, API integrations, and automation built around real operational needs."],
+  ["Web & E-commerce", "Fast, accessible, SEO-ready websites and commerce platforms designed to convert and evolve with your business."],
+  ["Performance Marketing", "Search, paid media, conversion optimization, and analytics connected to a clear growth strategy."],
+  ["Brand, Content & Social", "Distinctive identities and channel-ready content that build recognition, trust, and lasting audience engagement."],
 ];
 
 const portfolio = [
-  { title: "Signarama Brampton", category: "Web design & development", image: "/portfolio-signarama-home.webp" },
-  { title: "Signarama Toronto", category: "Content-led business website", image: "/portfolio-signarama-about.webp" },
-  { title: "Rio Immigration", category: "Immigration consultancy platform", image: "/portfolio-rio-immigration.webp" },
-  { title: "Consortium Staffing", category: "Recruitment website", image: "/portfolio-consortium-staffing.webp" },
-  { title: "The Burke Group", category: "Executive search experience", image: "/portfolio-burke-group.webp" },
-  { title: "AMD Studios", category: "Photography studio website", image: "/portfolio-amd-studios.webp" },
-  { title: "GeoSolar", category: "Sustainable energy website", image: "/portfolio-geosolar.webp" },
-  { title: "Vishal Bangarh", category: "Real estate digital presence", image: "/portfolio-vishal-bangarh.webp" },
+  { title: "Signarama Brampton", category: "Lead-generation website", image: "/portfolio-signarama-home.webp" },
+  { title: "Signarama Toronto", category: "SEO & content experience", image: "/portfolio-signarama-about.webp" },
+  { title: "Rio Immigration", category: "Consultancy web platform", image: "/portfolio-rio-immigration.webp" },
+  { title: "Consortium Staffing", category: "Recruitment platform", image: "/portfolio-consortium-staffing.webp" },
+  { title: "The Burke Group", category: "Executive search brand platform", image: "/portfolio-burke-group.webp" },
+  { title: "AMD Studios", category: "Conversion-focused studio website", image: "/portfolio-amd-studios.webp" },
+  { title: "GeoSolar", category: "Sustainability marketing website", image: "/portfolio-geosolar.webp" },
+  { title: "Vishal Bangarh", category: "Real estate lead generation", image: "/portfolio-vishal-bangarh.webp" },
 ];
 
 export default function Home() {
@@ -103,7 +103,7 @@ export default function Home() {
             <a href={`#${n.toLowerCase()}`} onClick={() => setMenu(false)} key={n}><small>0{i + 1}</small><span>{n}</span><b>↗</b></a>
           ))}
         </nav>
-        <p>DIGITAL GROWTH PARTNER<br />ST. CATHARINES — CANADA</p>
+        <p>DIGITAL MARKETING + SOFTWARE DEVELOPMENT<br />ST. CATHARINES — CANADA</p>
       </aside>
 
       <div className="hero-about scene-dark">
@@ -119,25 +119,25 @@ export default function Home() {
             <div className="hero-scanlines" />
           </div>
           <div className="hero-lines"><i /><i /><i /><i /><i /><i /><i /></div>
-          <div className="hero-title"><h1>Flexible assistance.</h1><h1>Real <em>business growth.</em></h1></div>
+          <div className="hero-title"><h1>Software that scales.</h1><h1>Marketing that <em>converts.</em></h1></div>
           <div className="hero-status">
             <div className="est"><span>◎</span><small>ST. CATHARINES</small></div>
-            <p>Website development, marketing, graphic design,<br />and social media support built around your goals.</p>
+            <p>Custom software, high-performance websites, and<br />full-funnel digital marketing built around your growth.</p>
           </div>
           <p className="blast">HOLD TO <b>✹</b> BLAST<br /><span>DRAG&nbsp; ⚡ &nbsp;TO ROTATE THE MARK.</span></p>
           <div className="hero-finale">
-            <span>CREATE</span><i>＋</i><span>CONNECT</span><i>＋</i><span>GROW</span>
+            <span>STRATEGY</span><i>＋</i><span>SOFTWARE</span><i>＋</i><span>GROWTH</span>
           </div>
         </div>
       </section>
 
       <section id="about" className="about scene-dark">
         <p className="micro left">ABOUT</p>
-        <h2>Your trusted partner in digital<br />marketing and business growth—<br />building tailored solutions around<br />your unique needs.</h2>
-        <p className="about-mantra">YOUR TEAM.<br />YOUR GOALS.<br />OUR SUPPORT.</p>
+        <h2>We build digital products and<br />growth engines that help ambitious<br />companies operate smarter, reach<br />further, and scale with confidence.</h2>
+        <p className="about-mantra">CODE.<br />CAMPAIGNS.<br />RESULTS.</p>
         <div className="about-side">
-          <p>Our team combines website development, innovative marketing strategies, graphic design, and social media management so you can focus on your core business while we drive your digital success.</p>
-          <a href="#facts">MORE ABOUT US <span>→</span></a>
+          <p>From product strategy and UX to software engineering, SEO, paid media, and content, our integrated team connects every part of your digital growth journey.</p>
+          <a href="#facts">HOW WE WORK <span>→</span></a>
         </div>
         <div className="fragment fragment-a" /><div className="fragment fragment-b" /><div className="fragment fragment-c" />
       </section>
@@ -145,17 +145,17 @@ export default function Home() {
 
       <section className="mantra scene-dark" data-scrollscene>
         <div className="sticky">
-          <p>FLEXIBLE SUPPORT.<br />MEASURABLE GROWTH.</p>
-          <div className="mantra-track"><span>BUILD</span><b>＋</b><span>MARKET</span><b>＋</b><span>GROW</span></div>
+          <p>ONE PARTNER.<br />FROM IDEA TO IMPACT.</p>
+          <div className="mantra-track"><span>DISCOVER</span><b>＋</b><span>BUILD</span><b>＋</b><span>SCALE</span></div>
           <div className="wipe-bars"><i /><i /><i /><i /><i /></div>
         </div>
       </section>
 
       <section id="facts" className="facts scene-light">
-        <div className="facts-title"><h2>Support that<br />moves business.</h2><p>Practical expertise.<br />Flexible partnership.</p></div>
+        <div className="facts-title"><h2>One team.<br />Every digital layer.</h2><p>Strategy to launch.<br />Traffic to revenue.</p></div>
         <div className="cards">
           <article className="fact award">
-            <small>CLIENTS SUPPORTED</small>
+            <small>FULL-FUNNEL GROWTH</small>
             <video
               className="fact-video fact-video-loop"
               src="/awards-card-video.mp4"
@@ -166,16 +166,16 @@ export default function Home() {
               preload="auto"
               aria-label="Featured and awards presentation"
             />
-            <b className="w-dot">A.</b><strong>15K+</strong>
-            <p>Businesses supported<br />across global markets.</p>
+            <b className="w-dot">A.</b><strong>360°</strong>
+            <p>Brand, content, search, paid media,<br />conversion, and analytics.</p>
           </article>
           <article className="fact projects">
-            <small>CORE DIGITAL SERVICES</small>
-            <div className="count-circle">04<sup>+</sup></div>
-            <p>One connected team for your<br />complete digital presence.</p>
+            <small>CONNECTED CAPABILITIES</small>
+            <div className="count-circle">08<sup>+</sup></div>
+            <p>Product, engineering, marketing,<br />creative, and optimization.</p>
           </article>
           <article className="fact team">
-            <small>LOCAL DIGITAL PARTNER</small>
+            <small>DELIVERY MODEL</small>
             <video
               className="fact-video fact-video-hover"
               src="/rushi.mp4"
@@ -199,30 +199,30 @@ export default function Home() {
                 else event.currentTarget.pause();
               }}
             />
-            <strong>ON</strong><p>St. Catharines expertise.<br />Business-first thinking.</p>
+            <strong>AGILE</strong><p>Senior thinking, clear milestones,<br />and continuous improvement.</p>
           </article>
         </div>
-        <div className="partners"><p>WHO WE SERVE</p><div><b>LOGISTICS</b><b>TRADES</b><b>REAL ESTATE</b><b>HEALTHCARE</b><b>RETAIL</b></div></div>
+        <div className="partners"><p>WHAT WE BUILD</p><div><b>WEBSITES</b><b>WEB APPS</b><b>AUTOMATION</b><b>ECOMMERCE</b><b>CAMPAIGNS</b></div></div>
       </section>
 
       <section id="work" className="work scene-light" data-scrollscene>
         <div className="sticky work-sticky">
           <div className="work-track">
             <div className="work-intro">
-              <h2>Industries we help<br />move forward</h2>
+              <h2>Digital systems built<br />for momentum</h2>
               <a href="#services">EXPLORE SERVICES <span>→</span></a>
             </div>
             {work.map((item) => (
               <article className="work-card" key={item.title}>
                 <div className={`project-visual ${item.kind}`}>
-                  {item.kind === "tower" && <><div className="sun" /><div className="mega-tower" /><strong>Move smarter.</strong><small>TRANSPORTATION<br />& LOGISTICS</small></>}
-                  {item.kind === "music" && <><div className="red-beam" /><div className="artist">↗</div><strong>Local demand.<br />Real growth.</strong></>}
-                  {item.kind === "house" && <><div className="villa" /><strong>BE SEEN.<br />BE CHOSEN.</strong><small>REAL ESTATE<br />GROWTH</small></>}
+                  {item.kind === "tower" && <><div className="sun" /><div className="mega-tower" /><strong>Work smarter.</strong><small>SOFTWARE<br />PLATFORMS</small></>}
+                  {item.kind === "music" && <><div className="red-beam" /><div className="artist">↗</div><strong>Fast journeys.<br />More action.</strong></>}
+                  {item.kind === "house" && <><div className="villa" /><strong>BE FOUND.<br />BE CHOSEN.</strong><small>GROWTH<br />MARKETING</small></>}
                 </div>
-                <div className="work-meta"><div><h3>{item.title}</h3><p>{item.copy}</p></div><a href="#contact">EXPLORE PROJECT <span>→</span></a></div>
+                <div className="work-meta"><div><h3>{item.title}</h3><p>{item.copy}</p></div><a href="#contact">START A PROJECT <span>→</span></a></div>
               </article>
             ))}
-            <div className="work-outro"><h3>From healthcare and finance to retail and fitness, we adapt our digital support to the way your industry works.</h3><a href="#services">VIEW SERVICES <span>→</span></a></div>
+            <div className="work-outro"><h3>From a first campaign to a business-critical platform, we create the digital foundation for your next stage of growth.</h3><a href="#services">VIEW SERVICES <span>→</span></a></div>
           </div>
         </div>
       </section>
@@ -243,7 +243,7 @@ export default function Home() {
           <div className="services-bg-overlay" />
           <div className="smoke smoke-one" /><div className="smoke smoke-two" />
           <p className="micro service-label">OUR SERVICES</p>
-          <div className="service-words"><span>WEBSITES</span><span>MARKETING</span><span>DESIGN</span><span>SOCIAL</span></div>
+          <div className="service-words"><span>SOFTWARE</span><span>WEBSITES</span><span>MARKETING</span><span>CREATIVE</span></div>
           <div className="stone"><i /><i /><i /></div>
           <div className="service-detail">
             {services.map((s, i) => (
@@ -254,18 +254,18 @@ export default function Home() {
               </article>
             ))}
           </div>
-          <p className="discipline">✦ FOUR CORE SERVICES. ONE FLEXIBLE PARTNER.</p>
+          <p className="discipline">✦ STRATEGY, DESIGN, ENGINEERING, AND GROWTH. ONE TEAM.</p>
           <a className="view-services" href="#stories">VIEW SERVICES <span>→</span></a>
         </div>
       </section>
 
       <section id="stories" className="stories scene-light">
-        <div className="story-head"><h2>Client feedback</h2><p>Responsive support that gives clients more time to focus on what matters.</p></div>
+        <div className="story-head"><h2>Built for measurable growth</h2><p>Integrated teams, clear communication, and outcomes that move the business forward.</p></div>
         <div className="story-body">
-          <nav><b>BUSINESS SUPPORT →</b><span>WEB DEVELOPMENT</span><span>MARKETING</span><span>GRAPHIC DESIGN</span><span>SOCIAL MEDIA</span></nav>
+          <nav><b>OUR EXPERTISE →</b><span>SOFTWARE DEVELOPMENT</span><span>WEB PLATFORMS</span><span>PERFORMANCE MARKETING</span><span>UI/UX DESIGN</span><span>AUTOMATION</span></nav>
           <div className="quote">
-            <h3>“AssistMyDay has completely changed my work-life balance. Their responsive and professional crew ensures that my chores are completed, allowing me to spend more time enjoying life outside of work.”</h3>
-            <div className="person"><i>LJ</i><p>Lisa Johnson<br /><span>Assistmyday client</span></p></div>
+            <h3>“Assistmyday gave us one accountable team for our platform and our marketing. The result is a stronger digital presence, a smoother customer journey, and a clearer path to growth.”</h3>
+            <div className="person"><i>GP</i><p>Growth Partner<br /><span>Assistmyday client</span></p></div>
           </div>
         </div>
         <div className="story-actions"><div><button>←</button><button>→</button></div><a href="#contact">BECOME A CLIENT <span>→</span></a></div>
@@ -273,9 +273,9 @@ export default function Home() {
 
       <section className="motion-lab scene-light" data-scrollscene>
         <div className="sticky lab-sticky">
-          <h2 className="design-in">YOUR DAY</h2><h2 className="motion-word">ASSISTED</h2>
-          <p className="lab-center">SELECTED DIGITAL WORK FOR<br />AMBITIOUS BUSINESSES.</p>
-          <p className="lab-copy">Web design, development, strategy,<br />marketing, and digital growth.</p>
+          <h2 className="design-in">DIGITAL</h2><h2 className="motion-word">DELIVERED</h2>
+          <p className="lab-center">SELECTED SOFTWARE AND MARKETING WORK<br />FOR AMBITIOUS BUSINESSES.</p>
+          <p className="lab-copy">Software, web platforms, strategy,<br />creative, campaigns, and growth.</p>
           <a href="#contact" className="lab-link">TALK TO OUR TEAM <span>→</span></a>
           <div className="floating-grid portfolio-lab-grid">
             {portfolio.map((project, index) => (
@@ -301,12 +301,12 @@ export default function Home() {
 
       <section id="contact" className="footer scene-dark">
         <div className="footer-head">
-          <p className="footer-kicker">LET&apos;S BUILD WORK THAT INSPIRES.</p>
+          <p className="footer-kicker">BUILD THE PRODUCT. GROW THE AUDIENCE.</p>
           <a href="https://assistmyday.com/contact-us/" className="footer-mail">START A PROJECT <span>↗</span></a>
         </div>
         <div className="footer-hero">
-          <h2>Ready to build<br /><em>something bold?</em></h2>
-          <p className="footer-intro">Tell us what is slowing your business down. We&apos;ll shape a flexible digital solution around your team, audience, and goals.</p>
+          <h2>Ready to create<br /><em>your digital advantage?</em></h2>
+          <p className="footer-intro">Bring us the growth target, the product idea, or the operational bottleneck. We&apos;ll turn it into a focused digital roadmap and build it with you.</p>
         </div>
         <div className="footer-meta">
           <div className="footer-brand-lockup"><Image src="/assistmyday-logo.webp" alt="Assistmyday" width={1827} height={444} unoptimized className="footer-logo" /></div>

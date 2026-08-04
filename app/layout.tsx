@@ -7,19 +7,19 @@ const geistMono = Geist_Mono({ variable: "--font-geist-mono", subsets: ["latin"]
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://axiom-motion-studio.onirtechnology.chatgpt.site"),
-  title: "Assistmyday — Digital Marketing & Business Growth",
-  description: "Website development, marketing, graphic design, and social media support for growing businesses.",
+  title: "Assistmyday — Digital Marketing & Software Development",
+  description: "Custom software, high-performance websites, automation, and full-funnel digital marketing for ambitious businesses.",
   openGraph: {
-    title: "Assistmyday — Flexible Assistance. Real Business Growth.",
-    description: "Tailored digital solutions for websites, marketing, graphic design, and social media.",
+    title: "Assistmyday — Software That Scales. Marketing That Converts.",
+    description: "An integrated software development and digital marketing partner for ambitious businesses.",
     type: "website",
-    images: [{ url: "/og.png", width: 1200, height: 630, alt: "Assistmyday — Flexible Assistance. Real Business Growth." }],
+    images: [{ url: "/og-software-marketing.png", width: 1200, height: 630, alt: "Assistmyday — Software That Scales. Marketing That Converts." }],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Assistmyday — Flexible Assistance. Real Business Growth.",
-    description: "Tailored digital solutions for websites, marketing, graphic design, and social media.",
-    images: ["/og.png"],
+    title: "Assistmyday — Software That Scales. Marketing That Converts.",
+    description: "Custom software, web platforms, automation, and digital marketing connected by one team.",
+    images: ["/og-software-marketing.png"],
   },
 };
 
