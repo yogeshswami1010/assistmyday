@@ -55,6 +55,54 @@ export default function Home() {
         el.style.setProperty("--workProgress", String(workProgress));
         el.style.setProperty("--shift", `${workProgress * -226}vw`);
         el.style.setProperty("--labShift", `${(progress - 0.5) * 110}vw`);
+        if (el.classList.contains("motion-lab")) {
+          const cards = el.querySelectorAll<HTMLElement>(".portfolio-lab-card");
+          const mobile = innerWidth <= 760;
+          const columns = mobile ? 2 : 4;
+          const gap = mobile ? 10 : 18;
+          const cardWidth = mobile
+            ? innerWidth * 0.43
+            : Math.min(360, Math.max(260, innerWidth * 0.22));
+          const cardHeight = mobile
+            ? innerWidth * 0.25
+            : Math.min(220, Math.max(165, innerWidth * 0.13));
+          const rows = Math.ceil(cards.length / columns);
+          const gridWidth = columns * cardWidth + (columns - 1) * gap;
+          const gridHeight = rows * cardHeight + (rows - 1) * gap;
+          const gridStartX = (innerWidth - gridWidth) / 2;
+          const gridStartY = (innerHeight - gridHeight) / 2;
+          const rawAssemble = Math.min(1, Math.max(0, (progress - 0.04) / 0.42));
+          const assemble = 1 - Math.pow(1 - rawAssemble, 3);
+
+          cards.forEach((card, index) => {
+            const curve = cards.length > 1 ? index / (cards.length - 1) : 0;
+            const startX = mobile
+              ? innerWidth * (-0.3 + curve * 1.35)
+              : innerWidth * (-0.09 + curve * 1.03);
+            const startY = mobile
+              ? innerHeight * (0.28 - Math.sin(curve * Math.PI) * 0.15)
+              : innerHeight * (0.31 - Math.sin(curve * Math.PI) * 0.25);
+            const startScale = mobile ? 1.16 - curve * 0.4 : 1.48 - curve * 0.93;
+            const startRotation = 11 - curve * 20;
+            const startTilt = mobile ? 8 - curve * 12 : 13 - curve * 20;
+            const startZ = mobile ? 80 - curve * 120 : 220 - curve * 300;
+            const column = index % columns;
+            const row = Math.floor(index / columns);
+            const endX = gridStartX + column * (cardWidth + gap);
+            const endY = gridStartY + row * (cardHeight + gap);
+            const x = startX + (endX - startX) * assemble;
+            const y = startY + (endY - startY) * assemble;
+            const scale = startScale + (1 - startScale) * assemble;
+            const rotation = startRotation * (1 - assemble);
+            const tilt = startTilt * (1 - assemble);
+            const z = startZ * (1 - assemble);
+
+            card.style.width = `${cardWidth}px`;
+            card.style.height = `${cardHeight}px`;
+            card.style.zIndex = String(cards.length - index);
+            card.style.transform = `translate3d(${x}px, ${y}px, ${z}px) rotateY(${tilt}deg) rotateZ(${rotation}deg) scale(${scale})`;
+          });
+        }
         if (progress !== target) keepAnimating = true;
       });
       const targetPageProgress = scrollY / Math.max(document.documentElement.scrollHeight - innerHeight, 1);
@@ -271,7 +319,7 @@ export default function Home() {
         <div className="story-actions"><div><button>←</button><button>→</button></div><a href="#contact">BECOME A CLIENT <span>→</span></a></div>
       </section>
 
-      <section className="motion-lab scene-light" data-scrollscene>
+      <section id="portfolio" className="motion-lab scene-light" data-scrollscene>
         <div className="sticky lab-sticky">
           <h2 className="design-in">DIGITAL</h2><h2 className="motion-word">DELIVERED</h2>
           <p className="lab-center">SELECTED SOFTWARE AND MARKETING WORK<br />FOR AMBITIOUS BUSINESSES.</p>
@@ -296,6 +344,7 @@ export default function Home() {
               </article>
             ))}
           </div>
+          <div className="portfolio-transition-wipe" aria-hidden="true"><i /><i /><i /><i /><i /><i /></div>
         </div>
       </section>
 
