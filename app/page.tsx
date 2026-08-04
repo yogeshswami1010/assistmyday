@@ -1,19 +1,20 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Image from "next/image";
 import AxiomWebGL from "./components/AxiomWebGL";
 
 const work = [
-  { title: "Nexora AI", copy: "A platform simplifying work, decisions, and intelligent automation.", kind: "tower" },
-  { title: "Echo Studio", copy: "A motion-led music platform showcasing artists, projects, and culture.", kind: "music" },
-  { title: "Habitat", copy: "A seamless property platform for effortless discovery.", kind: "house" },
+  { title: "Transportation & Logistics", copy: "Digital systems that keep operations visible, responsive, and moving forward.", kind: "tower" },
+  { title: "Trades & Services", copy: "Clear websites and campaigns designed to turn local demand into qualified leads.", kind: "music" },
+  { title: "Real Estate", copy: "High-impact digital experiences that help properties and professionals stand out.", kind: "house" },
 ];
 
 const services = [
-  ["AI & Intelligent Automation", "Smarter systems that work quietly, learn quickly, and turn complexity into momentum."],
-  ["Web Development", "High-performance digital experiences built for clarity, scale, and longevity."],
-  ["Product Design", "Thoughtful products that earn attention, deepen engagement, and build lasting loyalty."],
-  ["Branding", "Distinct identities that position ambitious businesses for relevance and growth."],
+  ["Website Development", "Fast, functional, SEO-ready websites and applications designed to convert and grow with your business."],
+  ["Marketing & Sales", "Data-informed campaigns, audience targeting, and local growth strategies focused on measurable results."],
+  ["Graphic Designing", "Professional logos, social graphics, website visuals, and marketing collateral that strengthen your identity."],
+  ["Social Media", "Consistent content and channel management that builds visibility, engagement, and lasting customer relationships."],
 ];
 
 export default function Home() {
@@ -75,7 +76,9 @@ export default function Home() {
       <div className="page-progress" />
 
       <header className="site-header">
-        <a href="#home" className="brand"><i />Assistmyday<sup>®</sup></a>
+        <a href="#home" className="brand" aria-label="Assistmyday home">
+          <Image src="/assistmyday-logo.webp" alt="Assistmyday" width={1827} height={444} priority className="brand-logo" />
+        </a>
         <div className="head-actions">
           <button className="sound" onClick={() => setSound(!sound)} aria-label="Toggle sound">{sound ? "◖))" : "◖×"}</button>
           <a href="#contact" className="talk">LET&apos;S TALK</a>
@@ -89,7 +92,7 @@ export default function Home() {
             <a href={`#${n.toLowerCase()}`} onClick={() => setMenu(false)} key={n}><small>0{i + 1}</small><span>{n}</span><b>↗</b></a>
           ))}
         </nav>
-        <p>INDEPENDENT DIGITAL STUDIO<br />INDIA — WORLDWIDE</p>
+        <p>DIGITAL GROWTH PARTNER<br />ST. CATHARINES — CANADA</p>
       </aside>
 
       <div className="hero-about scene-dark">
@@ -105,24 +108,24 @@ export default function Home() {
             <div className="hero-scanlines" />
           </div>
           <div className="hero-lines"><i /><i /><i /><i /><i /><i /><i /></div>
-          <div className="hero-title"><h1>Designed to</h1><h1>mean <em>impact.</em></h1></div>
+          <div className="hero-title"><h1>Flexible assistance.</h1><h1>Real <em>business growth.</em></h1></div>
           <div className="hero-status">
-            <div className="est"><span>◎</span><small>EST. 2012</small></div>
-            <p>Websites, AI products, brands, and<br />systems built for clarity, scale and impact.</p>
+            <div className="est"><span>◎</span><small>ST. CATHARINES</small></div>
+            <p>Website development, marketing, graphic design,<br />and social media support built around your goals.</p>
           </div>
           <p className="blast">HOLD TO <b>✹</b> BLAST<br /><span>DRAG&nbsp; ⚡ &nbsp;TO ROTATE THE MARK.</span></p>
           <div className="hero-finale">
-            <span>STRUCTURE</span><i>＋</i><span>SIGNAL</span><i>＋</i><span>IMPACT</span>
+            <span>CREATE</span><i>＋</i><span>CONNECT</span><i>＋</i><span>GROW</span>
           </div>
         </div>
       </section>
 
       <section id="about" className="about scene-dark">
         <p className="micro left">ABOUT</p>
-        <h2>Assistmyday is an independent digital<br />studio crafting meaningful brand<br />experiences through strategy, design,<br />and technology.</h2>
-        <p className="about-mantra">WE DESIGN<br />FIRST. CRAFT<br />BUILT &nbsp;&nbsp; SCALE.</p>
+        <h2>Your trusted partner in digital<br />marketing and business growth—<br />building tailored solutions around<br />your unique needs.</h2>
+        <p className="about-mantra">YOUR TEAM.<br />YOUR GOALS.<br />OUR SUPPORT.</p>
         <div className="about-side">
-          <p>Our mission is to make technology feel human by designing digital products that are intuitive, purposeful, and meaningful to people.</p>
+          <p>Our team combines website development, innovative marketing strategies, graphic design, and social media management so you can focus on your core business while we drive your digital success.</p>
           <a href="#facts">MORE ABOUT US <span>→</span></a>
         </div>
         <div className="fragment fragment-a" /><div className="fragment fragment-b" /><div className="fragment fragment-c" />
@@ -131,17 +134,17 @@ export default function Home() {
 
       <section className="mantra scene-dark" data-scrollscene>
         <div className="sticky">
-          <p>FOCUSED VISION.<br />MEASURED EXECUTION.</p>
-          <div className="mantra-track"><span>CREATE</span><b>＋</b><span>IMPACT</span><b>＋</b><span>INSPIRE</span></div>
+          <p>FLEXIBLE SUPPORT.<br />MEASURABLE GROWTH.</p>
+          <div className="mantra-track"><span>BUILD</span><b>＋</b><span>MARKET</span><b>＋</b><span>GROW</span></div>
           <div className="wipe-bars"><i /><i /><i /><i /><i /></div>
         </div>
       </section>
 
       <section id="facts" className="facts scene-light">
-        <div className="facts-title"><h2>Key facts</h2><p>A snapshot of our<br />experience and impact.</p></div>
+        <div className="facts-title"><h2>Support that<br />moves business.</h2><p>Practical expertise.<br />Flexible partnership.</p></div>
         <div className="cards">
           <article className="fact award">
-            <small>FEATURED & AWARDS</small>
+            <small>CLIENTS SUPPORTED</small>
             <video
               className="fact-video fact-video-loop"
               src="/awards-card-video.mp4"
@@ -152,16 +155,16 @@ export default function Home() {
               preload="auto"
               aria-label="Featured and awards presentation"
             />
-            <b className="w-dot">W.</b><strong>50+</strong>
-            <p>Featured on top design<br />platforms worldwide.</p>
+            <b className="w-dot">A.</b><strong>15K+</strong>
+            <p>Businesses supported<br />across global markets.</p>
           </article>
           <article className="fact projects">
-            <small>PROJECTS COMPLETED</small>
-            <div className="count-circle">1.5K<sup>+</sup></div>
-            <p>90% of our clients seek our<br />services for a second project.</p>
+            <small>CORE DIGITAL SERVICES</small>
+            <div className="count-circle">04<sup>+</sup></div>
+            <p>One connected team for your<br />complete digital presence.</p>
           </article>
           <article className="fact team">
-            <small>OUR TEAM MEMBERS</small>
+            <small>LOCAL DIGITAL PARTNER</small>
             <video
               className="fact-video fact-video-hover"
               src="/rushi.mp4"
@@ -185,30 +188,30 @@ export default function Home() {
                 else event.currentTarget.pause();
               }}
             />
-            <strong>20+</strong><p>Different skills.<br />One standard.</p>
+            <strong>ON</strong><p>St. Catharines expertise.<br />Business-first thinking.</p>
           </article>
         </div>
-        <div className="partners"><p>OUR BUSINESS PARTNERS</p><div><b>credible</b><b>Yellowtail</b><b>LUXURY<br />PRESENCE</b><b>TECHNIS</b><b>OCKTO</b></div></div>
+        <div className="partners"><p>WHO WE SERVE</p><div><b>LOGISTICS</b><b>TRADES</b><b>REAL ESTATE</b><b>HEALTHCARE</b><b>RETAIL</b></div></div>
       </section>
 
       <section id="work" className="work scene-light" data-scrollscene>
         <div className="sticky work-sticky">
           <div className="work-track">
             <div className="work-intro">
-              <h2>Selected work<br />& explorations</h2>
-              <a href="#services">VIEW ALL PROJECTS <span>→</span></a>
+              <h2>Industries we help<br />move forward</h2>
+              <a href="#services">EXPLORE SERVICES <span>→</span></a>
             </div>
             {work.map((item) => (
               <article className="work-card" key={item.title}>
                 <div className={`project-visual ${item.kind}`}>
-                  {item.kind === "tower" && <><div className="sun" /><div className="mega-tower" /><strong>Hi, I&apos;m Nova.</strong><small>POWER YOUR WORKFORCE<br />WITH DIGITAL WORKERS</small></>}
-                  {item.kind === "music" && <><div className="red-beam" /><div className="artist">♩</div><strong>Independent sound.<br />Built to move culture.</strong></>}
-                  {item.kind === "house" && <><div className="villa" /><strong>LIVE LIFE<br />IN LUXURY</strong><small>10K<br />LISTINGS</small></>}
+                  {item.kind === "tower" && <><div className="sun" /><div className="mega-tower" /><strong>Move smarter.</strong><small>TRANSPORTATION<br />& LOGISTICS</small></>}
+                  {item.kind === "music" && <><div className="red-beam" /><div className="artist">↗</div><strong>Local demand.<br />Real growth.</strong></>}
+                  {item.kind === "house" && <><div className="villa" /><strong>BE SEEN.<br />BE CHOSEN.</strong><small>REAL ESTATE<br />GROWTH</small></>}
                 </div>
                 <div className="work-meta"><div><h3>{item.title}</h3><p>{item.copy}</p></div><a href="#contact">EXPLORE PROJECT <span>→</span></a></div>
               </article>
             ))}
-            <div className="work-outro"><h3>Discover our complete collection of digital experiences, brands, and platforms.</h3><a href="#services">VIEW ALL PROJECTS <span>→</span></a></div>
+            <div className="work-outro"><h3>From healthcare and finance to retail and fitness, we adapt our digital support to the way your industry works.</h3><a href="#services">VIEW SERVICES <span>→</span></a></div>
           </div>
         </div>
       </section>
@@ -229,7 +232,7 @@ export default function Home() {
           <div className="services-bg-overlay" />
           <div className="smoke smoke-one" /><div className="smoke smoke-two" />
           <p className="micro service-label">OUR SERVICES</p>
-          <div className="service-words"><span>A.I.</span><span>DESIGN</span><span>DEVELOPMENT</span><span>BRANDING</span></div>
+          <div className="service-words"><span>WEBSITES</span><span>MARKETING</span><span>DESIGN</span><span>SOCIAL</span></div>
           <div className="stone"><i /><i /><i /></div>
           <div className="service-detail">
             {services.map((s, i) => (
@@ -240,18 +243,18 @@ export default function Home() {
               </article>
             ))}
           </div>
-          <p className="discipline">✦ DIFFERENT DISCIPLINES. ONE STANDARD OF CRAFT.</p>
+          <p className="discipline">✦ FOUR CORE SERVICES. ONE FLEXIBLE PARTNER.</p>
           <a className="view-services" href="#stories">VIEW SERVICES <span>→</span></a>
         </div>
       </section>
 
       <section id="stories" className="stories scene-light">
-        <div className="story-head"><h2>Client stories</h2><p>Great work is built through partnership. Here&apos;s what our clients say.</p></div>
+        <div className="story-head"><h2>Client feedback</h2><p>Responsive support that gives clients more time to focus on what matters.</p></div>
         <div className="story-body">
-          <nav><span>ARC STUDIO</span><b>VERDANT →</b><span>NORTH/ONE</span><span>CREATIVE UNIT</span><span>MONOCLE</span></nav>
+          <nav><b>BUSINESS SUPPORT →</b><span>WEB DEVELOPMENT</span><span>MARKETING</span><span>GRAPHIC DESIGN</span><span>SOCIAL MEDIA</span></nav>
           <div className="quote">
-            <h3>“Assistmyday is extremely reliable, professional and talented. They turn complex ideas into digital work that feels beautifully simple.”</h3>
-            <div className="person"><i>AM</i><p>Amelia Morgan<br /><span>Founder & CEO · USA</span></p></div>
+            <h3>“AssistMyDay has completely changed my work-life balance. Their responsive and professional crew ensures that my chores are completed, allowing me to spend more time enjoying life outside of work.”</h3>
+            <div className="person"><i>LJ</i><p>Lisa Johnson<br /><span>Assistmyday client</span></p></div>
           </div>
         </div>
         <div className="story-actions"><div><button>←</button><button>→</button></div><a href="#contact">BECOME A CLIENT <span>→</span></a></div>
@@ -259,12 +262,12 @@ export default function Home() {
 
       <section className="motion-lab scene-light" data-scrollscene>
         <div className="sticky lab-sticky">
-          <h2 className="design-in">DESIGN IN</h2><h2 className="motion-word">MOTION</h2>
-          <p className="lab-center">EXPLORING IDEAS THROUGH<br />DAILY DESIGN PRACTICE.</p>
-          <p className="lab-copy">Concepts, explorations, and interface<br />experiments shared openly as part of<br />our creative process.</p>
-          <a href="#contact" className="lab-link">VIEW ON DRIBBBLE <span>→</span></a>
+          <h2 className="design-in">YOUR DAY</h2><h2 className="motion-word">ASSISTED</h2>
+          <p className="lab-center">SPECIALIZED SUPPORT FOR<br />THE WAY YOUR BUSINESS WORKS.</p>
+          <p className="lab-copy">Transportation, trades, real estate,<br />law, finance, healthcare, retail,<br />fitness, and more.</p>
+          <a href="#contact" className="lab-link">TALK TO OUR TEAM <span>→</span></a>
           <div className="floating-grid">
-            {["editorial","fashion","culture","watch","future","pink"].map((n, i) => <div className={`lab-card ${n}`} key={n}><small>0{i + 1}</small><b>{n === "pink" ? "NOVAGLAM" : n === "future" ? "2026" : n.toUpperCase()}</b><i /></div>)}
+            {[["editorial","LOGISTICS"],["fashion","TRADES"],["culture","REAL ESTATE"],["watch","LAW"],["future","FINANCE"],["pink","HEALTHCARE"]].map(([kind, label], i) => <div className={`lab-card ${kind}`} key={kind}><small>0{i + 1}</small><b>{label}</b><i /></div>)}
           </div>
         </div>
       </section>
@@ -272,22 +275,22 @@ export default function Home() {
       <section id="contact" className="footer scene-dark">
         <div className="footer-head">
           <p className="footer-kicker">LET&apos;S BUILD WORK THAT INSPIRES.</p>
-          <a href="mailto:hello@assistmyday.com" className="footer-mail">START A PROJECT <span>↗</span></a>
+          <a href="https://assistmyday.com/contact-us/" className="footer-mail">START A PROJECT <span>↗</span></a>
         </div>
         <div className="footer-hero">
           <h2>Ready to build<br /><em>something bold?</em></h2>
-          <p className="footer-intro">We partner with ambitious teams to shape meaningful brands, products, and digital experiences.</p>
+          <p className="footer-intro">Tell us what is slowing your business down. We&apos;ll shape a flexible digital solution around your team, audience, and goals.</p>
         </div>
         <div className="footer-meta">
-          <div className="footer-brand-lockup"><i />Assistmyday<sup>®</sup></div>
+          <div className="footer-brand-lockup"><Image src="/assistmyday-logo.webp" alt="Assistmyday" width={1827} height={444} className="footer-logo" /></div>
           <div className="footer-info">
-            <div><small>BUSINESS ENQUIRY</small><p><a href="mailto:hello@assistmyday.com">hello@assistmyday.com</a><br /><a href="tel:+919824182099">+91 98241 82099</a></p></div>
-            <div><small>SOCIAL</small><p>LinkedIn&nbsp;&nbsp; Instagram<br />Dribbble&nbsp;&nbsp; Facebook</p></div>
+            <div><small>CALL ANYTIME</small><p><a href="tel:+19053748878">+1 (905) 374-8878</a><br />St. Catharines, Ontario</p></div>
+            <div><small>VISIT US</small><p>110 James St, Suite 411<br />St. Catharines, ON L2R 7E8</p></div>
           </div>
         </div>
         <div className="footer-base">
           <p className="copyright">© ASSISTMYDAY® 2026</p>
-          <p>INDIA — WORLDWIDE</p>
+          <p>ST. CATHARINES — CANADA</p>
           <a href="#home">BACK TO TOP <span>↑</span></a>
         </div>
       </section>
