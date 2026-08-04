@@ -150,8 +150,7 @@ export default function Home() {
           <Image src="/assistmyday-logo.webp" alt="Assistmyday" width={1827} height={444} priority unoptimized className="brand-logo" />
         </a>
         <div className="head-actions">
-          <button className="sound" onClick={() => setSound(!sound)} aria-label="Toggle sound">{sound ? "◖))" : "◖×"}</button>
-          <a href="#contact" className="talk">LET&apos;S TALK</a>
+       
           <button className="menu-toggle" onClick={() => setMenu(!menu)} aria-expanded={menu}>MENU <b>{menu ? "×" : "＝"}</b></button>
         </div>
       </header>
