@@ -133,8 +133,8 @@ body{background:var(--amd-night)}
 .footer{background:linear-gradient(145deg,#03040b 0 55%,#17174f)}
 .footer-mail{border-color:rgba(91,184,232,.65)}
 .footer-mail:hover{background:var(--amd-blue);color:#07101d}
-.footer-brand-lockup{padding:18px 22px;border-radius:20px;background:#fff}
+.footer-brand-lockup{width:fit-content;max-width:100%;justify-self:start;padding:18px 22px;border-radius:20px;background:#fff;box-sizing:border-box}
 .footer-logo{display:block;width:min(100%,520px);height:auto}
 .footer-info a:hover{color:var(--amd-blue)}
 .footer-base a{color:var(--amd-blue)}
-@media(max-width:760px){.brand{padding:5px 9px;border-radius:10px}.brand-logo{width:132px}.footer-brand-lockup{padding:13px 15px;border-radius:14px}.footer-logo{width:100%}.hero-title h1{font-size:14.5vw}.service-words span{font-size:14vw}}
+@media(max-width:760px){.brand{padding:5px 9px;border-radius:10px}.brand-logo{width:132px}.footer-brand-lockup{width:fit-content;padding:13px 15px;border-radius:14px}.footer-logo{width:min(100%,520px)}.hero-title h1{font-size:14.5vw}.service-words span{font-size:14vw}}
