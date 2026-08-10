@@ -146,7 +146,7 @@ export default function Home() {
       <div className="page-progress" />
 
       <header className="site-header">
-        <a href="#home" className="brand" aria-label="Assistmyday home">
+        <a href="/" className="brand" aria-label="Assistmyday home">
           <Image src="/assistmyday-logo.webp" alt="Assistmyday" width={1827} height={444} priority unoptimized className="brand-logo" />
         </a>
         <div className="head-actions">
@@ -157,8 +157,13 @@ export default function Home() {
 
       <aside className={`menu-screen ${menu ? "is-open" : ""}`}>
         <nav>
-          {["WORK", "ABOUT", "SERVICES", "CONTACT"].map((n, i) => (
-            <a href={`#${n.toLowerCase()}`} onClick={() => setMenu(false)} key={n}><small>0{i + 1}</small><span>{n}</span><b>↗</b></a>
+          {[
+            { label: "PORTFOLIO", href: "/portfolio" },
+            { label: "SERVICES", href: "/services" },
+            { label: "BLOG", href: "/blog" },
+            { label: "CONTACT", href: "/contact" },
+          ].map((item, i) => (
+            <a href={item.href} onClick={() => setMenu(false)} key={item.label}><small>0{i + 1}</small><span>{item.label}</span><b>↗</b></a>
           ))}
         </nav>
         <p>DIGITAL MARKETING + SOFTWARE DEVELOPMENT<br />ST. CATHARINES — CANADA</p>
@@ -268,7 +273,7 @@ export default function Home() {
           <div className="work-track">
             <div className="work-intro">
               <h2>Digital systems built<br />for momentum</h2>
-              <a href="#services">EXPLORE SERVICES <span>→</span></a>
+              <a href="/services">EXPLORE SERVICES <span>→</span></a>
             </div>
             {work.map((item) => (
               <article className="work-card" key={item.title}>
@@ -277,10 +282,10 @@ export default function Home() {
                   {item.kind === "music" && <><div className="red-beam" /><div className="artist">↗</div><strong>Fast journeys.<br />More action.</strong></>}
                   {item.kind === "house" && <><div className="villa" /><strong>BE FOUND.<br />BE CHOSEN.</strong><small>GROWTH<br />MARKETING</small></>}
                 </div>
-                <div className="work-meta"><div><h3>{item.title}</h3><p>{item.copy}</p></div><a href="#contact">START A PROJECT <span>→</span></a></div>
+                <div className="work-meta"><div><h3>{item.title}</h3><p>{item.copy}</p></div><a href="/contact">START A PROJECT <span>→</span></a></div>
               </article>
             ))}
-            <div className="work-outro"><h3>From a first campaign to a business-critical platform, we create the digital foundation for your next stage of growth.</h3><a href="#services">VIEW SERVICES <span>→</span></a></div>
+            <div className="work-outro"><h3>From a first campaign to a business-critical platform, we create the digital foundation for your next stage of growth.</h3><a href="/services">VIEW SERVICES <span>→</span></a></div>
           </div>
         </div>
       </section>
@@ -313,7 +318,7 @@ export default function Home() {
             ))}
           </div>
           <p className="discipline">✦ STRATEGY, DESIGN, ENGINEERING, AND GROWTH. ONE TEAM.</p>
-          <a className="view-services" href="#stories">VIEW SERVICES <span>→</span></a>
+          <a className="view-services" href="/services">VIEW SERVICES <span>→</span></a>
         </div>
       </section>
 
@@ -326,7 +331,7 @@ export default function Home() {
             <div className="person"><i>GP</i><p>Growth Partner<br /><span>Assistmyday client</span></p></div>
           </div>
         </div>
-        <div className="story-actions"><div><button>←</button><button>→</button></div><a href="#contact">BECOME A CLIENT <span>→</span></a></div>
+        <div className="story-actions"><div><button>←</button><button>→</button></div><a href="/contact">BECOME A CLIENT <span>→</span></a></div>
       </section>
 
       <section id="portfolio" className="motion-lab scene-light" data-scrollscene>
@@ -334,7 +339,7 @@ export default function Home() {
           <h2 className="design-in">DIGITAL</h2><h2 className="motion-word">DELIVERED</h2>
           <p className="lab-center">SELECTED SOFTWARE AND MARKETING WORK<br />FOR AMBITIOUS BUSINESSES.</p>
           <p className="lab-copy">Software, web platforms, strategy,<br />creative, campaigns, and growth.</p>
-          <a href="#contact" className="lab-link">TALK TO OUR TEAM <span>→</span></a>
+          <a href="/contact" className="lab-link">TALK TO OUR TEAM <span>→</span></a>
           <div className="floating-grid portfolio-lab-grid">
             {portfolio.map((project, index) => (
               <article className="lab-card portfolio-lab-card" key={`${project.title}-${index}`}>
@@ -361,7 +366,7 @@ export default function Home() {
       <section id="contact" className="footer scene-dark">
         <div className="footer-head">
           <p className="footer-kicker">BUILD THE PRODUCT. GROW THE AUDIENCE.</p>
-          <a href="https://assistmyday.com/contact-us/" className="footer-mail">START A PROJECT <span>↗</span></a>
+          <a href="/contact" className="footer-mail">START A PROJECT <span>↗</span></a>
         </div>
         <div className="footer-hero">
           <h2>Ready to create<br /><em>your digital advantage?</em></h2>

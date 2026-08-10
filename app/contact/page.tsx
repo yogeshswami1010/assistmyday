@@ -1,0 +1,37 @@
+import type { Metadata } from "next";
+import InnerPages from "../components/InnerPages";
+
+export const metadata: Metadata = {
+  title: "Contact | Assistmyday",
+  description: "Talk to Assistmyday about your software, website, automation, or digital marketing project.",
+};
+
+export default function ContactPage() {
+  return (
+    <InnerPages active="CONTACT">
+      <section className="inner-hero">
+        <div><p className="inner-kicker">START A CONVERSATION</p><h1>Bring us the challenge. We&apos;ll build the <em>way forward.</em></h1></div>
+        <p className="inner-hero-copy">Tell us what you are trying to improve, launch, automate, or grow. We will help turn it into a focused digital plan.</p>
+      </section>
+      <section className="inner-section">
+        <div className="contact-layout">
+          <div className="contact-details">
+            <h2>Let&apos;s talk about what comes next.</h2>
+            <p><strong>Email</strong><br /><a href="mailto:info@assistmyday.com">info@assistmyday.com</a></p>
+            <p><strong>Call</strong><br /><a href="tel:+19053748878">+1 (905) 374-8878</a></p>
+            <p><strong>Visit</strong><br />110 James St, Suite 411<br />St. Catharines, ON L2R 7E8</p>
+          </div>
+          <form className="contact-form" action="mailto:info@assistmyday.com" method="post" encType="text/plain">
+            <label>YOUR NAME<input type="text" name="name" autoComplete="name" required /></label>
+            <label>WORK EMAIL<input type="email" name="email" autoComplete="email" required /></label>
+            <label>COMPANY<input type="text" name="company" autoComplete="organization" /></label>
+            <label>PHONE<input type="tel" name="phone" autoComplete="tel" /></label>
+            <label>HOW CAN WE HELP?<textarea name="message" rows={6} required /></label>
+            <p className="contact-form-note">Submitting opens your email application with the project details.</p>
+            <button type="submit">SEND PROJECT DETAILS ↗</button>
+          </form>
+        </div>
+      </section>
+    </InnerPages>
+  );
+}
