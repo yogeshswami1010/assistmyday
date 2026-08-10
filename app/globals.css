@@ -110,7 +110,7 @@ body{background:var(--amd-night)}
 .tower{background:linear-gradient(#dff7ff,#5bb8e8)}
 .tower .sun{background:#fff}
 .mega-tower{background:linear-gradient(90deg,#17174f,#7fd4ff,#4b4fd8)}
-.music{background:linear-gradient(140deg,#060718,#17174f 55%,#4b4fd8)}
+.music{background:linear-gradient(140deg,#060718,#17174f 55%,#4b4fd8);color:#fff}
 .red-beam{background:#5bb8e8;box-shadow:0 0 70px rgba(91,184,232,.78)}
 .house{background:linear-gradient(#e9f8ff,#82ccec)}
 .villa{background:linear-gradient(#17174f 0 15%,#fff 15% 25%,#5bb8e8 25% 65%,#eef9ff 65%);box-shadow:0 30px 0 #4b4fd8}
