@@ -154,7 +154,7 @@ body{font-size:var(--type-body);line-height:var(--type-leading);font-family:Aria
 .micro,.fact small,.partners>p,.service-label,.lab-center,.footer-kicker,.footer-info small{font-size:var(--type-label)!important;line-height:1.25;letter-spacing:.035em}
 .head-actions button,.talk{height:36px;padding-inline:17px;font-size:13px}
 .menu-screen nav small,.menu-screen>p{font-size:12px;line-height:1.4}.menu-screen nav span{font-size:clamp(48px,6.5vw,92px);line-height:.92;letter-spacing:-.055em}
-.hero-title{width:min(1180px,78vw)}.hero-title h1{font-size:clamp(48px,4.5vw,76px);line-height:.96;letter-spacing:-.052em}
+.hero-title{width:min(1180px,78vw);margin-top:160px}.hero-title h1{letter-spacing:0;font-size:clamp(48px,6.5vw,76px);line-height:.96}
 .hero-status{width:260px}.est small{font-size:11px;line-height:1.25}.hero-status p{font-size:15px;line-height:1.35}.blast{font-size:12px;line-height:1.35}
 .hero-finale{width:94vw;justify-content:center;gap:1.7vw;font-size:clamp(42px,5.15vw,82px);line-height:.95;letter-spacing:-.05em}.hero-finale i{font-size:.28em}
 .about>h2{width:min(1500px,84vw);font-size:clamp(42px,4.55vw,70px);line-height:1;letter-spacing:-.048em}.about .left{left:8vw}.about-mantra{left:10.5%;font-size:14px;line-height:1.15}.about-side{right:10.5%;width:340px}.about-side p{font-size:16px;line-height:1.4}
