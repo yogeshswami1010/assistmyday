@@ -4,6 +4,7 @@ import type { ReactNode } from "react";
 import { useState } from "react";
 import Image from "next/image";
 import styles from "./InnerPages.module.css";
+import FooterNavigation from "./FooterNavigation";
 
 const navigation = [
   { label: "HOME", href: "/" },
@@ -40,6 +41,7 @@ export default function InnerPages({ children, active }: { children: ReactNode; 
 
       <footer className={styles.footer}>
         <div className={styles.footerTop}><p>READY TO BUILD SOMETHING BETTER?</p><a href="/contact">START A PROJECT <span>↗</span></a></div>
+        <FooterNavigation />
         <div className={styles.footerMain}>
           <h2>Software that scales.<br /><em>Marketing that converts.</em></h2>
           <Image src="/assistmyday-logo.webp" alt="Assistmyday" width={1827} height={444} unoptimized />

@@ -162,9 +162,11 @@ export default function PortfolioExperience() {
 
       <section className={styles.projects} aria-label="Selected projects">
         <header className={styles.projectsHeader}>
-          <p>SELECTED WORK / 2026</p>
-          <h2>Built for visibility.<br />Designed for <em>results.</em></h2>
-          <span>Strategy, design, software, and marketing—connected from first idea to measurable impact.</span>
+          <div className={styles.projectsIntro}>
+            <p>SELECTED WORK / 2026</p>
+            <span>Strategy, design, software, and marketing—connected from first idea to measurable impact.</span>
+          </div>
+          <h2>SELECTED <em>PROJECTS.</em></h2>
         </header>
 
         <div className={styles.projectGrid}>

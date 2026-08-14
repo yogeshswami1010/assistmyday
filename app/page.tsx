@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import Image from "next/image";
 import AxiomWebGL from "./components/AxiomWebGL";
+import FooterNavigation from "./components/FooterNavigation";
 
 const work = [
   { title: "Custom Software Platforms", copy: "Purpose-built portals, dashboards, and workflow systems that simplify operations and support growth.", kind: "tower" },
@@ -363,11 +364,12 @@ export default function Home() {
         </div>
       </section>
 
-      <section id="contact" className="footer scene-dark">
+      <section id="contact" className="footer scene-dark footer-has-nav">
         <div className="footer-head">
           <p className="footer-kicker">BUILD THE PRODUCT. GROW THE AUDIENCE.</p>
           <a href="/contact" className="footer-mail">START A PROJECT <span>↗</span></a>
         </div>
+        <FooterNavigation />
         <div className="footer-hero">
           <h2>Ready to create<br /><em>your digital advantage?</em></h2>
           <p className="footer-intro">Bring us the growth target, the product idea, or the operational bottleneck. We&apos;ll turn it into a focused digital roadmap and build it with you.</p>
