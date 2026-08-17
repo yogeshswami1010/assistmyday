@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import Image from "next/image";
 import AxiomWebGL from "./components/AxiomWebGL";
 import FooterNavigation from "./components/FooterNavigation";
+import MenuScreen from "./components/MenuScreen";
 
 const work = [
   { title: "Custom Software Platforms", copy: "Purpose-built portals, dashboards, and workflow systems that simplify operations and support growth.", kind: "tower" },
@@ -156,19 +157,7 @@ export default function Home() {
         </div>
       </header>
 
-      <aside className={`menu-screen ${menu ? "is-open" : ""}`}>
-        <nav>
-          {[
-            { label: "PORTFOLIO", href: "/portfolio" },
-            { label: "SERVICES", href: "/services" },
-            { label: "BLOG", href: "/blog" },
-            { label: "CONTACT", href: "/contact" },
-          ].map((item, i) => (
-            <a href={item.href} onClick={() => setMenu(false)} key={item.label}><small>0{i + 1}</small><span>{item.label}</span><b>↗</b></a>
-          ))}
-        </nav>
-        <p>DIGITAL MARKETING + SOFTWARE DEVELOPMENT<br />ST. CATHARINES — CANADA</p>
-      </aside>
+      <MenuScreen open={menu} onClose={() => setMenu(false)} />
 
       <div className="hero-about scene-dark">
         <div className="hero-canvas-shell">
