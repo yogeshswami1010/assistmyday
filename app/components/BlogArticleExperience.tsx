@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import Link from "next/link";
 import type { BlogArticle } from "../blog/articles";
 import styles from "./BlogArticleExperience.module.css";
 
@@ -42,7 +43,7 @@ export default function BlogArticleExperience({ article, related }: { article: B
       <div className={styles.readingProgress} aria-hidden="true"><div ref={progressRef} /></div>
       <header className={styles.hero}>
         <div className={styles.heroNoise} aria-hidden="true" />
-        <div className={styles.heroMeta}><a href="/blog">← ALL INSIGHTS</a><span>{article.category}</span><span>{article.date}</span><span>{article.readTime}</span></div>
+        <div className={styles.heroMeta}><Link href="/blog">← ALL INSIGHTS</Link><span>{article.category}</span><span>{article.date}</span><span>{article.readTime}</span></div>
         <h1>{article.title}</h1>
         <div className={styles.heroBottom}>
           <p>{article.excerpt}</p>

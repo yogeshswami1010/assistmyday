@@ -3,6 +3,7 @@
 import type { ReactNode } from "react";
 import { useState } from "react";
 import Image from "next/image";
+import Link from "next/link";
 import styles from "./InnerPages.module.css";
 import FooterNavigation from "./FooterNavigation";
 
@@ -20,9 +21,9 @@ export default function InnerPages({ children, active }: { children: ReactNode; 
   return (
     <div className={styles.shell}>
       <header className={styles.header}>
-        <a href="/" className={styles.brand} aria-label="Assistmyday home">
+        <Link href="/" className={styles.brand} aria-label="Assistmyday home">
           <Image src="/assistmyday-logo.webp" alt="Assistmyday" width={1827} height={444} priority unoptimized />
-        </a>
+        </Link>
         <nav className={styles.desktopNav} aria-label="Main navigation">
           {navigation.map((item) => <a key={item.label} href={item.href} aria-current={active === item.label ? "page" : undefined}>{item.label}</a>)}
         </nav>
@@ -46,7 +47,7 @@ export default function InnerPages({ children, active }: { children: ReactNode; 
           <h2>Software that scales.<br /><em>Marketing that converts.</em></h2>
           <Image src="/assistmyday-logo.webp" alt="Assistmyday" width={1827} height={444} unoptimized />
         </div>
-        <div className={styles.footerBase}><span>© ASSISTMYDAY® 2026</span><span>ST. CATHARINES — CANADA</span><a href="/">BACK HOME ↑</a></div>
+        <div className={styles.footerBase}><span>© ASSISTMYDAY® 2026</span><span>ST. CATHARINES — CANADA</span><Link href="/">BACK HOME ↑</Link></div>
       </footer>
     </div>
   );

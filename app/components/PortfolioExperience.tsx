@@ -2,18 +2,10 @@
 
 import Image from "next/image";
 import { useEffect, useRef } from "react";
+import type { PortfolioProject } from "../../lib/content-types";
 import styles from "./PortfolioExperience.module.css";
 
-const projects = [
-  { title: "Signarama Brampton", category: "Website / Lead generation", image: "/portfolio-signarama-home.webp", size: "large", side: "left" },
-  { title: "Signarama Toronto", category: "SEO / Content experience", image: "/portfolio-signarama-about.webp", size: "medium", side: "right" },
-  { title: "Rio Immigration", category: "Web platform / Strategy", image: "/portfolio-rio-immigration.webp", size: "large", side: "left" },
-  { title: "Consortium Staffing", category: "Recruitment / Digital product", image: "/portfolio-consortium-staffing.webp", size: "xlarge", side: "center" },
-  { title: "The Burke Group", category: "Brand platform / Executive search", image: "/portfolio-burke-group.webp", size: "large", side: "right" },
-  { title: "AMD Studios", category: "Website / Conversion design", image: "/portfolio-amd-studios.webp", size: "medium", side: "left" },
-  { title: "GeoSolar", category: "Marketing / Sustainability", image: "/portfolio-geosolar.webp", size: "large", side: "right" },
-  { title: "Vishal Bangarh", category: "Real estate / Lead generation", image: "/portfolio-vishal-bangarh.webp", size: "xlarge", side: "center" },
-] as const;
+
 
 const flightPaths = [
   [-43, -35, -8, -64, -12], [41, -31, 16, -58, 11], [-33, 9, -58, -5, -7], [38, 15, 61, 4, 9],
@@ -24,7 +16,7 @@ function clamp(value: number, min = 0, max = 1) {
   return Math.min(max, Math.max(min, value));
 }
 
-export default function PortfolioExperience() {
+export default function PortfolioExperience({ projects }: { projects: PortfolioProject[] }) {
   const stageRef = useRef<HTMLElement>(null);
   const pinRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -172,7 +164,7 @@ export default function PortfolioExperience() {
         <div className={styles.projectGrid}>
           {projects.map((project, index) => (
             <article className={`${styles.projectCard} ${styles[project.size]} ${styles[project.side]}`} key={project.title}>
-              <a className={styles.projectImage} href="/contact" aria-label={`Start a project like ${project.title}`}>
+              <a className={styles.projectImage} href={project.projectUrl || "/contact"} aria-label={`View ${project.title}`}>
                 <Image src={project.image} alt={`${project.title} website`} width={1904} height={870} unoptimized />
                 <span>VIEW PROJECT ↗</span>
               </a>

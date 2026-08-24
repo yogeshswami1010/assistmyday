@@ -1,22 +1,8 @@
-export type ArticleSection = {
-  heading: string;
-  paragraphs: string[];
-  bullets?: string[];
-};
+import type { BlogArticle } from "../../lib/content-types";
 
-export type BlogArticle = {
-  slug: string;
-  category: string;
-  title: string;
-  excerpt: string;
-  date: string;
-  readTime: string;
-  accent: string;
-  intro: string;
-  sections: ArticleSection[];
-};
+export type { ArticleSection, BlogArticle } from "../../lib/content-types";
 
-export const articles: BlogArticle[] = [
+const articleSeeds: Omit<BlogArticle, "sortOrder" | "published">[] = [
   {
     slug: "when-custom-software-makes-sense",
     category: "SOFTWARE",
@@ -108,6 +94,12 @@ export const articles: BlogArticle[] = [
     ],
   },
 ];
+
+export const articles: BlogArticle[] = articleSeeds.map((article, index) => ({
+  ...article,
+  sortOrder: index + 1,
+  published: true,
+}));
 
 export function getArticle(slug: string) {
   return articles.find((article) => article.slug === slug);

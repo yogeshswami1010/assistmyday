@@ -1,42 +1,10 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import type { ServiceItem } from "../../lib/content-types";
 import styles from "./ServicesExperience.module.css";
 
-const services = [
-  {
-    number: "01",
-    title: "Custom Software Development",
-    label: "SYSTEMS THAT SCALE",
-    copy: "Purpose-built platforms, portals, dashboards, and automations designed around the way your organization actually works.",
-    items: ["Web applications", "Business portals", "API integrations", "Workflow automation"],
-    motif: "rings",
-  },
-  {
-    number: "02",
-    title: "Websites & E-commerce",
-    label: "EXPERIENCES THAT CONVERT",
-    copy: "Fast, accessible, conversion-focused websites and commerce journeys that communicate clearly and create measurable action.",
-    items: ["UX strategy", "Web design", "Development", "E-commerce"],
-    motif: "frame",
-  },
-  {
-    number: "03",
-    title: "Performance Marketing",
-    label: "GROWTH YOU CAN MEASURE",
-    copy: "Connected search, paid media, content, CRO, and analytics programs that turn attention into qualified demand.",
-    items: ["SEO", "Paid media", "Content", "Analytics & CRO"],
-    motif: "signal",
-  },
-  {
-    number: "04",
-    title: "Brand, Content & Social",
-    label: "RECOGNITION THAT LASTS",
-    copy: "Distinctive identities and channel-ready creative systems that build recognition, trust, and long-term audience engagement.",
-    items: ["Brand strategy", "Visual identity", "Campaigns", "Social content"],
-    motif: "orbit",
-  },
-] as const;
+
 
 const process = [
   ["01", "Discover", "We clarify the challenge, audience, operational context, and success measures."],
@@ -45,7 +13,7 @@ const process = [
   ["04", "Grow", "We optimize performance, expand capabilities, and improve results over time."],
 ] as const;
 
-export default function ServicesExperience() {
+export default function ServicesExperience({ services }: { services: ServiceItem[] }) {
   const rootRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -113,7 +81,7 @@ export default function ServicesExperience() {
 
       <section className={styles.services} aria-label="Service capabilities">
         <header className={`${styles.sectionHeader} ${styles.reveal}`}>
-          <p>WHAT WE DO / 04 CAPABILITIES</p>
+          <p>WHAT WE DO / {String(services.length).padStart(2, "0")} CAPABILITIES</p>
           <h2>Built together.<br /><em>Better together.</em></h2>
           <span>Engage us for one focused challenge or bring us the complete growth objective. We assemble the right senior team around the outcome.</span>
         </header>

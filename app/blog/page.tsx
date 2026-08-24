@@ -1,13 +1,17 @@
 import type { Metadata } from "next";
 import InnerPages from "../components/InnerPages";
-import { articles } from "./articles";
+import { getBlogArticles } from "../../lib/content-store";
+
+export const dynamic = "force-dynamic";
+export const runtime = "nodejs";
 
 export const metadata: Metadata = {
   title: "Insights | Assistmyday",
   description: "Practical thinking on software, web design, automation, SEO, and digital growth.",
 };
 
-export default function BlogPage() {
+export default async function BlogPage() {
+  const articles = await getBlogArticles();
   return (
     <InnerPages active="BLOG">
       <section className="inner-hero">
