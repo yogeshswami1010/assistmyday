@@ -156,7 +156,7 @@ const mapBlog = (row: BlogRow): BlogArticle => ({
   sections: safeJson(row.sections_json, []), sortOrder: row.sort_order, published: Boolean(row.published),
 });
 
-export async function getPortfolioProjects(includeUnpublished = false) {
+async function getPortfolioProjectsFromDatabase(includeUnpublished = false) {
   if (!isDatabaseConfigured()) return portfolioSeeds.filter((item) => includeUnpublished || item.published);
   await ensureSchema();
   const [rows] = await getPool().query<PortfolioRow[]>(
@@ -165,7 +165,7 @@ export async function getPortfolioProjects(includeUnpublished = false) {
   return rows.map(mapPortfolio);
 }
 
-export async function getServices(includeUnpublished = false) {
+async function getServicesFromDatabase(includeUnpublished = false) {
   if (!isDatabaseConfigured()) return serviceSeeds.filter((item) => includeUnpublished || item.published);
   await ensureSchema();
   const [rows] = await getPool().query<ServiceRow[]>(
@@ -174,7 +174,7 @@ export async function getServices(includeUnpublished = false) {
   return rows.map(mapService);
 }
 
-export async function getBlogArticles(includeUnpublished = false) {
+async function getBlogArticlesFromDatabase(includeUnpublished = false) {
   if (!isDatabaseConfigured()) return blogSeeds.filter((item) => includeUnpublished || item.published);
   await ensureSchema();
   const [rows] = await getPool().query<BlogRow[]>(
@@ -183,7 +183,7 @@ export async function getBlogArticles(includeUnpublished = false) {
   return rows.map(mapBlog);
 }
 
-export async function getBlogArticle(slug: string, includeUnpublished = false) {
+async function getBlogArticleFromDatabase(slug: string, includeUnpublished = false) {
   if (!isDatabaseConfigured()) return blogSeeds.find((item) => item.slug === slug && (includeUnpublished || item.published));
   await ensureSchema();
   const [rows] = await getPool().execute<BlogRow[]>(
@@ -192,6 +192,45 @@ export async function getBlogArticle(slug: string, includeUnpublished = false) {
   return rows[0] ? mapBlog(rows[0]) : undefined;
 }
 
+export async function getPortfolioProjects(includeUnpublished = false, strict = false) {
+  try {
+    return await getPortfolioProjectsFromDatabase(includeUnpublished);
+  } catch (error) {
+    if (strict) throw error;
+    console.error("Portfolio database unavailable; using built-in content.", error);
+    return portfolioSeeds.filter((item) => includeUnpublished || item.published);
+  }
+}
+
+export async function getServices(includeUnpublished = false, strict = false) {
+  try {
+    return await getServicesFromDatabase(includeUnpublished);
+  } catch (error) {
+    if (strict) throw error;
+    console.error("Services database unavailable; using built-in content.", error);
+    return serviceSeeds.filter((item) => includeUnpublished || item.published);
+  }
+}
+
+export async function getBlogArticles(includeUnpublished = false, strict = false) {
+  try {
+    return await getBlogArticlesFromDatabase(includeUnpublished);
+  } catch (error) {
+    if (strict) throw error;
+    console.error("Blog database unavailable; using built-in content.", error);
+    return blogSeeds.filter((item) => includeUnpublished || item.published);
+  }
+}
+
+export async function getBlogArticle(slug: string, includeUnpublished = false, strict = false) {
+  try {
+    return await getBlogArticleFromDatabase(slug, includeUnpublished);
+  } catch (error) {
+    if (strict) throw error;
+    console.error("Blog database unavailable; using built-in article content.", error);
+    return blogSeeds.find((item) => item.slug === slug && (includeUnpublished || item.published));
+  }
+}
 export async function createContent(kind: ContentKind, value: PortfolioProject | ServiceItem | BlogArticle) {
   await ensureSchema();
   const pool = getPool();

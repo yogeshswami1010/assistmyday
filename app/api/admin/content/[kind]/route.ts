@@ -15,8 +15,12 @@ export async function GET(_request: Request, { params }: { params: Promise<{ kin
   const { kind } = await params;
   if (!isContentKind(kind)) return NextResponse.json({ error: "Unknown content type." }, { status: 404 });
   if (!isDatabaseConfigured()) return NextResponse.json({ error: "Database is not configured." }, { status: 503 });
-  const items = kind === "portfolio" ? await getPortfolioProjects(true) : kind === "services" ? await getServices(true) : await getBlogArticles(true);
-  return NextResponse.json({ items });
+  try {
+    const items = kind === "portfolio" ? await getPortfolioProjects(true, true) : kind === "services" ? await getServices(true, true) : await getBlogArticles(true, true);
+    return NextResponse.json({ items });
+  } catch {
+    return NextResponse.json({ error: "Database connection is unavailable." }, { status: 503 });
+  }
 }
 
 export async function POST(request: Request, { params }: { params: Promise<{ kind: string }> }) {

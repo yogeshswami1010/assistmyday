@@ -8,9 +8,23 @@ export const metadata = { title: "Content Admin | Assistmyday", robots: { index:
 
 export default async function AdminPage() {
   const session = await requireAdminSession();
-  const databaseReady = isDatabaseConfigured();
-  const [portfolio, services, blogs] = databaseReady
-    ? await Promise.all([getPortfolioProjects(true), getServices(true), getBlogArticles(true)])
-    : [[], [], []];
+  let databaseReady = isDatabaseConfigured();
+  let portfolio: Awaited<ReturnType<typeof getPortfolioProjects>> = [];
+  let services: Awaited<ReturnType<typeof getServices>> = [];
+  let blogs: Awaited<ReturnType<typeof getBlogArticles>> = [];
+
+  if (databaseReady) {
+    try {
+      [portfolio, services, blogs] = await Promise.all([
+        getPortfolioProjects(true, true),
+        getServices(true, true),
+        getBlogArticles(true, true),
+      ]);
+    } catch (error) {
+      console.error("Admin database connection failed.", error);
+      databaseReady = false;
+    }
+  }
+
   return <AdminPanel email={session.email} databaseReady={databaseReady} initialRecords={{ portfolio, services, blogs }} />;
 }
