@@ -27,7 +27,7 @@ export default function AdminLogin({ configured }: { configured: boolean }) {
     <Image className={styles.logo} src="/assistmyday-logo.webp" alt="Assistmyday" width={350} height={84} priority />
     <p>CONTENT OPERATIONS</p><h1>Admin access.</h1>
     <span>Manage portfolio projects, services, and editorial content from one secure workspace.</span>
-    {!configured && <div className={styles.notice}>Admin login is not configured on Hostinger. Add ADMIN_EMAIL, ADMIN_PASSWORD (12+ characters), and ADMIN_AUTH_SECRET (32+ characters), then redeploy.</div>}
+    {!configured && <div className={styles.notice}>Admin login is not configured on Hostinger. Add ADMIN_EMAIL and ADMIN_PASSWORD (8+ characters), then redeploy.</div>}
     <form className={styles.loginForm} onSubmit={submit}>
       <div className={styles.field}><label htmlFor="email">EMAIL ADDRESS</label><input id="email" name="email" type="email" autoComplete="username" required /></div>
       <div className={styles.field}><label htmlFor="password">PASSWORD</label><input id="password" name="password" type="password" autoComplete="current-password" required /></div>

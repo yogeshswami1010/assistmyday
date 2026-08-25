@@ -1,20 +1,22 @@
-import { createHmac, timingSafeEqual } from "node:crypto";
+import { createHmac, randomBytes, timingSafeEqual } from "node:crypto";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 
 const COOKIE_NAME = "amd_admin_session";
 const SESSION_SECONDS = 60 * 60 * 8;
+const globalAuth = globalThis as typeof globalThis & { assistmydayEphemeralAuthSecret?: Buffer };
 
 type SessionPayload = { email: string; exp: number };
 
 export function isAdminAuthConfigured() {
-  return Boolean(process.env.ADMIN_EMAIL && (process.env.ADMIN_PASSWORD?.length || 0) >= 12 && (process.env.ADMIN_AUTH_SECRET?.length || 0) >= 32);
+  return Boolean(process.env.ADMIN_EMAIL && (process.env.ADMIN_PASSWORD?.length || 0) >= 8);
 }
 
 function secret() {
-  const value = process.env.ADMIN_AUTH_SECRET;
-  if (!value) throw new Error("ADMIN_AUTH_NOT_CONFIGURED");
-  return value;
+  const configuredSecret = process.env.ADMIN_AUTH_SECRET;
+  if (configuredSecret && configuredSecret.length >= 32) return configuredSecret;
+  globalAuth.assistmydayEphemeralAuthSecret ??= randomBytes(32);
+  return globalAuth.assistmydayEphemeralAuthSecret;
 }
 
 function sameValue(left: string, right: string) {
