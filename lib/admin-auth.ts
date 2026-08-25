@@ -83,8 +83,20 @@ export async function requireAdminSession() {
   return session;
 }
 
+function parseOrigin(value: string | undefined | null) {
+  if (!value) return null;
+  try { return new URL(value).origin; } catch { return null; }
+}
+
 export function isSameOrigin(request: Request) {
-  const origin = request.headers.get("origin");
-  if (!origin) return true;
-  try { return new URL(origin).host === new URL(request.url).host; } catch { return false; }
+  const origin = parseOrigin(request.headers.get("origin"));
+  if (!origin) return !request.headers.get("origin");
+
+  const allowedOrigins = new Set<string>();
+  const requestOrigin = parseOrigin(request.url);
+  const configuredOrigin = parseOrigin(process.env.NEXT_PUBLIC_SITE_URL);
+  if (requestOrigin) allowedOrigins.add(requestOrigin);
+  if (configuredOrigin) allowedOrigins.add(configuredOrigin);
+
+  return allowedOrigins.has(origin);
 }
