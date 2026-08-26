@@ -13,6 +13,14 @@ type ServiceRow = RowDataPacket & {
   id: number; number_label: string; title: string; label: string; copy: string;
   items_json: string; motif: ServiceItem["motif"]; sort_order: number; published: number;
 };
+type MediaRow = RowDataPacket & {
+  id: number;
+  filename: string;
+  content_type: string;
+  data: Buffer;
+  size_bytes: number;
+};
+
 type BlogRow = RowDataPacket & {
   id: number; slug: string; category: string; title: string; image_url: string | null; excerpt: string;
   display_date: string; read_time: string; accent: string; intro: string; content_html: string | null;
@@ -107,6 +115,7 @@ async function initializeSchema() {
     created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
   ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci`);
+  await pool.query("CREATE TABLE IF NOT EXISTS amd_media (id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY, filename VARCHAR(255) NOT NULL, content_type VARCHAR(80) NOT NULL, data LONGBLOB NOT NULL, size_bytes INT UNSIGNED NOT NULL, created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci");
   await pool.query(`CREATE TABLE IF NOT EXISTS amd_blogs (
     id INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
     slug VARCHAR(180) NOT NULL UNIQUE,
@@ -254,6 +263,32 @@ export async function getBlogArticle(slug: string, includeUnpublished = false, s
     return blogSeeds.find((item) => item.slug === slug && (includeUnpublished || item.published));
   }
 }
+export async function createMedia(filename: string, contentType: string, data: Buffer) {
+  await ensureSchema();
+  const [result] = await getPool().execute<ResultSetHeader>(
+    "INSERT INTO amd_media (filename, content_type, data, size_bytes) VALUES (?, ?, ?, ?)",
+    [filename.slice(0, 255), contentType, data, data.byteLength],
+  );
+  return result.insertId;
+}
+
+export async function getMedia(id: number) {
+  await ensureSchema();
+  const [rows] = await getPool().execute<MediaRow[]>(
+    "SELECT id, filename, content_type, data, size_bytes FROM amd_media WHERE id = ? LIMIT 1",
+    [id],
+  );
+  const row = rows[0];
+  if (!row) return undefined;
+  return {
+    id: row.id,
+    filename: row.filename,
+    contentType: row.content_type,
+    data: row.data,
+    size: row.size_bytes,
+  };
+}
+
 export async function createContent(kind: ContentKind, value: PortfolioProject | ServiceItem | BlogArticle) {
   await ensureSchema();
   const pool = getPool();

@@ -68,6 +68,7 @@ export default function AdminPanel({ email, databaseReady, databaseMessage, init
 
   async function save(event: FormEvent) {
     event.preventDefault(); if (!draft) return;
+    if (active === "blogs" && !field("image")) { setError("Select a featured image before saving."); return; }
     setSaving(true); setError("");
     const payload = { ...draft } as Record<string, unknown>;
     if (active === "services") payload.items = field("itemsText").split(/\r?\n|,/).map((item) => item.trim()).filter(Boolean);
@@ -130,7 +131,7 @@ export default function AdminPanel({ email, databaseReady, databaseMessage, init
         </>}
         {active === "blogs" && <>
           <Field wide label="ARTICLE TITLE" value={field("title")} onChange={(v) => update("title", v)} placeholder="Enter the blog title" required />
-          <Field wide label="FEATURED IMAGE URL OR /PUBLIC PATH" value={field("image")} onChange={(v) => update("image", v)} placeholder="https://... or /images/blog-cover.jpg" required hint="This image appears on the blog card and at the top of the article." />
+          <ImageUploadField value={field("image")} onChange={(value) => update("image", value)} />
           <Field label="PUBLISH DATE" value={field("date")} onChange={(v) => update("date", v)} readOnly hint="Automatically set to today for new posts." />
           <Field label="CATEGORY" value={field("category")} onChange={(v) => update("category", v)} placeholder="INSIGHTS" />
           <div className={[styles.field, styles.wide].join(" ")}>
@@ -142,6 +143,46 @@ export default function AdminPanel({ email, databaseReady, databaseMessage, init
         <label className={`${styles.check} ${styles.wide}`}><input type="checkbox" checked={Boolean(draft.published)} onChange={(event) => update("published", event.target.checked)} /> Publish this content on the website</label>
       </div>{error && <p className={styles.error}>{error}</p>}<div className={styles.formActions}><button type="button" className={styles.ghostButton} onClick={() => setDraft(null)}>CANCEL</button><button className={styles.primaryButton} disabled={saving}>{saving ? "SAVING…" : editingId ? "SAVE CHANGES" : "CREATE CONTENT"}</button></div></form>
     </section></div>}
+  </div>;
+}
+
+function ImageUploadField({ value, onChange }: { value: string; onChange: (value: string) => void }) {
+  const inputRef = useRef<HTMLInputElement>(null);
+  const [uploading, setUploading] = useState(false);
+  const [uploadError, setUploadError] = useState("");
+
+  async function upload(file?: File) {
+    if (!file) return;
+    setUploading(true);
+    setUploadError("");
+    const body = new FormData();
+    body.append("image", file);
+    try {
+      const response = await fetch("/api/admin/upload", { method: "POST", body });
+      const data = await response.json().catch(() => ({})) as { url?: string; error?: string };
+      if (!response.ok || !data.url) throw new Error(data.error || "Unable to upload image.");
+      onChange(data.url);
+    } catch (error) {
+      setUploadError(error instanceof Error ? error.message : "Unable to upload image.");
+    } finally {
+      setUploading(false);
+      if (inputRef.current) inputRef.current.value = "";
+    }
+  }
+
+  return <div className={[styles.field, styles.wide].join(" ")}>
+    <label>FEATURED IMAGE</label>
+    <div className={styles.imagePicker}>
+      <div className={styles.imagePreview}>
+        {value ? <Image src={value} alt="Selected featured image" fill sizes="600px" unoptimized /> : <span>NO IMAGE SELECTED</span>}
+      </div>
+      <div className={styles.imagePickerActions}>
+        <input ref={inputRef} type="file" accept="image/jpeg,image/png,image/webp,image/gif" onChange={(event) => upload(event.target.files?.[0])} hidden />
+        <button type="button" onClick={() => inputRef.current?.click()} disabled={uploading}>{uploading ? "UPLOADING…" : value ? "REPLACE IMAGE" : "SELECT IMAGE"}</button>
+        <small>JPEG, PNG, WebP, or GIF. Maximum file size: 5 MB.</small>
+      </div>
+    </div>
+    {uploadError && <small className={styles.uploadError}>{uploadError}</small>}
   </div>;
 }
 
