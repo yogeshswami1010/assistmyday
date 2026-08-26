@@ -30,6 +30,22 @@ export function isDatabaseConfigured() {
   );
 }
 
+export function describeDatabaseError(error: unknown) {
+  const code = typeof error === "object" && error !== null && "code" in error
+    ? String(error.code)
+    : "UNKNOWN";
+  const messages: Record<string, string> = {
+    ER_ACCESS_DENIED_ERROR: "MySQL rejected the database username or password. Reset the MySQL user password in Hostinger, update DB_PASSWORD, and redeploy.",
+    ER_BAD_DB_ERROR: "MySQL could not find DB_NAME. Copy the exact database name from Hostinger and redeploy.",
+    ER_DBACCESS_DENIED_ERROR: "The MySQL user does not have access to this database. Reassign the user to the database in Hostinger.",
+    ER_TABLEACCESS_DENIED_ERROR: "The MySQL user cannot create or update the required content tables.",
+    ECONNREFUSED: "MySQL refused the connection. Keep DB_HOST as localhost and DB_PORT as 3306, then restart the Node.js application.",
+    ETIMEDOUT: "The MySQL connection timed out. Restart the Node.js application and check Hostinger runtime logs.",
+    ENOTFOUND: "DB_HOST could not be resolved. Use localhost for a Hostinger MySQL database.",
+  };
+  return messages[code] || `MySQL connection failed (${code}). Check the Node.js runtime logs in Hostinger.`;
+}
+
 function getPool() {
   if (!isDatabaseConfigured()) throw new Error("DATABASE_NOT_CONFIGURED");
   if (!globalDatabase.assistmydayPool) {

@@ -49,7 +49,7 @@ function toDraft(kind: ContentKind, item: ManagedItem) {
   return { ...item };
 }
 
-export default function AdminPanel({ email, databaseReady, initialRecords }: { email: string; databaseReady: boolean; initialRecords: Records }) {
+export default function AdminPanel({ email, databaseReady, databaseMessage, initialRecords }: { email: string; databaseReady: boolean; databaseMessage: string; initialRecords: Records }) {
   const router = useRouter();
   const [active, setActive] = useState<ContentKind>("portfolio");
   const [records, setRecords] = useState<Records>(initialRecords);
@@ -106,7 +106,7 @@ export default function AdminPanel({ email, databaseReady, initialRecords }: { e
       <aside className={styles.sidebar}><small>CONTENT</small>{(["portfolio", "services", "blogs"] as ContentKind[]).map((kind, index) => <button key={kind} onClick={() => changeSection(kind)} className={`${styles.navButton} ${active === kind ? styles.navActive : ""}`}><span>{labels[kind]}</span><b>0{index + 1}</b></button>)}</aside>
       <main className={styles.main}>
         <header className={styles.heading}><div><p>ASSISTMYDAY / ADMIN</p><h1>Manage <em>{labels[active].toLowerCase()}.</em></h1></div><button className={styles.primaryButton} onClick={openNew} disabled={!databaseReady}>＋ ADD NEW</button></header>
-        {!databaseReady && <div className={styles.notice}>The admin interface is ready, but MySQL is not connected. Add <code>DB_HOST</code>, <code>DB_USER</code>, <code>DB_PASSWORD</code>, and <code>DB_NAME</code> in Hostinger, then redeploy.</div>}
+        {!databaseReady && <div className={styles.notice}><strong>MySQL is not connected.</strong><br />{databaseMessage}</div>}
         <section className={styles.stats}><div className={styles.stat}><small>TOTAL RECORDS</small><strong>{activeItems.length}</strong></div><div className={styles.stat}><small>PUBLISHED</small><strong>{publishedCount}</strong></div><div className={styles.stat}><small>DRAFTS</small><strong>{activeItems.length - publishedCount}</strong></div></section>
         <section className={styles.list}>{activeItems.length ? activeItems.map((item) => {
           const image = active === "portfolio" ? (item as PortfolioProject).image : "";
