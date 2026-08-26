@@ -35,11 +35,13 @@ export type BlogArticle = {
   slug: string;
   category: string;
   title: string;
+  image?: string;
   excerpt: string;
   date: string;
   readTime: string;
   accent: string;
   intro: string;
+  contentHtml?: string;
   sections: ArticleSection[];
   sortOrder: number;
   published: boolean;

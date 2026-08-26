@@ -1,3 +1,4 @@
+import sanitizeHtml from "sanitize-html";
 import type { ArticleSection, BlogArticle, ContentKind, PortfolioProject, ServiceItem } from "./content-types";
 
 function text(value: unknown, field: string, max = 500) {
@@ -29,7 +30,7 @@ function slug(value: unknown, fallback: string) {
 function contentUrl(value: unknown, field: string, fallback = "") {
   const result = optionalText(value, fallback, 2000);
   if (!result) throw new Error(`${field} is required.`);
-  if (result.startsWith("/")) return result;
+  if (result.startsWith("/") && !result.startsWith("//")) return result;
   try {
     const parsed = new URL(result);
     if (parsed.protocol !== "https:" && parsed.protocol !== "http:") throw new Error();
@@ -39,9 +40,14 @@ function contentUrl(value: unknown, field: string, fallback = "") {
   }
 }
 
+function optionalContentUrl(value: unknown, field: string) {
+  const result = optionalText(value, "", 2000);
+  return result ? contentUrl(result, field) : "";
+}
+
 function sections(value: unknown): ArticleSection[] {
-  if (!Array.isArray(value)) throw new Error("Article content is required.");
-  const result = value.slice(0, 30).map((section) => {
+  if (!Array.isArray(value)) return [];
+  return value.slice(0, 30).map((section) => {
     const item = section as Partial<ArticleSection>;
     const paragraphs = Array.isArray(item.paragraphs)
       ? item.paragraphs.map((entry) => optionalText(entry, "", 5000)).filter(Boolean).slice(0, 20)
@@ -51,8 +57,27 @@ function sections(value: unknown): ArticleSection[] {
       : [];
     return { heading: text(item.heading, "Section heading", 240), paragraphs, ...(bullets.length ? { bullets } : {}) };
   });
-  if (!result.length) throw new Error("Add at least one article section.");
-  return result;
+}
+
+export function sanitizeBlogHtml(value: unknown) {
+  if (typeof value !== "string" || !value.trim()) throw new Error("Description is required.");
+  const cleaned = sanitizeHtml(value.slice(0, 100000), {
+    allowedTags: ["p", "br", "strong", "b", "em", "i", "h2", "h3", "ul", "ol", "li", "blockquote", "a"],
+    allowedAttributes: { a: ["href", "target", "rel"] },
+    allowedSchemes: ["http", "https", "mailto"],
+    allowedSchemesByTag: { a: ["http", "https", "mailto"] },
+  }).trim();
+  if (!cleaned) throw new Error("Description is required.");
+  return cleaned;
+}
+
+function plainTextFromHtml(value: string) {
+  const spaced = value.replace(/<\/(p|h2|h3|li|blockquote)>/gi, (tag) => tag + " ");
+  return sanitizeHtml(spaced, { allowedTags: [], allowedAttributes: {} }).replace(/\s+/g, " ").trim();
+}
+function currentDisplayDate() {
+  return new Intl.DateTimeFormat("en-US", { month: "short", day: "2-digit", year: "numeric" })
+    .format(new Date()).toUpperCase();
 }
 
 export function parseContent(kind: ContentKind, value: unknown): PortfolioProject | ServiceItem | BlogArticle {
@@ -80,13 +105,29 @@ export function parseContent(kind: ContentKind, value: unknown): PortfolioProjec
       items, motif, sortOrder: number(input.sortOrder), published: boolean(input.published),
     };
   }
+
   const title = text(input.title, "Article title", 240);
+  const contentHtml = sanitizeBlogHtml(input.contentHtml);
+  const plainContent = plainTextFromHtml(contentHtml);
+  if (!plainContent) throw new Error("Description is required.");
+  const excerpt = optionalText(input.excerpt, plainContent.slice(0, 280), 1000) || plainContent.slice(0, 280);
+  const intro = optionalText(input.intro, excerpt, 5000) || excerpt;
+  const legacySections = sections(input.sections);
+  const wordCount = plainContent.split(/\s+/).filter(Boolean).length;
   return {
-    slug: slug(input.slug, title), category: text(input.category, "Category", 120), title,
-    excerpt: text(input.excerpt, "Excerpt", 1000), date: text(input.date, "Display date", 40),
-    readTime: text(input.readTime, "Read time", 40), accent: optionalText(input.accent, "#5bb8e8", 20),
-    intro: text(input.intro, "Introduction", 5000), sections: sections(input.sections),
-    sortOrder: number(input.sortOrder), published: boolean(input.published),
+    slug: slug(input.slug, title),
+    category: optionalText(input.category, "INSIGHTS", 120) || "INSIGHTS",
+    title,
+    image: optionalContentUrl(input.image, "Featured image"),
+    excerpt,
+    date: optionalText(input.date, currentDisplayDate(), 40) || currentDisplayDate(),
+    readTime: optionalText(input.readTime, `${Math.max(1, Math.ceil(wordCount / 200))} MIN READ`, 40),
+    accent: optionalText(input.accent, "#5bb8e8", 20),
+    intro,
+    contentHtml,
+    sections: legacySections.length ? legacySections : [{ heading: "Article", paragraphs: [plainContent] }],
+    sortOrder: number(input.sortOrder),
+    published: boolean(input.published),
   };
 }
 

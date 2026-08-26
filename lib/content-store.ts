@@ -2,6 +2,7 @@ import mysql, { type Pool, type ResultSetHeader, type RowDataPacket } from "mysq
 import { articles as blogSeeds } from "../app/blog/articles";
 import { portfolioSeeds, serviceSeeds } from "./content-seeds";
 import type { BlogArticle, ContentKind, PortfolioProject, ServiceItem } from "./content-types";
+import { sanitizeBlogHtml } from "./content-validation";
 
 type PortfolioRow = RowDataPacket & {
   id: number; title: string; slug: string; category: string; image_url: string;
@@ -13,8 +14,8 @@ type ServiceRow = RowDataPacket & {
   items_json: string; motif: ServiceItem["motif"]; sort_order: number; published: number;
 };
 type BlogRow = RowDataPacket & {
-  id: number; slug: string; category: string; title: string; excerpt: string;
-  display_date: string; read_time: string; accent: string; intro: string;
+  id: number; slug: string; category: string; title: string; image_url: string | null; excerpt: string;
+  display_date: string; read_time: string; accent: string; intro: string; content_html: string | null;
   sections_json: string; sort_order: number; published: number;
 };
 
@@ -111,17 +112,23 @@ async function initializeSchema() {
     slug VARCHAR(180) NOT NULL UNIQUE,
     category VARCHAR(120) NOT NULL,
     title VARCHAR(240) NOT NULL,
+    image_url TEXT NULL,
     excerpt TEXT NOT NULL,
     display_date VARCHAR(40) NOT NULL,
     read_time VARCHAR(40) NOT NULL,
     accent VARCHAR(20) NOT NULL DEFAULT '#5bb8e8',
     intro TEXT NOT NULL,
+    content_html LONGTEXT NULL,
     sections_json LONGTEXT NOT NULL,
     sort_order INT NOT NULL DEFAULT 0,
     published TINYINT(1) NOT NULL DEFAULT 1,
     created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
   ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci`);
+  const [imageColumn] = await pool.query<RowDataPacket[]>("SHOW COLUMNS FROM amd_blogs LIKE 'image_url'");
+  if (!imageColumn.length) await pool.query("ALTER TABLE amd_blogs ADD COLUMN image_url TEXT NULL AFTER title");
+  const [contentColumn] = await pool.query<RowDataPacket[]>("SHOW COLUMNS FROM amd_blogs LIKE 'content_html'");
+  if (!contentColumn.length) await pool.query("ALTER TABLE amd_blogs ADD COLUMN content_html LONGTEXT NULL AFTER intro");
   await seedTable("amd_portfolio", portfolioSeeds, async (item) => {
     await pool.execute(
       `INSERT INTO amd_portfolio (title, slug, category, image_url, project_url, description, size, side, sort_order, published)
@@ -138,9 +145,9 @@ async function initializeSchema() {
   });
   await seedTable("amd_blogs", blogSeeds, async (item) => {
     await pool.execute(
-      `INSERT INTO amd_blogs (slug, category, title, excerpt, display_date, read_time, accent, intro, sections_json, sort_order, published)
-       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
-      [item.slug, item.category, item.title, item.excerpt, item.date, item.readTime, item.accent, item.intro, JSON.stringify(item.sections), item.sortOrder, item.published ? 1 : 0],
+      `INSERT INTO amd_blogs (slug, category, title, image_url, excerpt, display_date, read_time, accent, intro, content_html, sections_json, sort_order, published)
+       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+      [item.slug, item.category, item.title, item.image || "", item.excerpt, item.date, item.readTime, item.accent, item.intro, item.contentHtml || "", JSON.stringify(item.sections), item.sortOrder, item.published ? 1 : 0],
     );
   });
 }
@@ -167,8 +174,8 @@ const mapService = (row: ServiceRow): ServiceItem => ({
   published: Boolean(row.published),
 });
 const mapBlog = (row: BlogRow): BlogArticle => ({
-  id: row.id, slug: row.slug, category: row.category, title: row.title, excerpt: row.excerpt,
-  date: row.display_date, readTime: row.read_time, accent: row.accent, intro: row.intro,
+  id: row.id, slug: row.slug, category: row.category, title: row.title, image: row.image_url || "", excerpt: row.excerpt,
+  date: row.display_date, readTime: row.read_time, accent: row.accent, intro: row.intro, contentHtml: row.content_html ? sanitizeBlogHtml(row.content_html) : "",
   sections: safeJson(row.sections_json, []), sortOrder: row.sort_order, published: Boolean(row.published),
 });
 
@@ -266,8 +273,8 @@ export async function createContent(kind: ContentKind, value: PortfolioProject |
   }
   const item = value as BlogArticle;
   const [result] = await pool.execute<ResultSetHeader>(`INSERT INTO amd_blogs
-    (slug, category, title, excerpt, display_date, read_time, accent, intro, sections_json, sort_order, published)
-    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`, [item.slug, item.category, item.title, item.excerpt, item.date, item.readTime, item.accent, item.intro, JSON.stringify(item.sections), item.sortOrder, item.published ? 1 : 0]);
+    (slug, category, title, image_url, excerpt, display_date, read_time, accent, intro, content_html, sections_json, sort_order, published)
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`, [item.slug, item.category, item.title, item.image || "", item.excerpt, item.date, item.readTime, item.accent, item.intro, item.contentHtml || "", JSON.stringify(item.sections), item.sortOrder, item.published ? 1 : 0]);
   return result.insertId;
 }
 
@@ -284,8 +291,8 @@ export async function updateContent(kind: ContentKind, id: number, value: Portfo
       [item.number, item.title, item.label, item.copy, JSON.stringify(item.items), item.motif, item.sortOrder, item.published ? 1 : 0, id]);
   } else {
     const item = value as BlogArticle;
-    await pool.execute(`UPDATE amd_blogs SET slug=?, category=?, title=?, excerpt=?, display_date=?, read_time=?, accent=?, intro=?, sections_json=?, sort_order=?, published=? WHERE id=?`,
-      [item.slug, item.category, item.title, item.excerpt, item.date, item.readTime, item.accent, item.intro, JSON.stringify(item.sections), item.sortOrder, item.published ? 1 : 0, id]);
+    await pool.execute(`UPDATE amd_blogs SET slug=?, category=?, title=?, image_url=?, excerpt=?, display_date=?, read_time=?, accent=?, intro=?, content_html=?, sections_json=?, sort_order=?, published=? WHERE id=?`,
+      [item.slug, item.category, item.title, item.image || "", item.excerpt, item.date, item.readTime, item.accent, item.intro, item.contentHtml || "", JSON.stringify(item.sections), item.sortOrder, item.published ? 1 : 0, id]);
   }
 }
 

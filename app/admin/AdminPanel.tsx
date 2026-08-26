@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { useMemo, useState, type FormEvent } from "react";
+import { useEffect, useMemo, useRef, useState, type FormEvent } from "react";
 import type { BlogArticle, ContentKind, PortfolioProject, ServiceItem } from "../../lib/content-types";
 import styles from "./Admin.module.css";
 
@@ -11,41 +11,35 @@ type Records = Record<ContentKind, ManagedItem[]>;
 
 const labels: Record<ContentKind, string> = { portfolio: "Portfolio", services: "Services", blogs: "Blog" };
 
-function articleToText(sections: BlogArticle["sections"]) {
-  return sections.map((section) => [
-    `## ${section.heading}`,
-    ...section.paragraphs,
-    ...(section.bullets || []).map((bullet) => `- ${bullet}`),
-  ].join("\n\n")).join("\n\n");
+function escapeHtml(value: string) {
+  return value.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
 }
 
-function textToSections(value: string): BlogArticle["sections"] {
-  const result: BlogArticle["sections"] = [];
-  let current = { heading: "Overview", paragraphs: [] as string[], bullets: [] as string[] };
-  const flush = () => {
-    if (current.paragraphs.length || current.bullets.length || current.heading !== "Overview") {
-      result.push({ heading: current.heading, paragraphs: current.paragraphs, ...(current.bullets.length ? { bullets: current.bullets } : {}) });
-    }
-  };
-  value.split(/\r?\n/).map((line) => line.trim()).filter(Boolean).forEach((line) => {
-    if (line.startsWith("## ")) {
-      flush(); current = { heading: line.slice(3).trim() || "Section", paragraphs: [], bullets: [] };
-    } else if (line.startsWith("- ")) current.bullets.push(line.slice(2).trim());
-    else current.paragraphs.push(line);
-  });
-  flush();
-  return result.length ? result : [{ heading: "Overview", paragraphs: [value.trim()] }];
+function articleToHtml(article: BlogArticle) {
+  if (article.contentHtml) return article.contentHtml;
+  return article.sections.map((section) => {
+    const paragraphs = section.paragraphs.map((paragraph) => "<p>" + escapeHtml(paragraph) + "</p>").join("");
+    const bullets = section.bullets?.length
+      ? "<ul>" + section.bullets.map((bullet) => "<li>" + escapeHtml(bullet) + "</li>").join("") + "</ul>"
+      : "";
+    return "<h2>" + escapeHtml(section.heading) + "</h2>" + paragraphs + bullets;
+  }).join("");
+}
+
+function currentDisplayDate() {
+  return new Intl.DateTimeFormat("en-US", { month: "short", day: "2-digit", year: "numeric" })
+    .format(new Date()).toUpperCase();
 }
 
 function newDraft(kind: ContentKind): Record<string, unknown> {
   if (kind === "portfolio") return { title: "", slug: "", category: "", image: "", projectUrl: "/contact", description: "", size: "large", side: "left", sortOrder: 0, published: true };
   if (kind === "services") return { number: "", title: "", label: "", copy: "", itemsText: "", motif: "rings", sortOrder: 0, published: true };
-  return { title: "", slug: "", category: "", excerpt: "", date: "", readTime: "6 MIN READ", accent: "#5bb8e8", intro: "", articleBody: "", sortOrder: 0, published: true };
+  return { title: "", slug: "", category: "INSIGHTS", image: "", date: currentDisplayDate(), accent: "#5bb8e8", contentHtml: "<p></p>", sortOrder: 0, published: true };
 }
 
 function toDraft(kind: ContentKind, item: ManagedItem) {
   if (kind === "services") return { ...item, itemsText: (item as ServiceItem).items.join("\n") };
-  if (kind === "blogs") return { ...item, articleBody: articleToText((item as BlogArticle).sections) };
+  if (kind === "blogs") return { ...item, contentHtml: articleToHtml(item as BlogArticle) };
   return { ...item };
 }
 
@@ -77,7 +71,6 @@ export default function AdminPanel({ email, databaseReady, databaseMessage, init
     setSaving(true); setError("");
     const payload = { ...draft } as Record<string, unknown>;
     if (active === "services") payload.items = field("itemsText").split(/\r?\n|,/).map((item) => item.trim()).filter(Boolean);
-    if (active === "blogs") payload.sections = textToSections(field("articleBody"));
     const response = await fetch(`/api/admin/content/${active}${editingId ? `/${editingId}` : ""}`, {
       method: editingId ? "PUT" : "POST", headers: { "content-type": "application/json" }, body: JSON.stringify(payload),
     });
@@ -109,7 +102,7 @@ export default function AdminPanel({ email, databaseReady, databaseMessage, init
         {!databaseReady && <div className={styles.notice}><strong>MySQL is not connected.</strong><br />{databaseMessage}</div>}
         <section className={styles.stats}><div className={styles.stat}><small>TOTAL RECORDS</small><strong>{activeItems.length}</strong></div><div className={styles.stat}><small>PUBLISHED</small><strong>{publishedCount}</strong></div><div className={styles.stat}><small>DRAFTS</small><strong>{activeItems.length - publishedCount}</strong></div></section>
         <section className={styles.list}>{activeItems.length ? activeItems.map((item) => {
-          const image = active === "portfolio" ? (item as PortfolioProject).image : "";
+          const image = active === "portfolio" ? (item as PortfolioProject).image : active === "blogs" ? (item as BlogArticle).image || "" : "";
           const subtitle = active === "portfolio" ? (item as PortfolioProject).category : active === "services" ? (item as ServiceItem).label : `${(item as BlogArticle).category} · ${(item as BlogArticle).date}`;
           return <article className={styles.card} key={`${active}-${item.id || item.title}`}>
             {image ? <Image className={styles.thumb} src={image} alt="" width={78} height={58} unoptimized /> : <div className={styles.thumbText}>{active === "services" ? (item as ServiceItem).number : (item as BlogArticle).category.slice(0, 2)}</div>}
@@ -136,15 +129,62 @@ export default function AdminPanel({ email, databaseReady, databaseMessage, init
           <Select label="VISUAL MOTIF" value={field("motif")} onChange={(v) => update("motif", v)} options={["rings", "frame", "signal", "orbit"]} />
         </>}
         {active === "blogs" && <>
-          <Field wide label="ARTICLE TITLE" value={field("title")} onChange={(v) => update("title", v)} required /><Field label="SLUG" value={field("slug")} onChange={(v) => update("slug", v)} placeholder="generated-from-title" /><Field label="CATEGORY" value={field("category")} onChange={(v) => update("category", v)} required />
-          <Field label="DISPLAY DATE" value={field("date")} onChange={(v) => update("date", v)} placeholder="AUG 24, 2026" required /><Field label="READ TIME" value={field("readTime")} onChange={(v) => update("readTime", v)} required />
-          <Field wide area label="EXCERPT" value={field("excerpt")} onChange={(v) => update("excerpt", v)} required /><Field wide area label="INTRODUCTION" value={field("intro")} onChange={(v) => update("intro", v)} required />
-          <Field wide area tall label="ARTICLE CONTENT" value={field("articleBody")} onChange={(v) => update("articleBody", v)} required hint="Use ## before section headings and - before bullet points. Put each paragraph on a new line." />
-          <Field label="ACCENT COLOR" type="color" value={field("accent")} onChange={(v) => update("accent", v)} /><Field label="SORT ORDER" type="number" value={field("sortOrder")} onChange={(v) => update("sortOrder", v)} />
+          <Field wide label="ARTICLE TITLE" value={field("title")} onChange={(v) => update("title", v)} placeholder="Enter the blog title" required />
+          <Field wide label="FEATURED IMAGE URL OR /PUBLIC PATH" value={field("image")} onChange={(v) => update("image", v)} placeholder="https://... or /images/blog-cover.jpg" required hint="This image appears on the blog card and at the top of the article." />
+          <Field label="PUBLISH DATE" value={field("date")} onChange={(v) => update("date", v)} readOnly hint="Automatically set to today for new posts." />
+          <Field label="CATEGORY" value={field("category")} onChange={(v) => update("category", v)} placeholder="INSIGHTS" />
+          <div className={[styles.field, styles.wide].join(" ")}>
+            <label>DESCRIPTION</label>
+            <RichTextEditor value={field("contentHtml")} onChange={(value) => update("contentHtml", value)} />
+            <small>Format the article with headings, bold, italic, lists, quotes, links, or switch to HTML mode.</small>
+          </div>
         </>}
         <label className={`${styles.check} ${styles.wide}`}><input type="checkbox" checked={Boolean(draft.published)} onChange={(event) => update("published", event.target.checked)} /> Publish this content on the website</label>
       </div>{error && <p className={styles.error}>{error}</p>}<div className={styles.formActions}><button type="button" className={styles.ghostButton} onClick={() => setDraft(null)}>CANCEL</button><button className={styles.primaryButton} disabled={saving}>{saving ? "SAVING…" : editingId ? "SAVE CHANGES" : "CREATE CONTENT"}</button></div></form>
     </section></div>}
+  </div>;
+}
+
+function RichTextEditor({ value, onChange }: { value: string; onChange: (value: string) => void }) {
+  const editorRef = useRef<HTMLDivElement>(null);
+  const [sourceMode, setSourceMode] = useState(false);
+
+  useEffect(() => {
+    const editor = editorRef.current;
+    if (!sourceMode && editor && editor.innerHTML !== value) editor.innerHTML = value;
+  }, [sourceMode, value]);
+
+  const sync = () => onChange(editorRef.current?.innerHTML || "");
+
+  function run(command: string, commandValue?: string) {
+    editorRef.current?.focus();
+    document.execCommand(command, false, commandValue);
+    sync();
+  }
+
+  function addLink() {
+    const url = window.prompt("Paste the link URL:");
+    if (url) run("createLink", url);
+  }
+
+  const keepSelection = (event: React.MouseEvent<HTMLButtonElement>) => event.preventDefault();
+
+  return <div className={styles.richText}>
+    <div className={styles.richToolbar} role="toolbar" aria-label="Description formatting">
+      <select aria-label="Text style" defaultValue="p" disabled={sourceMode} onChange={(event) => run("formatBlock", event.target.value)}>
+        <option value="p">Paragraph</option><option value="h2">Heading 2</option><option value="h3">Heading 3</option><option value="blockquote">Quote</option>
+      </select>
+      <button type="button" title="Bold" aria-label="Bold" disabled={sourceMode} onMouseDown={keepSelection} onClick={() => run("bold")}><strong>B</strong></button>
+      <button type="button" title="Italic" aria-label="Italic" disabled={sourceMode} onMouseDown={keepSelection} onClick={() => run("italic")}><em>I</em></button>
+      <button type="button" title="Bulleted list" aria-label="Bulleted list" disabled={sourceMode} onMouseDown={keepSelection} onClick={() => run("insertUnorderedList")}>• List</button>
+      <button type="button" title="Numbered list" aria-label="Numbered list" disabled={sourceMode} onMouseDown={keepSelection} onClick={() => run("insertOrderedList")}>1. List</button>
+      <button type="button" title="Add link" aria-label="Add link" disabled={sourceMode} onMouseDown={keepSelection} onClick={addLink}>Link</button>
+      <button type="button" title="Clear formatting" aria-label="Clear formatting" disabled={sourceMode} onMouseDown={keepSelection} onClick={() => run("removeFormat")}>Clear</button>
+      <button type="button" className={sourceMode ? styles.toolbarActive : ""} title="Edit HTML" aria-label="Edit HTML" onClick={() => setSourceMode((current) => !current)}>HTML</button>
+    </div>
+    {sourceMode
+      ? <textarea className={styles.htmlSource} value={value} onChange={(event) => onChange(event.target.value)} spellCheck={false} />
+      : <div ref={editorRef} className={styles.richEditor} contentEditable suppressContentEditableWarning onInput={sync} data-placeholder="Write your article description..." />}
   </div>;
 }
 

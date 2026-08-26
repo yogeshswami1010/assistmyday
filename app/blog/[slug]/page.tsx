@@ -7,16 +7,25 @@ import { getBlogArticle, getBlogArticles } from "../../../lib/content-store";
 export const dynamic = "force-dynamic";
 export const runtime = "nodejs";
 
+function absoluteImageUrl(image?: string) {
+  if (!image) return undefined;
+  if (image.startsWith("http://") || image.startsWith("https://")) return image;
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL;
+  if (!siteUrl) return undefined;
+  try { return new URL(image, siteUrl).toString(); } catch { return undefined; }
+}
+
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const { slug } = await params;
   const article = await getBlogArticle(slug);
   if (!article) return { title: "Article not found | Assistmyday", robots: { index: false } };
   const title = `${article.title} | Assistmyday`;
+  const image = absoluteImageUrl(article.image);
   return {
     title,
     description: article.excerpt,
-    openGraph: { title, description: article.excerpt, images: [] },
-    twitter: { title, description: article.excerpt, images: [] },
+    openGraph: { title, description: article.excerpt, images: image ? [image] : [] },
+    twitter: { title, description: article.excerpt, images: image ? [image] : [] },
   };
 }
 

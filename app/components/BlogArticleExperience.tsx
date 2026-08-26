@@ -2,7 +2,8 @@
 
 import { useEffect, useRef } from "react";
 import Link from "next/link";
-import type { BlogArticle } from "../blog/articles";
+import Image from "next/image";
+import type { BlogArticle } from "../../lib/content-types";
 import styles from "./BlogArticleExperience.module.css";
 
 export default function BlogArticleExperience({ article, related }: { article: BlogArticle; related: BlogArticle[] }) {
@@ -43,6 +44,7 @@ export default function BlogArticleExperience({ article, related }: { article: B
       <div className={styles.readingProgress} aria-hidden="true"><div ref={progressRef} /></div>
       <header className={styles.hero}>
         <div className={styles.heroNoise} aria-hidden="true" />
+        {article.image && <div className={styles.heroImage} aria-hidden="true"><Image src={article.image} alt="" fill sizes="100vw" priority unoptimized /></div>}
         <div className={styles.heroMeta}><Link href="/blog">← ALL INSIGHTS</Link><span>{article.category}</span><span>{article.date}</span><span>{article.readTime}</span></div>
         <h1>{article.title}</h1>
         <div className={styles.heroBottom}>
@@ -54,14 +56,19 @@ export default function BlogArticleExperience({ article, related }: { article: B
       <div className={styles.body}>
         <aside className={styles.toc}>
           <p>IN THIS ARTICLE</p>
-          <nav>{article.sections.map((section, index) => <a href={`#section-${index + 1}`} key={section.heading}><small>0{index + 1}</small>{section.heading}</a>)}</nav>
+          <nav>{article.contentHtml ? <a href="#article-content"><small>01</small>ARTICLE</a> : article.sections.map((section, index) => <a href={"#section-" + (index + 1)} key={section.heading}><small>{"0" + (index + 1)}</small>{section.heading}</a>)}</nav>
           <a className={styles.contactLink} href="/contact">DISCUSS THIS TOPIC <span>↗</span></a>
         </aside>
         <div className={styles.content}>
           <p className={styles.lead}>{article.intro}</p>
-          {article.sections.map((section, index) => (
-            <section id={`section-${index + 1}`} className={styles.contentSection} key={section.heading}>
-              <span>0{index + 1}</span><h2>{section.heading}</h2>
+          {article.contentHtml ? (
+            <section id="article-content" className={styles.contentSection}>
+              <span>01</span>
+              <div className={styles.richContent} dangerouslySetInnerHTML={{ __html: article.contentHtml }} />
+            </section>
+          ) : article.sections.map((section, index) => (
+            <section id={"section-" + (index + 1)} className={styles.contentSection} key={section.heading}>
+              <span>{"0" + (index + 1)}</span><h2>{section.heading}</h2>
               {section.paragraphs.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}
               {section.bullets && <ul>{section.bullets.map((bullet) => <li key={bullet}>{bullet}</li>)}</ul>}
             </section>
