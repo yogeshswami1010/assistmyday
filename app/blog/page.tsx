@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import InnerPages from "../components/InnerPages";
 import { getBlogArticles } from "../../lib/content-store";
 
@@ -20,7 +21,33 @@ export default async function BlogPage() {
       </section>
       <section className="inner-section">
         <div className="inner-section-head"><h2>Latest perspectives.</h2><p>Clear, practical ideas for leaders building digital products, improving operations, and creating stronger demand.</p></div>
-        <div className="blog-grid">{articles.map((article, index) => <article className="blog-card" key={article.slug}><small>{String(index + 1).padStart(2, "0")} / {article.category}</small><h2>{article.title}</h2><p>{article.excerpt}</p><a href={"/blog/" + article.slug}>READ ARTICLE →</a></article>)}</div>
+        <div className="blog-grid">
+          {articles.map((article) => {
+            const href = "/blog/" + article.slug;
+
+            return (
+              <article className="blog-card" key={article.slug}>
+                <a className="blog-card-media" href={href} aria-label={"Read " + article.title}>
+                  {article.image ? (
+                    <Image
+                      src={article.image}
+                      alt={article.title}
+                      fill
+                      sizes="(max-width: 900px) 100vw, 33vw"
+                      unoptimized
+                    />
+                  ) : (
+                    <span>ASSISTMYDAY / INSIGHTS</span>
+                  )}
+                </a>
+                <div className="blog-card-content">
+                  <a className="blog-card-title" href={href}><h2>{article.title}</h2></a>
+                  <p>{article.excerpt}</p>
+                </div>
+              </article>
+            );
+          })}
+        </div>
       </section>
     </InnerPages>
   );
