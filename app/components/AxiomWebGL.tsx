@@ -31,8 +31,6 @@ function seededRandom(seed: number) {
 export default function AxiomWebGL() {
   const hostRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const blastRef = useRef(0);
-  const blastTargetRef = useRef(0);
 
   useEffect(() => {
     const host = hostRef.current;
@@ -59,18 +57,18 @@ export default function AxiomWebGL() {
     renderer.setPixelRatio(Math.min(devicePixelRatio, 1.75));
     renderer.outputColorSpace = THREE.SRGBColorSpace;
     renderer.toneMapping = THREE.ACESFilmicToneMapping;
-    renderer.toneMappingExposure = 0.82;
+    renderer.toneMappingExposure = 1.02;
 
     const world = new THREE.Group();
     const mark = new THREE.Group();
     world.add(mark);
     scene.add(world);
 
-    const ambient = new THREE.HemisphereLight(0x343799, 0x02030c, 0.62);
-    const key = new THREE.SpotLight(0x8edcff, 15, 28, Math.PI / 5, 0.7, 1.7);
+    const ambient = new THREE.HemisphereLight(0xf5f1e8, 0x090a12, 1.05);
+    const key = new THREE.SpotLight(0xfff8e8, 18, 28, Math.PI / 5, 0.7, 1.7);
     key.position.set(-5.5, 7, 7);
     key.target = mark;
-    const rim = new THREE.PointLight(0x4b4fd8, 9, 17, 1.8);
+    const rim = new THREE.PointLight(0xdde6f3, 10, 17, 1.8);
     rim.position.set(4.5, -1.5, 3.2);
     const ember = new THREE.PointLight(0x5bb8e8, 0, 12, 2);
     ember.position.set(0, -0.2, 1.25);
@@ -83,17 +81,17 @@ export default function AxiomWebGL() {
       rotationZ: number,
       scatter: [number, number, number],
       spin: [number, number, number],
-      tone = 0x17174f,
+      tone = 0xf1eee6,
     ) => {
       const geometry = new RoundedBoxGeometry(size[0], size[1], size[2], 5, Math.min(size[0], size[1], size[2]) * 0.11);
       const material = new THREE.MeshPhysicalMaterial({
         color: tone,
-        metalness: 0.96,
-        roughness: 0.24,
+        metalness: 0.58,
+        roughness: 0.3,
         clearcoat: 1,
         clearcoatRoughness: 0.14,
-        emissive: 0x05062a,
-        emissiveIntensity: 0.2,
+        emissive: 0x24221e,
+        emissiveIntensity: 0.08,
         transparent: true,
       });
       const mesh = new THREE.Mesh(geometry, material);
@@ -101,7 +99,7 @@ export default function AxiomWebGL() {
       mesh.rotation.z = rotationZ;
       const edges = new THREE.LineSegments(
         new THREE.EdgesGeometry(geometry, 32),
-        new THREE.LineBasicMaterial({ color: 0x69c9f4, transparent: true, opacity: 0.28 }),
+        new THREE.LineBasicMaterial({ color: 0xfffbf2, transparent: true, opacity: 0.38 }),
       );
       mesh.add(edges);
       mark.add(mesh);
@@ -117,10 +115,10 @@ export default function AxiomWebGL() {
     // The A is assembled from independent metal rails so the mark can split apart in depth.
     makePiece([0.58, 4.35, 0.62], [-0.82, 0.05, 0], -0.245, [-2.9, 1.8, 3.3], [-0.7, -1.1, -0.35]);
     makePiece([0.58, 4.35, 0.62], [0.82, 0.05, 0.04], 0.245, [3.2, 1.4, 4.2], [0.8, 1.25, 0.42]);
-    makePiece([1.78, 0.5, 0.72], [0, -0.38, 0.16], 0, [-0.5, -2.7, 5.1], [1.1, -0.35, -0.65], 0x5bb8e8);
-    makePiece([0.38, 3.25, 0.36], [-0.52, 0.15, -0.7], -0.245, [-4.2, -1.1, -2.8], [0.65, 1.45, -0.85], 0x24266f);
-    makePiece([0.38, 3.25, 0.36], [0.52, 0.15, -0.68], 0.245, [4.3, -1.5, -2.2], [-0.8, -1.25, 0.75], 0x24266f);
-    makePiece([1.25, 0.28, 0.42], [0, 0.36, -0.58], 0, [1.4, 3.1, -3.8], [-1.2, 0.7, 0.5], 0x5bb8e8);
+    makePiece([1.78, 0.5, 0.72], [0, -0.38, 0.16], 0, [-0.5, -2.7, 5.1], [1.1, -0.35, -0.65], 0xfaf7ef);
+    makePiece([0.38, 3.25, 0.36], [-0.52, 0.15, -0.7], -0.245, [-4.2, -1.1, -2.8], [0.65, 1.45, -0.85], 0xd8d4cb);
+    makePiece([0.38, 3.25, 0.36], [0.52, 0.15, -0.68], 0.245, [4.3, -1.5, -2.2], [-0.8, -1.25, 0.75], 0xd8d4cb);
+    makePiece([1.25, 0.28, 0.42], [0, 0.36, -0.58], 0, [1.4, 3.1, -3.8], [-1.2, 0.7, 0.5], 0xfaf7ef);
 
     // A layered outline remains assembled during the exploded scroll phase.
     const ghostMark = new THREE.Group();
@@ -128,7 +126,7 @@ export default function AxiomWebGL() {
     for (let layer = 0; layer < 3; layer += 1) {
       pieces.slice(0, 6).forEach((piece) => {
         const material = new THREE.LineBasicMaterial({
-          color: layer === 0 ? 0x3a3f49 : 0x242932,
+          color: layer === 0 ? 0xdad6ce : 0xa9a59d,
           transparent: true,
           opacity: 0,
           depthWrite: false,
@@ -150,11 +148,11 @@ export default function AxiomWebGL() {
       const h = 0.16 + random() * 1.25;
       const geometry = new RoundedBoxGeometry(w, h, 0.05 + random() * 0.16, 3, 0.018);
       const material = new THREE.MeshPhysicalMaterial({
-        color: index % 5 === 0 ? 0x5bb8e8 : 0x17174f,
-        metalness: 0.92,
-        roughness: 0.3,
-        emissive: index % 9 === 0 ? 0x291006 : 0x010204,
-        emissiveIntensity: index % 9 === 0 ? 0.7 : 0.28,
+        color: index % 5 === 0 ? 0xf0ece3 : 0xb9b5ad,
+        metalness: 0.58,
+        roughness: 0.34,
+        emissive: 0x171612,
+        emissiveIntensity: 0.08,
         transparent: true,
       });
       const angle = random() * Math.PI * 2;
@@ -307,7 +305,6 @@ export default function AxiomWebGL() {
       drag.x = event.clientX;
       drag.y = event.clientY;
       dragVelocity.set(0, 0);
-      blastTargetRef.current = 1;
       host.setPointerCapture(event.pointerId);
     };
     const onPointerMove = (event: PointerEvent) => {
@@ -323,20 +320,12 @@ export default function AxiomWebGL() {
     };
     const stopPointer = () => {
       drag.active = false;
-      blastTargetRef.current = 0;
     };
     const onKeyDown = (event: KeyboardEvent) => {
-      if (event.key === " " || event.key === "Enter") {
-        event.preventDefault();
-        blastTargetRef.current = 1;
-      }
       if (event.key === "ArrowLeft") dragRotation.y -= 0.16;
       if (event.key === "ArrowRight") dragRotation.y += 0.16;
       if (event.key === "ArrowUp") dragRotation.x -= 0.12;
       if (event.key === "ArrowDown") dragRotation.x += 0.12;
-    };
-    const onKeyUp = (event: KeyboardEvent) => {
-      if (event.key === " " || event.key === "Enter") blastTargetRef.current = 0;
     };
     host.addEventListener("pointerdown", onPointerDown);
     host.addEventListener("pointermove", onPointerMove);
@@ -344,7 +333,6 @@ export default function AxiomWebGL() {
     host.addEventListener("pointercancel", stopPointer);
     host.addEventListener("lostpointercapture", stopPointer);
     host.addEventListener("keydown", onKeyDown);
-    host.addEventListener("keyup", onKeyUp);
 
     const resize = () => {
       const width = Math.max(host.clientWidth, 1);
@@ -371,9 +359,7 @@ export default function AxiomWebGL() {
       const assembly = 1 - intro;
       const assemblyFlash =
         smooth((intro - 0.72) / 0.13) * (1 - smooth((intro - 0.93) / 0.07));
-
-      blastRef.current = THREE.MathUtils.lerp(blastRef.current, blastTargetRef.current, 0.13);
-      const blast = blastRef.current;
+      const blast = 0;
       pointer.lerp(pointerTarget, 0.055);
       if (!drag.active && !reducedMotion) {
         dragRotation.y += delta * (0.24 + (1 - explode) * 0.18) + dragVelocity.y;
@@ -404,7 +390,7 @@ export default function AxiomWebGL() {
           (index > 5
             ? 0.06 + assembly * 0.42 + explode * 0.72
             : 0.08 + intro * 0.92);
-        piece.mesh.material.emissiveIntensity = 0.42 + blast * 1.65;
+        piece.mesh.material.emissiveIntensity = 0.12;
         const edge = piece.mesh.children[0] as THREE.LineSegments<THREE.EdgesGeometry, THREE.LineBasicMaterial>;
         if (edge?.material) edge.material.opacity = visibility * intro * (0.16 + blast * 0.4);
       });
@@ -457,7 +443,6 @@ export default function AxiomWebGL() {
       host.removeEventListener("pointercancel", stopPointer);
       host.removeEventListener("lostpointercapture", stopPointer);
       host.removeEventListener("keydown", onKeyDown);
-      host.removeEventListener("keyup", onKeyUp);
       scene.traverse((object) => {
         const mesh = object as THREE.Mesh;
         if (mesh.geometry) mesh.geometry.dispose();
@@ -476,7 +461,7 @@ export default function AxiomWebGL() {
       className="webgl-logo-stage"
       role="application"
       tabIndex={0}
-      aria-label="Interactive 3D Assistmyday logo. Drag to rotate. Hold to energize. Scroll to move through the mark."
+      aria-label="Interactive 3D Assistmyday logo. Drag to rotate and scroll to move through the mark."
     >
       <canvas ref={canvasRef} className="webgl-logo-canvas" />
     </div>

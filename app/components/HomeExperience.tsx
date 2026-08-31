@@ -162,7 +162,7 @@ export default function HomeExperience({ services, portfolio }: { services: Serv
             <div className="est"><span>◎</span><small>ST. CATHARINES</small></div>
             <p>Custom software, high-performance websites, and<br />full-funnel digital marketing built around your growth.</p>
           </div>
-          <p className="blast">HOLD TO <b>✹</b> BLAST<br /><span>DRAG&nbsp; ⚡ &nbsp;TO ROTATE THE MARK.</span></p>
+          <p className="drag-hint">DRAG TO ROTATE</p>
           <div className="hero-finale">
             <span>STRATEGY</span><i>＋</i><span>SOFTWARE</span><i>＋</i><span>GROWTH</span>
           </div>
