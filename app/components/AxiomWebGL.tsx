@@ -284,7 +284,7 @@ export default function AxiomWebGL() {
       hero.style.setProperty("--hero-copy-y", `${copyOut * -54}px`);
       hero.style.setProperty("--hero-ui-opacity", String(1 - smooth(progress / 0.22)));
       hero.style.setProperty("--hero-world-opacity", String(worldFade));
-      hero.style.setProperty("--hero-finale-opacity", String(smooth((progress - 0.75) / 0.14) * worldFade));
+      hero.style.setProperty("--hero-finale-opacity", String(smooth((progress - 0.52) / 0.16) * worldFade));
     };
 
     const scrollTrigger = ScrollTrigger.create({
