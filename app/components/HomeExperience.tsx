@@ -301,12 +301,15 @@ export default function HomeExperience({ services, portfolio }: { services: Serv
         <div className="story-head"><h2>Built for measurable growth</h2><p>Integrated teams, clear communication, and outcomes that move the business forward.</p></div>
         <div className="story-body">
           <nav><b>OUR EXPERTISE →</b><span>SOFTWARE DEVELOPMENT</span><span>WEB PLATFORMS</span><span>PERFORMANCE MARKETING</span><span>UI/UX DESIGN</span><span>AUTOMATION</span></nav>
-          <div className="quote">
-            <h3>“Assistmyday gave us one accountable team for our platform and our marketing. The result is a stronger digital presence, a smoother customer journey, and a clearer path to growth.”</h3>
-            <div className="person"><i>GP</i><p>Growth Partner<br /><span>Assistmyday client</span></p></div>
+          <div className="quote google-review-panel">
+            <div className="google-review-top">
+              <div className="google-review-brand"><span className="google-g">G</span><p><b>Google Reviews</b><small>Assist My Day · St. Catharines</small></p></div>
+              <span className="google-stars" aria-label="Google rating">★★★★★</span>
+            </div>
+            <iframe title="Assist My Day on Google Maps" src="https://www.google.com/maps?q=Assist%20My%20Day%2C%20St.%20Catharines%2C%20ON&output=embed" loading="lazy" referrerPolicy="no-referrer-when-downgrade" allowFullScreen />
           </div>
         </div>
-        <div className="story-actions"><div><button>←</button><button>→</button></div><a href="https://share.google/VgwmytGzUI3oucbiI" target="_blank" rel="noopener noreferrer" aria-label="View Assistmyday reviews on Google">VIEW GOOGLE REVIEWS <span>↗</span></a></div>
+        <div className="story-actions"><p className="google-review-note">LIVE GOOGLE BUSINESS PROFILE</p><a href="https://share.google/VgwmytGzUI3oucbiI" target="_blank" rel="noopener noreferrer" aria-label="Read all Assist My Day reviews on Google">READ ALL GOOGLE REVIEWS <span>↗</span></a></div>
       </section>
 
       <section id="portfolio" className="motion-lab scene-light" data-scrollscene>

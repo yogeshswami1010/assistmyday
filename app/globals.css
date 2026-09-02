@@ -167,6 +167,11 @@ body{font-size:var(--type-body);line-height:var(--type-leading);font-family:Aria
 .portfolio-lab-caption small{font-size:11px}.portfolio-lab-caption span{font-size:11px;line-height:1.25}
 .footer h2{font-size:clamp(58px,7vw,112px);line-height:.88;letter-spacing:-.06em}.footer-intro{max-width:380px;font-size:17px;line-height:1.45}.footer-mail{font-size:12px}.footer-info p{font-size:15px;line-height:1.55}.footer-base,.copyright{font-size:12px;line-height:1.3}
 .partners>p{margin:0 0 28px}.partners>div{row-gap:18px}
+.google-review-panel{overflow:hidden;border:1px solid rgba(19,21,64,.16);border-radius:18px;background:#fff;box-shadow:0 24px 64px rgba(19,21,64,.1)}
+.google-review-top{display:flex;align-items:center;justify-content:space-between;gap:24px;padding:22px 24px;border-bottom:1px solid rgba(19,21,64,.12)}
+.google-review-brand{display:flex;align-items:center;gap:14px}.google-review-brand p{display:grid;gap:4px;margin:0;font-size:16px;line-height:1.15}.google-review-brand small{color:#777;font-size:12px;font-weight:400}
+.google-g{width:42px;height:42px;border-radius:50%;display:grid;place-items:center;background:#fff;color:#4285f4;border:1px solid #ddd;font-size:24px;font-weight:700;box-shadow:0 4px 14px rgba(0,0,0,.08)}
+.google-stars{color:#f4b400;font-size:19px;letter-spacing:.12em;white-space:nowrap}.google-review-panel iframe{display:block;width:100%;height:340px;border:0}.google-review-note{margin:0;font:12px/1.3 monospace;letter-spacing:.06em;color:#777}
 
 @media(max-width:760px){
   :root{--type-label:11px;--type-small:13px;--type-body:15px}
@@ -183,4 +188,5 @@ body{font-size:var(--type-body);line-height:var(--type-leading);font-family:Aria
   .story-head p{width:100%;font-size:15px}.quote h3{font-size:24px}.person p{font-size:14px}
   .design-in,.motion-word{font-size:clamp(44px,12vw,66px)}.lab-center{font-size:11px!important}.lab-copy{font-size:14px}
   .footer h2{font-size:clamp(46px,13vw,68px);line-height:.92}.footer-intro{font-size:15px}.footer-info p{font-size:13px}.footer-base,.copyright{font-size:10px}
+  .google-review-top{align-items:flex-start;padding:18px;gap:14px}.google-stars{font-size:14px}.google-review-panel iframe{height:300px}.google-review-note{font-size:10px}
 }
