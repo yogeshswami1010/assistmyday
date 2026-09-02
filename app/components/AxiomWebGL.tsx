@@ -81,7 +81,7 @@ export default function AxiomWebGL() {
       rotationZ: number,
       scatter: [number, number, number],
       spin: [number, number, number],
-      tone = 0xe8e8e6,
+      tone = 0x131540,
     ) => {
       const geometry = new RoundedBoxGeometry(size[0], size[1], size[2], 5, Math.min(size[0], size[1], size[2]) * 0.11);
       const material = new THREE.MeshPhysicalMaterial({
@@ -99,7 +99,7 @@ export default function AxiomWebGL() {
       mesh.rotation.z = rotationZ;
       const edges = new THREE.LineSegments(
         new THREE.EdgesGeometry(geometry, 32),
-        new THREE.LineBasicMaterial({ color: 0xe8e8e6, transparent: true, opacity: 0.38 }),
+        new THREE.LineBasicMaterial({ color: 0x131540, transparent: true, opacity: 0.38 }),
       );
       mesh.add(edges);
       mark.add(mesh);
@@ -115,10 +115,10 @@ export default function AxiomWebGL() {
     // The A is assembled from independent metal rails so the mark can split apart in depth.
     makePiece([0.58, 4.35, 0.62], [-0.82, 0.05, 0], -0.245, [-2.9, 1.8, 3.3], [-0.7, -1.1, -0.35]);
     makePiece([0.58, 4.35, 0.62], [0.82, 0.05, 0.04], 0.245, [3.2, 1.4, 4.2], [0.8, 1.25, 0.42]);
-    makePiece([1.78, 0.5, 0.72], [0, -0.38, 0.16], 0, [-0.5, -2.7, 5.1], [1.1, -0.35, -0.65], 0xe8e8e6);
-    makePiece([0.38, 3.25, 0.36], [-0.52, 0.15, -0.7], -0.245, [-4.2, -1.1, -2.8], [0.65, 1.45, -0.85], 0xe8e8e6);
-    makePiece([0.38, 3.25, 0.36], [0.52, 0.15, -0.68], 0.245, [4.3, -1.5, -2.2], [-0.8, -1.25, 0.75], 0xe8e8e6);
-    makePiece([1.25, 0.28, 0.42], [0, 0.36, -0.58], 0, [1.4, 3.1, -3.8], [-1.2, 0.7, 0.5], 0xe8e8e6);
+    makePiece([1.78, 0.5, 0.72], [0, -0.38, 0.16], 0, [-0.5, -2.7, 5.1], [1.1, -0.35, -0.65], 0x131540);
+    makePiece([0.38, 3.25, 0.36], [-0.52, 0.15, -0.7], -0.245, [-4.2, -1.1, -2.8], [0.65, 1.45, -0.85], 0x131540);
+    makePiece([0.38, 3.25, 0.36], [0.52, 0.15, -0.68], 0.245, [4.3, -1.5, -2.2], [-0.8, -1.25, 0.75], 0x131540);
+    makePiece([1.25, 0.28, 0.42], [0, 0.36, -0.58], 0, [1.4, 3.1, -3.8], [-1.2, 0.7, 0.5], 0x131540);
 
     // A layered outline remains assembled during the exploded scroll phase.
     const ghostMark = new THREE.Group();
@@ -126,7 +126,7 @@ export default function AxiomWebGL() {
     for (let layer = 0; layer < 3; layer += 1) {
       pieces.slice(0, 6).forEach((piece) => {
         const material = new THREE.LineBasicMaterial({
-          color: 0xe8e8e6,
+          color: 0x131540,
           transparent: true,
           opacity: 0,
           depthWrite: false,
@@ -148,7 +148,7 @@ export default function AxiomWebGL() {
       const h = 0.16 + random() * 1.25;
       const geometry = new RoundedBoxGeometry(w, h, 0.05 + random() * 0.16, 3, 0.018);
       const material = new THREE.MeshPhysicalMaterial({
-        color: 0xe8e8e6,
+        color: 0x131540,
         metalness: 0.58,
         roughness: 0.34,
         emissive: 0x181818,
@@ -175,7 +175,7 @@ export default function AxiomWebGL() {
     }
 
     const coreMaterial = new THREE.MeshBasicMaterial({
-      color: 0xe8e8e6,
+      color: 0x131540,
       transparent: true,
       opacity: 0,
       blending: THREE.AdditiveBlending,
