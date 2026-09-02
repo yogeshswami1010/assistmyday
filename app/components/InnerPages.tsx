@@ -5,7 +5,7 @@ import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import styles from "./InnerPages.module.css";
-import FooterNavigation from "./FooterNavigation";
+import SiteFooter from "./SiteFooter";
 
 const navigation = [
   { label: "HOME", href: "/" },
@@ -47,15 +47,7 @@ export default function InnerPages({ children, active }: { children: ReactNode; 
 
       <main>{children}</main>
 
-      <footer className={styles.footer}>
-        <div className={styles.footerTop}><p>READY TO BUILD SOMETHING BETTER?</p><a href="/contact">START A PROJECT <span>↗</span></a></div>
-        <FooterNavigation />
-        <div className={styles.footerMain}>
-          <h2>Software that scales.<br /><em>Marketing that converts.</em></h2>
-          <Image src="/assistmyday-logo.webp" alt="Assistmyday" width={1827} height={444} unoptimized />
-        </div>
-        <div className={styles.footerBase}><span>© ASSISTMYDAY® 2026</span><span>ST. CATHARINES — CANADA</span><Link href="/">BACK HOME ↑</Link></div>
-      </footer>
+      <SiteFooter />
     </div>
   );
 }
