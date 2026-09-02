@@ -306,7 +306,7 @@ export default function HomeExperience({ services, portfolio }: { services: Serv
             <div className="person"><i>GP</i><p>Growth Partner<br /><span>Assistmyday client</span></p></div>
           </div>
         </div>
-        <div className="story-actions"><div><button>←</button><button>→</button></div><a href="/contact">BECOME A CLIENT <span>→</span></a></div>
+        <div className="story-actions"><div><button>←</button><button>→</button></div><a href="https://share.google/VgwmytGzUI3oucbiI" target="_blank" rel="noopener noreferrer" aria-label="View Assistmyday reviews on Google">VIEW GOOGLE REVIEWS <span>↗</span></a></div>
       </section>
 
       <section id="portfolio" className="motion-lab scene-light" data-scrollscene>
