@@ -81,7 +81,7 @@ export default function ServicesExperience({ services }: { services: ServiceItem
 
       <section className={styles.services} aria-label="Service capabilities">
         <header className={`${styles.sectionHeader} ${styles.reveal}`}>
-          <p>WHAT WE DO / {String(services.length).padStart(2, "0")} CAPABILITIES</p>
+
           <h2>Built together.<br /><em>Better together.</em></h2>
           <span>Engage us for one focused challenge or bring us the complete growth objective. We assemble the right senior team around the outcome.</span>
         </header>
