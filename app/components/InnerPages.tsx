@@ -21,13 +21,21 @@ export default function InnerPages({ children, active }: { children: ReactNode; 
   return (
     <div className={styles.shell}>
       <header className={styles.header}>
-        <Link href="/" className={styles.brand} aria-label="Assistmyday home">
-          <Image src="/assistmyday-logo.webp" alt="Assistmyday" width={1827} height={444} priority unoptimized />
-        </Link>
-        <nav className={styles.desktopNav} aria-label="Main navigation">
-          {navigation.map((item) => <a key={item.label} href={item.href} aria-current={active === item.label ? "page" : undefined}>{item.label}</a>)}
-        </nav>
-        <button className={styles.menuButton} onClick={() => setMenuOpen((open) => !open)} aria-expanded={menuOpen} aria-controls="inner-mobile-nav">MENU <span>{menuOpen ? "×" : "＝"}</span></button>
+        <div className={styles.headerInner}>
+          <div className={styles.identity}>
+            <Link href="/" className={styles.brand} aria-label="Assistmyday home">
+              <Image src="/assistmyday-logo.webp" alt="Assistmyday" width={1827} height={444} priority unoptimized />
+            </Link>
+            <span className={styles.brandMeta}><b>INTEGRATED DIGITAL</b><small>ST. CATHARINES · CANADA</small></span>
+          </div>
+          <nav className={styles.desktopNav} aria-label="Main navigation">
+            {navigation.filter((item) => item.label !== "CONTACT").map((item) => <a key={item.label} href={item.href} aria-current={active === item.label ? "page" : undefined}>{item.label}</a>)}
+          </nav>
+          <Link className={styles.headerCta} href="/contact" aria-current={active === "CONTACT" ? "page" : undefined}>
+            <span>START A PROJECT</span><b>↗</b>
+          </Link>
+          <button className={styles.menuButton} onClick={() => setMenuOpen((open) => !open)} aria-expanded={menuOpen} aria-controls="inner-mobile-nav">MENU <span>{menuOpen ? "×" : "＝"}</span></button>
+        </div>
       </header>
 
       <nav id="inner-mobile-nav" className={`${styles.mobileNav} ${menuOpen ? styles.mobileNavOpen : ""}`} aria-label="Mobile navigation">
