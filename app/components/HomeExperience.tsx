@@ -13,12 +13,35 @@ const work = [
   { title: "High-Performance Websites", copy: "Conversion-focused websites and commerce experiences engineered for speed, clarity, and measurable action.", kind: "music" },
   { title: "Growth Marketing Systems", copy: "Connected SEO, paid media, content, and analytics programs that turn attention into qualified demand.", kind: "house" },
 ];
+const googleReviews = [
+  { name: "greenbeecleaners", time: "A year ago", comment: "We sincerely appreciate your dedication to excellence and the positive impact you make. Your team consistently goes above and beyond, and we’re grateful for your willingness to take on extra responsibilities. Thank you for your efficiency and hard work—we truly appreciate it." },
+  { name: "Griselda Gonsalves", time: "2 years ago", comment: "AssistMyDay excels in delivering great service, whether in web design or digital marketing solutions that redefine online presence. They have a knack for understanding client needs and translating them into compelling digital experiences." },
+  { name: "VA Jose", time: "A year ago", comment: "Perfect and honest 100% service. Creativity conceptualized to reality in web design and publishing. Reasonable pricing." },
+  { name: "Zoha Jamal", time: "2 years ago", comment: "Assist My Day is an excellent choice if you’re seeking website redesign or digital marketing solutions. The team is truly committed to delivering high-quality work and ensuring client satisfaction." },
+  { name: "Sumitha VA", time: "A year ago", comment: "Always deliver outstanding results with their web development and SEO services. Fantastic team!" },
+  { name: "Vishal Bangarh", time: "A year ago", comment: "Great work! Very hardworking and well-skilled team. Having great experience working with them. Special thanks to Kollins." },
+];
 
 
 
 export default function HomeExperience({ services, portfolio }: { services: ServiceItem[]; portfolio: PortfolioProject[] }) {
   const [menu, setMenu] = useState(false);
-  const [cursor, setCursor] = useState({ x: -100, y: -100 });
+  const [cursor, setCursor] = useState({ x: -100, y: -100 });  const [reviewPage, setReviewPage] = useState(0);
+  const [reviewsPerPage, setReviewsPerPage] = useState(3);
+
+  useEffect(() => {
+    const media = window.matchMedia("(max-width: 760px)");
+    const updateReviewsPerPage = () => {
+      setReviewsPerPage(media.matches ? 1 : 3);
+      setReviewPage(0);
+    };
+    updateReviewsPerPage();
+    media.addEventListener("change", updateReviewsPerPage);
+    return () => media.removeEventListener("change", updateReviewsPerPage);
+  }, []);
+
+  const reviewPageCount = Math.ceil(googleReviews.length / reviewsPerPage);
+  const visibleReviews = googleReviews.slice(reviewPage * reviewsPerPage, (reviewPage + 1) * reviewsPerPage);
 
   useEffect(() => {
     let raf = 0;
@@ -299,17 +322,20 @@ export default function HomeExperience({ services, portfolio }: { services: Serv
 
       <section id="stories" className="stories scene-light">
         <div className="story-head"><h2>Built for measurable growth</h2><p>Integrated teams, clear communication, and outcomes that move the business forward.</p></div>
-        <div className="story-body">
-          <nav><b>OUR EXPERTISE →</b><span>SOFTWARE DEVELOPMENT</span><span>WEB PLATFORMS</span><span>PERFORMANCE MARKETING</span><span>UI/UX DESIGN</span><span>AUTOMATION</span></nav>
-          <div className="quote google-review-panel">
-            <div className="google-review-top">
-              <div className="google-review-brand"><span className="google-g">G</span><p><b>Google Reviews</b><small>Assist My Day · St. Catharines</small></p></div>
-              <span className="google-stars" aria-label="Google rating">★★★★★</span>
-            </div>
-            <iframe title="Assist My Day on Google Maps" src="https://www.google.com/maps?q=Assist%20My%20Day%2C%20St.%20Catharines%2C%20ON&output=embed" loading="lazy" referrerPolicy="no-referrer-when-downgrade" allowFullScreen />
+        <div className="google-reviews">
+          <div className="google-review-summary"><div className="google-review-brand"><span className="google-g">G</span><p><b>Google Reviews</b><small>Assist My Day · St. Catharines</small></p></div><div><strong>5.0</strong><span className="google-stars" aria-label="Five-star rating">★★★★★</span><small>14 reviews</small></div></div>
+          <div className="google-review-grid" aria-live="polite">
+            {visibleReviews.map((review, index) => (
+              <article className="google-review-card" key={`${review.name}-${reviewPage}`} style={{ animationDelay: `${index * 90}ms` }}>
+                <header><span className="review-avatar">{review.name.charAt(0).toUpperCase()}</span><div><h3>{review.name}</h3><small>{review.time}</small></div><b>G</b></header>
+                <div className="google-stars" aria-label="Five-star review">★★★★★</div>
+                <p>{review.comment}</p>
+                <a href="https://share.google/VgwmytGzUI3oucbiI" target="_blank" rel="noopener noreferrer">VIEW ON GOOGLE <span>↗</span></a>
+              </article>
+            ))}
           </div>
+          <div className="google-review-controls"><div><button type="button" onClick={() => setReviewPage((page) => (page - 1 + reviewPageCount) % reviewPageCount)} aria-label="Show previous reviews">←</button><button type="button" onClick={() => setReviewPage((page) => (page + 1) % reviewPageCount)} aria-label="Show next reviews">→</button></div><span>{String(reviewPage + 1).padStart(2, "0")} / {String(reviewPageCount).padStart(2, "0")}</span><a href="https://share.google/VgwmytGzUI3oucbiI" target="_blank" rel="noopener noreferrer">READ ALL GOOGLE REVIEWS <b>↗</b></a></div>
         </div>
-        <div className="story-actions"><p className="google-review-note">LIVE GOOGLE BUSINESS PROFILE</p><a href="https://share.google/VgwmytGzUI3oucbiI" target="_blank" rel="noopener noreferrer" aria-label="Read all Assist My Day reviews on Google">READ ALL GOOGLE REVIEWS <span>↗</span></a></div>
       </section>
 
       <section id="portfolio" className="motion-lab scene-light" data-scrollscene>
