@@ -38,6 +38,33 @@ export default function HomeExperience({ services, portfolio }: { services: Serv
     return () => media.removeEventListener("change", updateReviewsPerPage);
   }, []);
 
+  useEffect(() => {
+    const hero = document.querySelector<HTMLElement>("[data-hero-scroll]");
+    if (!hero) return;
+
+    let frame = 0;
+    const updateFinale = () => {
+      frame = 0;
+      const scrollDistance = Math.max(hero.offsetHeight - window.innerHeight, 1);
+      const progress = Math.min(1, Math.max(0, -hero.getBoundingClientRect().top / scrollDistance));
+      const raw = Math.min(1, Math.max(0, (progress - 0.32) / 0.16));
+      const eased = raw * raw * (3 - 2 * raw);
+      hero.style.setProperty("--hero-finale-opacity", String(eased));
+    };
+    const requestUpdate = () => {
+      if (!frame) frame = requestAnimationFrame(updateFinale);
+    };
+
+    updateFinale();
+    window.addEventListener("scroll", requestUpdate, { passive: true });
+    window.addEventListener("resize", requestUpdate);
+    return () => {
+      window.removeEventListener("scroll", requestUpdate);
+      window.removeEventListener("resize", requestUpdate);
+      if (frame) cancelAnimationFrame(frame);
+    };
+  }, []);
+
   const reviewPageCount = Math.ceil(googleReviews.length / reviewsPerPage);
   const visibleReviews = googleReviews.slice(reviewPage * reviewsPerPage, (reviewPage + 1) * reviewsPerPage);
 
