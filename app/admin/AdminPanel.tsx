@@ -95,7 +95,7 @@ export default function AdminPanel({ email, databaseReady, databaseMessage, init
   function changeSection(kind: ContentKind) { setActive(kind); setDraft(null); setError(""); }
 
   return <div className={styles.shell}>
-    <header className={styles.topbar}><Image className={styles.logo} src="/assistmyday-logo.webp" alt="Assistmyday" width={350} height={84} priority /><div className={styles.account}><span>{email}</span><a className={styles.ghostButton} href="/" target="_blank">VIEW SITE ↗</a><button className={styles.ghostButton} onClick={logout}>SIGN OUT</button></div></header>
+    <header className={styles.topbar}><Image className={styles.logo} src="/assistmyday-logo-white.png" alt="Assistmyday" width={2424} height={462} priority /><div className={styles.account}><span>{email}</span><a className={styles.ghostButton} href="/" target="_blank">VIEW SITE ↗</a><button className={styles.ghostButton} onClick={logout}>SIGN OUT</button></div></header>
     <div className={styles.layout}>
       <aside className={styles.sidebar}><small>CONTENT</small>{(["portfolio", "services", "blogs"] as ContentKind[]).map((kind, index) => <button key={kind} onClick={() => changeSection(kind)} className={`${styles.navButton} ${active === kind ? styles.navActive : ""}`}><span>{labels[kind]}</span><b>0{index + 1}</b></button>)}</aside>
       <main className={styles.main}>

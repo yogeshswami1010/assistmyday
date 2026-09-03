@@ -24,7 +24,7 @@ export default function AdminLogin({ configured }: { configured: boolean }) {
   }
 
   return <main className={styles.loginShell}><section className={styles.loginCard}>
-    <Image className={styles.logo} src="/assistmyday-logo.webp" alt="Assistmyday" width={350} height={84} priority />
+    <Image className={styles.logo} src="/assistmyday-logo-white.png" alt="Assistmyday" width={2424} height={462} priority />
     <p>CONTENT OPERATIONS</p><h1>Admin access.</h1>
     <span>Manage portfolio projects, services, and editorial content from one secure workspace.</span>
     {!configured && <div className={styles.notice}>Admin login is not configured on Hostinger. Add ADMIN_EMAIL and ADMIN_PASSWORD (8+ characters), then redeploy.</div>}

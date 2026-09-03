@@ -14,7 +14,7 @@ export default function SiteFooter({ id, topHref = "#" }: { id?: string; topHref
         <p className="footer-intro">Bring us the growth target, the product idea, or the operational bottleneck. We&apos;ll turn it into a focused digital roadmap and build it with you.</p>
       </div>
       <div className="footer-meta">
-        <div className="footer-brand-lockup"><Image src="/assistmyday-logo.webp" alt="Assistmyday" width={1827} height={444} unoptimized className="footer-logo" /></div>
+        <div className="footer-brand-lockup"><Image src="/assistmyday-logo-white.png" alt="Assistmyday" width={2424} height={462} unoptimized className="footer-logo" /></div>
         <div className="footer-info">
           <div><small>CALL ANYTIME</small><p><a href="tel:+19053748878">+1 (905) 374-8878</a><br />St. Catharines, Ontario</p></div>
           <div><small>VISIT US</small><p>110 James St, Suite 411<br />St. Catharines, ON L2R 7E8</p></div>

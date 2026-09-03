@@ -22,7 +22,7 @@ export default function SiteHeader({ active }: { active: string }) {
         <div className={styles.headerInner}>
           <div className={styles.identity}>
             <Link href="/" className={styles.brand} aria-label="Assistmyday home">
-              <Image src="/assistmyday-logo.webp" alt="Assistmyday" width={1827} height={444} priority unoptimized />
+              <Image src="/assistmyday-logo-white.png" alt="Assistmyday" width={2424} height={462} priority unoptimized />
             </Link>
           </div>
           <nav className={styles.desktopNav} aria-label="Main navigation">
