@@ -1,8 +1,8 @@
 @import "tailwindcss";
 
 .hero{height:500vh!important;min-height:3300px!important}
-.hero-about{position:relative;isolation:isolate;background:#08090b}
-.hero-canvas-shell{position:absolute;z-index:1;inset:0;pointer-events:none}
+.hero-about{position:relative;isolation:isolate;background:#08090b;padding-top:124px}
+.hero-canvas-shell{position:absolute;z-index:1;inset:124px 0 0;pointer-events:none}
 .hero-about>.hero,.hero-about>.about{z-index:2;background:transparent!important;pointer-events:none}
 .hero-about a,.hero-about button{pointer-events:auto}
 .hero-3d{pointer-events:none!important}
@@ -190,3 +190,5 @@ body{font-size:var(--type-body);line-height:var(--type-leading);font-family:Aria
   .footer h2{font-size:clamp(46px,13vw,68px);line-height:.92}.footer-intro{font-size:15px}.footer-info p{font-size:13px}.footer-base,.copyright{font-size:10px}
   .google-reviews{padding-top:34px}.google-review-summary{align-items:flex-start;gap:18px}.google-review-summary>div:last-child{display:grid;justify-items:end;gap:4px}.google-review-summary strong{font-size:26px}.google-stars{font-size:14px}.google-review-grid{grid-template-columns:1fr;min-height:360px}.google-review-card{min-height:360px;padding:23px}.google-review-controls{grid-template-columns:auto 1fr;row-gap:24px}.google-review-controls>a{grid-column:1/-1;width:100%}
 }
+
+@media(max-width:760px){.hero-about{padding-top:100px}.hero-canvas-shell{inset:100px 0 0}}
