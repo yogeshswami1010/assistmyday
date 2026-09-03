@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { Fragment, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import styles from "./InnerPages.module.css";
@@ -26,8 +26,11 @@ export default function SiteHeader({ active }: { active: string }) {
             </Link>
           </div>
           <nav className={styles.desktopNav} aria-label="Main navigation">
-            {navigation.filter((item) => item.label !== "CONTACT").map((item) => (
-              <Link key={item.label} href={item.href} aria-current={active === item.label ? "page" : undefined}>{item.label}</Link>
+            {navigation.slice(0, -1).map((item, index) => (
+              <Fragment key={item.label}>
+                <Link href={item.href} aria-current={active === item.label ? "page" : undefined}>{item.label}</Link>
+                {index < navigation.length - 2 && <span className={styles.navSeparator} aria-hidden="true">/</span>}
+              </Fragment>
             ))}
           </nav>
           <Link className={styles.headerCta} href="/contact" aria-current={active === "CONTACT" ? "page" : undefined}>
