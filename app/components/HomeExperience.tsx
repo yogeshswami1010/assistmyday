@@ -2,10 +2,9 @@
 
 import { useEffect, useState } from "react";
 import Image from "next/image";
-import Link from "next/link";
 import AxiomWebGL from "./AxiomWebGL";
 import SiteFooter from "./SiteFooter";
-import MenuScreen from "./MenuScreen";
+import SiteHeader from "./SiteHeader";
 import type { PortfolioProject, ServiceItem } from "../../lib/content-types";
 
 const work = [
@@ -25,7 +24,6 @@ const googleReviews = [
 
 
 export default function HomeExperience({ services, portfolio }: { services: ServiceItem[]; portfolio: PortfolioProject[] }) {
-  const [menu, setMenu] = useState(false);
   const [cursor, setCursor] = useState({ x: -100, y: -100 });  const [reviewPage, setReviewPage] = useState(0);
   const [reviewsPerPage, setReviewsPerPage] = useState(3);
 
@@ -155,17 +153,7 @@ export default function HomeExperience({ services, portfolio }: { services: Serv
       <div className="cursor-dot" style={{ transform: `translate(${cursor.x}px,${cursor.y}px)` }} />
       <div className="page-progress" />
 
-      <header className="site-header">
-        <Link href="/" className="brand" aria-label="Assistmyday home">
-          <Image src="/assistmyday-logo.webp" alt="Assistmyday" width={1827} height={444} priority unoptimized className="brand-logo" />
-        </Link>
-        <div className="head-actions">
-       
-          <button className="menu-toggle" onClick={() => setMenu(!menu)} aria-expanded={menu}>MENU <b>{menu ? "×" : "＝"}</b></button>
-        </div>
-      </header>
-
-      <MenuScreen open={menu} onClose={() => setMenu(false)} />
+      <SiteHeader active="HOME" />
 
       <div className="hero-about scene-dark">
         <div className="hero-canvas-shell">
