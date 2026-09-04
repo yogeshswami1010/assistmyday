@@ -250,3 +250,12 @@ body{font-size:var(--type-body);line-height:var(--type-leading);font-family:var(
   .lab-link{position:relative;inset:auto;width:100%;margin-top:24px;padding:16px 0;color:var(--amd-navy)}
   .portfolio-transition-wipe{display:none}
 }
+/* Give the mobile hero finale a slower entrance, readable hold, and smooth exit. */
+@media(max-width:760px){
+  .hero{height:240svh!important;min-height:1500px!important}
+  .hero-finale{
+    --finale-enter:clamp(0,calc((var(--hero-p) - .18)*4),1);
+    --finale-exit:clamp(0,calc((var(--hero-p) - .72)*3.57),1);
+    transform:translate(-50%,calc(-50% + 58svh - var(--finale-enter)*58svh - var(--finale-exit)*58svh)) scale(calc(.94 + var(--finale-enter)*.06))!important;
+  }
+}
