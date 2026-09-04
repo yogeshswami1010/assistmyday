@@ -231,3 +231,22 @@ body{font-size:var(--type-body);line-height:var(--type-leading);font-family:var(
   .discipline{position:relative;left:auto;bottom:auto;margin:38px 0 24px}
   .view-services{position:relative;right:auto;bottom:auto;width:100%}
 }
+/* Mobile portfolio is a readable project gallery; desktop retains the motion scene. */
+@media(max-width:760px){
+  .motion-lab{height:auto!important;min-height:0;padding:92px 18px 100px;background:linear-gradient(155deg,#f8fdff 0%,#e7f7ff 55%,#c7ebfb 100%)}
+  .lab-sticky{position:relative!important;top:auto!important;height:auto!important;min-height:0;overflow:visible;background:transparent}
+  .design-in,.motion-word{position:relative;inset:auto!important;margin:0;font-size:clamp(46px,14vw,68px);line-height:.82;letter-spacing:-.045em}
+  .motion-word{color:var(--amd-violet)}
+  .lab-center{position:relative;top:auto;left:auto;transform:none;margin:28px 0 0;text-align:left;font-size:12px!important;line-height:1.45;color:rgba(23,23,79,.72)}
+  .portfolio-lab-grid{position:relative;inset:auto;display:grid;grid-template-columns:1fr;grid-template-rows:none;gap:24px;margin-top:48px;perspective:none;overflow:visible;opacity:1!important}
+  .portfolio-lab-card{position:relative!important;inset:auto!important;width:100%!important;height:auto!important;aspect-ratio:1.55/1;border:1px solid rgba(23,23,79,.16);border-radius:14px;transform:none!important;box-shadow:0 20px 44px rgba(23,23,79,.14);will-change:auto}
+  .portfolio-lab-card>img{width:100%;height:100%;object-fit:cover;object-position:top center}
+  .portfolio-lab-card:after{inset:42% 0 0;opacity:.92;background:linear-gradient(transparent,rgba(3,4,18,.92))}
+  .portfolio-lab-caption{display:grid;left:18px;right:18px;bottom:16px;grid-template-columns:auto 1fr;gap:4px 12px;align-items:end;opacity:1;transform:none;color:#fff}
+  .portfolio-lab-caption small{grid-row:1/3;font-size:10px;color:#8edbff}
+  .portfolio-lab-caption b{font-size:clamp(19px,5.8vw,26px)!important;line-height:1.05}
+  .portfolio-lab-caption span{font-size:10px;color:#d9deea}
+  .lab-copy{position:relative;inset:auto;margin:42px 0 0;font-size:14px;line-height:1.5;color:rgba(23,23,79,.72)}
+  .lab-link{position:relative;inset:auto;width:100%;margin-top:24px;padding:16px 0;color:var(--amd-navy)}
+  .portfolio-transition-wipe{display:none}
+}
