@@ -250,14 +250,13 @@ body{font-size:var(--type-body);line-height:var(--type-leading);font-family:var(
   .lab-link{position:relative;inset:auto;width:100%;margin-top:24px;padding:16px 0;color:var(--amd-navy)}
   .portfolio-transition-wipe{display:none}
 }
-/* Mobile hero finale travels steadily from bottom to top without dead space. */
+/* Mobile hero finale remains visible until the section ends, avoiding a blank tail. */
 @media(max-width:760px){
-  .hero{height:185svh!important;min-height:1180px!important}
+  .hero{height:160svh!important;min-height:1020px!important}
   .hero-finale{
-    --finale-travel:clamp(0,calc((var(--hero-p) - .06)*1.136),1);
-    --finale-fade-in:clamp(0,calc((var(--hero-p) - .04)*7.15),1);
-    --finale-fade-out:clamp(0,calc((.96 - var(--hero-p))*7.15),1);
-    opacity:min(var(--finale-fade-in),var(--finale-fade-out))!important;
-    transform:translate(-50%,calc(-50% + 45svh - var(--finale-travel)*90svh))!important;
+    --finale-travel:clamp(0,calc((var(--hero-p) - .05)*1.075),1);
+    --finale-fade-in:clamp(0,calc((var(--hero-p) - .03)*8),1);
+    opacity:var(--finale-fade-in)!important;
+    transform:translate(-50%,calc(-50% + 43svh - var(--finale-travel)*78svh))!important;
   }
 }
