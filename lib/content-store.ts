@@ -209,19 +209,22 @@ async function getServicesFromDatabase(includeUnpublished = false) {
 async function getBlogArticlesFromDatabase(includeUnpublished = false) {
   if (!isDatabaseConfigured()) return blogSeeds.filter((item) => includeUnpublished || item.published);
   await ensureSchema();
-  const [rows] = await getPool().query<BlogRow[]>(
-    `SELECT * FROM amd_blogs ${includeUnpublished ? "" : "WHERE published = 1"} ORDER BY sort_order, id`,
-  );
-  return rows.map(mapBlog);
+  const [rows] = await getPool().query<BlogRow[]>("SELECT * FROM amd_blogs ORDER BY sort_order, id");
+  const merged = new Map(blogSeeds.map((item) => [item.slug, item]));
+  rows.map(mapBlog).forEach((item) => merged.set(item.slug, item));
+  return Array.from(merged.values())
+    .filter((item) => includeUnpublished || item.published)
+    .sort((a, b) => a.sortOrder - b.sortOrder);
 }
 
 async function getBlogArticleFromDatabase(slug: string, includeUnpublished = false) {
-  if (!isDatabaseConfigured()) return blogSeeds.find((item) => item.slug === slug && (includeUnpublished || item.published));
+  const seed = blogSeeds.find((item) => item.slug === slug && (includeUnpublished || item.published));
+  if (!isDatabaseConfigured()) return seed;
   await ensureSchema();
-  const [rows] = await getPool().execute<BlogRow[]>(
-    `SELECT * FROM amd_blogs WHERE slug = ? ${includeUnpublished ? "" : "AND published = 1"} LIMIT 1`, [slug],
-  );
-  return rows[0] ? mapBlog(rows[0]) : undefined;
+  const [rows] = await getPool().execute<BlogRow[]>("SELECT * FROM amd_blogs WHERE slug = ? LIMIT 1", [slug]);
+  if (!rows[0]) return seed;
+  const article = mapBlog(rows[0]);
+  return includeUnpublished || article.published ? article : undefined;
 }
 
 export async function getPortfolioProjects(includeUnpublished = false, strict = false) {

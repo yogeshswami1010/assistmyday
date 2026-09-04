@@ -1,4 +1,6 @@
+import importedArticleData from "../../data/imported-blog-articles.json";
 import type { BlogArticle } from "../../lib/content-types";
+import { sanitizeBlogHtml } from "../../lib/content-validation";
 
 export type { ArticleSection, BlogArticle } from "../../lib/content-types";
 
@@ -95,11 +97,19 @@ const articleSeeds: Omit<BlogArticle, "sortOrder" | "published">[] = [
   },
 ];
 
-export const articles: BlogArticle[] = articleSeeds.map((article, index) => ({
+const importedArticles = (importedArticleData as BlogArticle[]).map((article) => ({
   ...article,
-  sortOrder: index + 1,
-  published: true,
+  contentHtml: article.contentHtml ? sanitizeBlogHtml(article.contentHtml) : "",
 }));
+
+export const articles: BlogArticle[] = [
+  ...importedArticles,
+  ...articleSeeds.map((article, index) => ({
+    ...article,
+    sortOrder: importedArticles.length + index + 1,
+    published: true,
+  })),
+];
 
 export function getArticle(slug: string) {
   return articles.find((article) => article.slug === slug);
