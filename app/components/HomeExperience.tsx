@@ -320,7 +320,7 @@ export default function HomeExperience({ services, portfolio }: { services: Serv
           <div className="smoke smoke-one" /><div className="smoke smoke-two" />
           <p className="micro service-label">OUR SERVICES</p>
           <div className="service-words"><span>SOFTWARE</span><span>WEBSITES</span><span>MARKETING</span><span>CREATIVE</span></div>
-          <div className="stone"><Image className="stone-mark" src="/assistmyday-mark.svg" alt="" width={320} height={190} aria-hidden="true" /></div>
+          <div className="stone"><Image className="stone-mark" src="/assistmyday-mark.svg" alt="" width={240} height={190} aria-hidden="true" /></div>
           <div className="service-detail">
             {services.slice(0, 4).map((s, i) => (
               <article key={s.id || s.title} className={`detail-${i}`}>

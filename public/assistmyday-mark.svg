@@ -1,6 +1,5 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 190" role="img" aria-label="Assist My Day mark">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 190" role="img" aria-label="Assist My Day mark">
   <circle cx="34" cy="142" r="18" fill="#a54312"/>
   <rect x="76" y="26" width="48" height="134" rx="24" fill="#f4efc3" transform="rotate(-20 100 93)"/>
   <rect x="139" y="26" width="48" height="134" rx="24" fill="#f4efc3" transform="rotate(-20 163 93)"/>
-  <rect x="202" y="26" width="48" height="134" rx="24" fill="#f4efc3" transform="rotate(-20 226 93)"/>
 </svg>
