@@ -250,13 +250,13 @@ body{font-size:var(--type-body);line-height:var(--type-leading);font-family:var(
   .lab-link{position:relative;inset:auto;width:100%;margin-top:24px;padding:16px 0;color:var(--amd-navy)}
   .portfolio-transition-wipe{display:none}
 }
-/* Mobile hero finale remains visible until the section ends, avoiding a blank tail. */
+/* Mobile hero finale uses the full section so no empty tail remains. */
 @media(max-width:760px){
-  .hero{height:160svh!important;min-height:1020px!important}
+  .hero{height:145svh!important;min-height:0!important}
   .hero-finale{
-    --finale-travel:clamp(0,calc((var(--hero-p) - .05)*1.075),1);
-    --finale-fade-in:clamp(0,calc((var(--hero-p) - .03)*8),1);
+    --finale-travel:clamp(0,var(--hero-p),1);
+    --finale-fade-in:clamp(0,calc(var(--hero-p)*8),1);
     opacity:var(--finale-fade-in)!important;
-    transform:translate(-50%,calc(-50% + 43svh - var(--finale-travel)*78svh))!important;
+    transform:translate(-50%,calc(-50% + 43svh - var(--finale-travel)*65svh))!important;
   }
 }
