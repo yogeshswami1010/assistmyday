@@ -238,7 +238,7 @@ body{font-size:var(--type-body);line-height:var(--type-leading);font-family:var(
   .design-in,.motion-word{position:relative;inset:auto!important;margin:0;font-size:clamp(46px,14vw,68px);line-height:.82;letter-spacing:-.045em}
   .motion-word{color:var(--amd-violet)}
   .lab-center{position:relative;top:auto;left:auto;transform:none;margin:28px 0 0;text-align:left;font-size:12px!important;line-height:1.45;color:rgba(23,23,79,.72)}
-  .portfolio-lab-grid{position:relative;inset:auto;display:flex;gap:14px;margin:48px -18px 0;padding:0 18px 18px;overflow-x:auto;overflow-y:hidden;perspective:none;opacity:1!important;scroll-snap-type:x mandatory;scroll-padding-left:18px;-webkit-overflow-scrolling:touch;scrollbar-width:none}
+  .portfolio-lab-grid{position:relative;inset:auto;display:flex;justify-content:flex-start!important;align-items:stretch;place-content:normal;gap:14px;margin:48px -18px 0;padding:0 18px 18px;overflow-x:auto;overflow-y:hidden;perspective:none;opacity:1!important;scroll-snap-type:x mandatory;scroll-padding-left:18px;-webkit-overflow-scrolling:touch;scrollbar-width:none}
   .portfolio-lab-grid::-webkit-scrollbar{display:none}
   .portfolio-lab-card{position:relative!important;inset:auto!important;flex:0 0 calc(100vw - 36px);width:calc(100vw - 36px)!important;min-width:calc(100vw - 36px)!important;height:auto!important;aspect-ratio:2.16/1;border:1px solid rgba(23,23,79,.16);border-radius:12px;background:#fff;transform:none!important;box-shadow:0 20px 44px rgba(23,23,79,.14);will-change:auto;scroll-snap-align:start}
   .portfolio-lab-card>img{width:100%;height:100%;object-fit:contain;object-position:center;background:#fff}
