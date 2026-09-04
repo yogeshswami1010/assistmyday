@@ -64,6 +64,7 @@ export default function BlogArticleExperience({ article, related, recent }: { ar
           <a className={styles.contactLink} href="/contact">DISCUSS THIS TOPIC <span>↗</span></a>
         </aside>
         <div className={styles.content}>
+          {article.image && <div className={styles.contentFeature}><Image src={article.image} alt={article.title} fill sizes="(max-width: 900px) 100vw, 60vw" unoptimized /></div>}
           {article.contentHtml ? (
             <section id="article-content" className={styles.contentSection}>
               <span>01</span>
