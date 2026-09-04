@@ -47,10 +47,6 @@ export default function BlogArticleExperience({ article, related }: { article: B
         {article.image && <div className={styles.heroImage} aria-hidden="true"><Image src={article.image} alt="" fill sizes="100vw" priority unoptimized /></div>}
         <div className={styles.heroMeta}><Link href="/blog">← ALL INSIGHTS</Link><span>{article.category}</span><span>{article.date}</span><span>{article.readTime}</span></div>
         <h1>{article.title}</h1>
-        <div className={styles.heroBottom}>
-          <p>{article.excerpt}</p>
-          <div className={styles.heroGraphic} aria-hidden="true"><i /><i /><i /><b /></div>
-        </div>
       </header>
 
       <div className={styles.body}>
@@ -60,7 +56,6 @@ export default function BlogArticleExperience({ article, related }: { article: B
           <a className={styles.contactLink} href="/contact">DISCUSS THIS TOPIC <span>↗</span></a>
         </aside>
         <div className={styles.content}>
-          <p className={styles.lead}>{article.intro}</p>
           {article.contentHtml ? (
             <section id="article-content" className={styles.contentSection}>
               <span>01</span>
