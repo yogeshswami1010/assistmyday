@@ -33,6 +33,7 @@ export default async function BlogArticlePage({ params }: { params: Promise<{ sl
   const { slug } = await params;
   const [article, allArticles] = await Promise.all([getBlogArticle(slug), getBlogArticles()]);
   if (!article) notFound();
-  const related = allArticles.filter((item) => item.slug !== article.slug).slice(0, 2);
-  return <InnerPages active="BLOG"><BlogArticleExperience article={article} related={related} /></InnerPages>;
+  const recent = allArticles.filter((item) => item.slug !== article.slug).slice(0, 5);
+  const related = recent.slice(0, 2);
+  return <InnerPages active="BLOG"><BlogArticleExperience article={article} related={related} recent={recent} /></InnerPages>;
 }

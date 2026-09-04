@@ -6,7 +6,7 @@ import Image from "next/image";
 import type { BlogArticle } from "../../lib/content-types";
 import styles from "./BlogArticleExperience.module.css";
 
-export default function BlogArticleExperience({ article, related }: { article: BlogArticle; related: BlogArticle[] }) {
+export default function BlogArticleExperience({ article, related, recent }: { article: BlogArticle; related: BlogArticle[]; recent: BlogArticle[] }) {
   const articleRef = useRef<HTMLElement>(null);
   const progressRef = useRef<HTMLDivElement>(null);
 
@@ -53,6 +53,14 @@ export default function BlogArticleExperience({ article, related }: { article: B
         <aside className={styles.toc}>
           <p>IN THIS ARTICLE</p>
           <nav>{article.contentHtml ? <a href="#article-content"><small>01</small>ARTICLE</a> : article.sections.map((section, index) => <a href={"#section-" + (index + 1)} key={section.heading}><small>{"0" + (index + 1)}</small>{section.heading}</a>)}</nav>
+          <section className={styles.sidebarSection}>
+            <p>CATEGORY</p>
+            <span className={styles.category}>{article.category}</span>
+          </section>
+          <section className={styles.sidebarSection}>
+            <p>RECENT POSTS</p>
+            <div className={styles.recentPosts}>{recent.map((item, index) => <Link href={`/blog/${item.slug}`} key={item.slug}><small>{String(index + 1).padStart(2, "0")}</small><span>{item.title}</span></Link>)}</div>
+          </section>
           <a className={styles.contactLink} href="/contact">DISCUSS THIS TOPIC <span>↗</span></a>
         </aside>
         <div className={styles.content}>
