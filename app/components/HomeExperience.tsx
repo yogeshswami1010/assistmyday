@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import AxiomWebGL from "./AxiomWebGL";
 import SiteFooter from "./SiteFooter";
@@ -26,6 +26,7 @@ const googleReviews = [
 export default function HomeExperience({ services, portfolio }: { services: ServiceItem[]; portfolio: PortfolioProject[] }) {
   const [cursor, setCursor] = useState({ x: -100, y: -100 });  const [reviewPage, setReviewPage] = useState(0);
   const [reviewsPerPage, setReviewsPerPage] = useState(3);
+  const portfolioSliderRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const media = window.matchMedia("(max-width: 760px)");
@@ -36,6 +37,29 @@ export default function HomeExperience({ services, portfolio }: { services: Serv
     updateReviewsPerPage();
     media.addEventListener("change", updateReviewsPerPage);
     return () => media.removeEventListener("change", updateReviewsPerPage);
+  }, []);
+
+  useEffect(() => {
+    const slider = portfolioSliderRef.current;
+    if (!slider || !window.matchMedia("(max-width: 760px)").matches) return;
+
+    const resetToFirstSlide = () => { slider.scrollLeft = 0; };
+    resetToFirstSlide();
+    const frame = requestAnimationFrame(() => requestAnimationFrame(resetToFirstSlide));
+    const observer = new IntersectionObserver((entries) => {
+      if (entries.some((entry) => entry.isIntersecting)) {
+        resetToFirstSlide();
+        observer.disconnect();
+      }
+    }, { threshold: 0.05 });
+    observer.observe(slider);
+    window.addEventListener("pageshow", resetToFirstSlide);
+
+    return () => {
+      cancelAnimationFrame(frame);
+      observer.disconnect();
+      window.removeEventListener("pageshow", resetToFirstSlide);
+    };
   }, []);
 
   useEffect(() => {
@@ -377,7 +401,7 @@ export default function HomeExperience({ services, portfolio }: { services: Serv
           <p className="lab-center">SELECTED SOFTWARE AND MARKETING WORK<br />FOR AMBITIOUS BUSINESSES.</p>
           <p className="lab-copy">Software, web platforms, strategy,<br />creative, campaigns, and growth.</p>
           <a href="/contact" className="lab-link">TALK TO OUR TEAM <span>→</span></a>
-          <div className="floating-grid portfolio-lab-grid">
+          <div ref={portfolioSliderRef} className="floating-grid portfolio-lab-grid">
             {portfolio.map((project, index) => (
               <article className="lab-card portfolio-lab-card" key={`${project.title}-${index}`}>
                 <Image
