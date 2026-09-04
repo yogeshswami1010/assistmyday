@@ -93,7 +93,16 @@ export default function HomeExperience({ services, portfolio }: { services: Serv
         if (el.classList.contains("motion-lab")) {
           const cards = el.querySelectorAll<HTMLElement>(".portfolio-lab-card");
           const mobile = innerWidth <= 760;
-          const columns = mobile ? 2 : 3;
+          if (mobile) {
+            cards.forEach((card) => {
+              card.style.removeProperty("width");
+              card.style.removeProperty("height");
+              card.style.removeProperty("z-index");
+              card.style.removeProperty("transform");
+            });
+            return;
+          }
+          const columns = 3;
           const gap = mobile ? 10 : 18;
           const cardWidth = mobile
             ? innerWidth * 0.43
