@@ -240,8 +240,8 @@ body{font-size:var(--type-body);line-height:var(--type-leading);font-family:var(
   .lab-center{position:relative;top:auto;left:auto;transform:none;margin:28px 0 0;text-align:left;font-size:12px!important;line-height:1.45;color:rgba(23,23,79,.72)}
   .portfolio-lab-grid{position:relative;inset:auto;display:flex;gap:14px;margin:48px -18px 0;padding:0 18px 18px;overflow-x:auto;overflow-y:hidden;perspective:none;opacity:1!important;scroll-snap-type:x mandatory;scroll-padding-left:18px;-webkit-overflow-scrolling:touch;scrollbar-width:none}
   .portfolio-lab-grid::-webkit-scrollbar{display:none}
-  .portfolio-lab-card{position:relative!important;inset:auto!important;flex:0 0 86vw;width:86vw!important;height:auto!important;aspect-ratio:1.55/1;border:1px solid rgba(23,23,79,.16);border-radius:14px;transform:none!important;box-shadow:0 20px 44px rgba(23,23,79,.14);will-change:auto;scroll-snap-align:start}
-  .portfolio-lab-card>img{width:100%;height:100%;object-fit:cover;object-position:top center}
+  .portfolio-lab-card{position:relative!important;inset:auto!important;flex:0 0 calc(100vw - 36px);width:calc(100vw - 36px)!important;min-width:calc(100vw - 36px)!important;height:auto!important;aspect-ratio:2.16/1;border:1px solid rgba(23,23,79,.16);border-radius:12px;background:#fff;transform:none!important;box-shadow:0 20px 44px rgba(23,23,79,.14);will-change:auto;scroll-snap-align:start}
+  .portfolio-lab-card>img{width:100%;height:100%;object-fit:contain;object-position:center;background:#fff}
   .portfolio-lab-card:after{display:none}
   .portfolio-lab-caption{display:none}
   .portfolio-lab-caption small{grid-row:1/3;font-size:10px;color:#8edbff}
