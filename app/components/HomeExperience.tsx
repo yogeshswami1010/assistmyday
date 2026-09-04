@@ -330,6 +330,15 @@ export default function HomeExperience({ services, portfolio }: { services: Serv
               </article>
             ))}
           </div>
+          <div className="mobile-services-list">
+            {services.map((s) => (
+              <article key={s.id || s.title}>
+                <h3>{s.title}</h3>
+                <i className="service-card-mark" aria-hidden="true" />
+                <p>{s.copy}</p>
+              </article>
+            ))}
+          </div>
           <p className="discipline">✦ STRATEGY, DESIGN, ENGINEERING, AND GROWTH. ONE TEAM.</p>
           <a className="view-services" href="/services">VIEW SERVICES <span>→</span></a>
         </div>

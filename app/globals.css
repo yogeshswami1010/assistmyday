@@ -214,3 +214,20 @@ body{font-size:var(--type-body);line-height:var(--type-leading);font-family:var(
   .footer{min-height:0;padding:50px 18px 24px}.footer-head{display:grid;gap:22px}.footer-mail{width:100%}.footer-hero{padding:75px 0}.footer h2{font-size:clamp(44px,13vw,62px)}.footer-intro{max-width:100%;font-size:15px;line-height:1.5}.footer-meta{padding:30px 0}.footer-brand-lockup{max-width:100%}.footer-info{grid-template-columns:1fr;gap:26px}.footer-base{grid-template-columns:1fr;gap:14px}.footer-base a{justify-self:start}
   .google-review-summary{display:grid;grid-template-columns:1fr}.google-review-summary>div:last-child{justify-items:start}.google-review-card{min-height:330px}.google-review-controls{grid-template-columns:1fr}.google-review-controls>span{display:none}
 }
+/* Mobile services use normal document flow; desktop keeps the scroll experience. */
+.mobile-services-list{display:none}
+@media(max-width:760px){
+  .services{height:auto!important;min-height:0}
+  .service-sticky{position:relative!important;top:auto!important;height:auto!important;min-height:0;overflow:hidden;padding:96px 18px 88px}
+  .service-label{position:relative;top:auto;left:auto;margin:0 0 28px}
+  .service-words{position:relative;inset:auto;display:block;margin:0 0 54px;text-align:left;opacity:1!important;transform:none!important}
+  .service-words span{font-size:clamp(42px,13vw,58px);line-height:.86;transform:none!important}
+  .stone,.service-detail{display:none}
+  .mobile-services-list{position:relative;z-index:4;display:grid;gap:16px}
+  .mobile-services-list article{position:relative;box-sizing:border-box;width:100%;min-height:250px;padding:24px;border:1px solid rgba(91,184,232,.3);border-radius:8px;background:linear-gradient(135deg,rgba(8,10,35,.94),rgba(23,23,79,.86));box-shadow:0 24px 70px rgba(3,5,18,.48),inset 0 1px 0 rgba(91,184,232,.16);overflow:hidden}
+  .mobile-services-list h3{width:68%;margin:0;font-size:25px;line-height:1.02;font-weight:400}
+  .mobile-services-list p{position:absolute;left:24px;bottom:24px;width:76%;margin:0;font-size:13px;line-height:1.35;color:rgba(238,241,245,.8)}
+  .mobile-services-list .service-card-mark{top:24px;right:24px}
+  .discipline{position:relative;left:auto;bottom:auto;margin:38px 0 24px}
+  .view-services{position:relative;right:auto;bottom:auto;width:100%}
+}
