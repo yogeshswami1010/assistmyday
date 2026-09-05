@@ -19,3 +19,11 @@
   .shell :global(.contact-form){padding:25px 18px;gap:24px}.shell :global(.contact-form input),.shell :global(.contact-form textarea){font-size:16px}
   .shell :global(.process-strip){grid-template-columns:1fr}.footer{padding:55px 18px 24px}.footerTop{display:grid;gap:20px}.footerTop a{gap:24px}.footerMain{padding:60px 0}.footerMain h2{font-size:clamp(42px,12vw,58px)}.footerBase{display:grid;grid-template-columns:1fr;gap:13px}
 }
+/* Requested inner-page navigation styles for mobile only. */
+@media(max-width:760px){
+  .mobileNav span{font-size:24px}
+  .mobileNav small{font:30px monospace}
+  .mobileNav a{min-height:9vh}
+  .mobileNav b{font-weight:400;font-size:37px}
+  .menuButton{color:#fff;background:#17174fb8;border:1px solid #5bb8e894;border-radius:999px;height:42px;padding:0 16px;font-size:16px;display:none}
+}
