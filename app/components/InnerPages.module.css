@@ -25,5 +25,5 @@
   .mobileNav small{font:30px monospace}
   .mobileNav a{min-height:9vh}
   .mobileNav b{font-weight:400;font-size:37px}
-  .menuButton{color:#fff;background:#17174fb8;border:1px solid #5bb8e894;border-radius:999px;height:42px;padding:0 16px;font-size:16px;display:none}
+  .menuButton{color:#fff;background:#17174fb8;border:1px solid #5bb8e894;border-radius:999px;height:42px;padding:0 16px;font-size:16px;display:block}
 }
