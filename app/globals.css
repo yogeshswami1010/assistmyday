@@ -251,14 +251,14 @@ body{font-size:var(--type-body);line-height:var(--type-leading);font-family:var(
   .lab-link{position:relative;inset:auto;width:100%;margin-top:24px;padding:16px 0;color:var(--amd-navy)}
   .portfolio-transition-wipe{display:none}
 }
-/* Mobile hero finale uses the full section so no empty tail remains. */
+/* Keep the mobile hero finale lower and shorten its trailing space. */
 @media(max-width:760px){
-  .hero{height:145svh!important;min-height:0!important}
+  .hero{height:130svh!important;min-height:0!important}
   .hero-finale{
     --finale-travel:clamp(0,var(--hero-p),1);
     --finale-fade-in:clamp(0,calc(var(--hero-p)*8),1);
     opacity:var(--finale-fade-in)!important;
-    transform:translate(-50%,calc(-50% + 43svh - var(--finale-travel)*65svh))!important;
+    transform:translate(-50%,calc(-50% + 43svh - var(--finale-travel)*28svh))!important;
   }
 }
 /* Keep the Discover / Build / Scale section static on every screen size. */
