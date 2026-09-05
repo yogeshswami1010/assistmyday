@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+import nodemailer from "nodemailer";
 import { createContactSubmission, setContactSubmissionEmailStatus } from "@/lib/content-store";
 
 export const runtime = "nodejs";
@@ -47,14 +48,24 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: "We could not save your message. Please try again." }, { status: 500 });
   }
 
-  const apiKey = process.env.RESEND_API_KEY;
+  const smtpHost = process.env.SMTP_HOST || "smtp.hostinger.com";
+  const smtpPort = Number(process.env.SMTP_PORT || 465);
+  const smtpUser = process.env.SMTP_USER;
+  const smtpPassword = process.env.SMTP_PASSWORD;
   const to = process.env.CONTACT_TO_EMAIL || "assistmyday@gmail.com";
-  const from = process.env.CONTACT_FROM_EMAIL;
-  if (!apiKey || !from) {
-    await setContactSubmissionEmailStatus(submissionId, false, "Email service is not configured.");
-    console.error("Contact submission saved, but RESEND_API_KEY or CONTACT_FROM_EMAIL is missing.");
+  const from = process.env.CONTACT_FROM_EMAIL || smtpUser;
+  if (!smtpUser || !smtpPassword || !from) {
+    await setContactSubmissionEmailStatus(submissionId, false, "SMTP is not configured.");
+    console.error("Contact submission saved, but SMTP_USER or SMTP_PASSWORD is missing.");
     return NextResponse.json({ error: "Your message was saved, but email delivery is temporarily unavailable.", saved: true }, { status: 503 });
   }
+
+  const transporter = nodemailer.createTransport({
+    host: smtpHost,
+    port: smtpPort,
+    secure: smtpPort === 465,
+    auth: { user: smtpUser, pass: smtpPassword },
+  });
 
   const subject = `New website enquiry from ${submission.name}`;
   const html = `<h2>New Assistmyday contact enquiry</h2>
@@ -65,12 +76,14 @@ export async function POST(request: NextRequest) {
     <p><strong>Message:</strong></p><p>${escapeHtml(submission.message).replace(/\n/g, "<br>")}</p>`;
 
   try {
-    const emailResponse = await fetch("https://api.resend.com/emails", {
-      method: "POST",
-      headers: { Authorization: `Bearer ${apiKey}`, "Content-Type": "application/json" },
-      body: JSON.stringify({ from, to: [to], reply_to: submission.email, subject, html }),
+    await transporter.sendMail({
+      from: { name: "Assistmyday Website", address: from },
+      to,
+      replyTo: submission.email,
+      subject,
+      text: `New Assistmyday contact enquiry\n\nName: ${submission.name}\nEmail: ${submission.email}\nCompany: ${submission.company || "Not provided"}\nPhone: ${submission.phone || "Not provided"}\n\nMessage:\n${submission.message}`,
+      html,
     });
-    if (!emailResponse.ok) throw new Error(`Resend returned ${emailResponse.status}: ${await emailResponse.text()}`);
     await setContactSubmissionEmailStatus(submissionId, true);
   } catch (error) {
     const message = error instanceof Error ? error.message : "Unknown email error";
