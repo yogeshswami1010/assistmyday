@@ -309,3 +309,12 @@ body{font-size:var(--type-body);line-height:var(--type-leading);font-family:var(
   .about>h2{font-size:37px;line-height:1.02}
   .about .left{left:18px;font-size:38px}
 }
+/* Final requested mobile typography adjustments. */
+@media(max-width:760px){
+  .about>h2{font-size:37px;line-height:1.02;margin-top:45px}
+  .hero-title h1{font-size:clamp(40px,12vw,54px);line-height:.98}
+  .est small{font-size:16px;line-height:1.25}
+  .hero-status p{font-size:25px}
+  .footer-mail{font-size:18px}
+  .footer-base,.copyright{font-size:17px}
+}
