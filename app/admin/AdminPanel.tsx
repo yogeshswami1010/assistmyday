@@ -97,7 +97,7 @@ export default function AdminPanel({ email, databaseReady, databaseMessage, init
   return <div className={styles.shell}>
     <header className={styles.topbar}><Image className={styles.logo} src="/assistmyday-logo-white.png" alt="Assistmyday" width={2424} height={462} priority /><div className={styles.account}><span>{email}</span><a className={styles.ghostButton} href="/" target="_blank">VIEW SITE ↗</a><button className={styles.ghostButton} onClick={logout}>SIGN OUT</button></div></header>
     <div className={styles.layout}>
-      <aside className={styles.sidebar}><small>CONTENT</small>{(["portfolio", "services", "blogs"] as ContentKind[]).map((kind, index) => <button key={kind} onClick={() => changeSection(kind)} className={`${styles.navButton} ${active === kind ? styles.navActive : ""}`}><span>{labels[kind]}</span><b>0{index + 1}</b></button>)}</aside>
+      <aside className={styles.sidebar}><small>CONTENT</small>{(["portfolio", "services", "blogs"] as ContentKind[]).map((kind, index) => <button key={kind} onClick={() => changeSection(kind)} className={`${styles.navButton} ${active === kind ? styles.navActive : ""}`}><span>{labels[kind]}</span><b>0{index + 1}</b></button>)}<a href="/admin/contacts" className={styles.navButton}><span>Contacts</span><b>04</b></a></aside>
       <main className={styles.main}>
         <header className={styles.heading}><div><p>ASSISTMYDAY / ADMIN</p><h1>Manage <em>{labels[active].toLowerCase()}.</em></h1></div><button className={styles.primaryButton} onClick={openNew} disabled={!databaseReady}>＋ ADD NEW</button></header>
         {!databaseReady && <div className={styles.notice}><strong>MySQL is not connected.</strong><br />{databaseMessage}</div>}

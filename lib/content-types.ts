@@ -48,3 +48,15 @@ export type BlogArticle = {
 };
 
 export type ContentKind = "portfolio" | "services" | "blogs";
+
+export type ContactSubmissionRecord = {
+  id: number;
+  name: string;
+  email: string;
+  company: string;
+  phone: string;
+  message: string;
+  emailSent: boolean;
+  emailError: string;
+  createdAt: string;
+};

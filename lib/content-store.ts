@@ -1,7 +1,7 @@
 import mysql, { type Pool, type ResultSetHeader, type RowDataPacket } from "mysql2/promise";
 import { articles as blogSeeds } from "../app/blog/articles";
 import { portfolioSeeds, serviceSeeds } from "./content-seeds";
-import type { BlogArticle, ContentKind, PortfolioProject, ServiceItem } from "./content-types";
+import type { BlogArticle, ContactSubmissionRecord, ContentKind, PortfolioProject, ServiceItem } from "./content-types";
 import { sanitizeBlogHtml } from "./content-validation";
 
 type PortfolioRow = RowDataPacket & {
@@ -21,6 +21,17 @@ type MediaRow = RowDataPacket & {
   size_bytes: number;
 };
 
+type ContactSubmissionRow = RowDataPacket & {
+  id: number;
+  name: string;
+  email: string;
+  company: string;
+  phone: string;
+  message: string;
+  email_sent: number;
+  email_error: string | null;
+  created_at: Date | string;
+};
 type BlogRow = RowDataPacket & {
   id: number; slug: string; category: string; title: string; image_url: string | null; excerpt: string;
   display_date: string; read_time: string; accent: string; intro: string; content_html: string | null;
@@ -333,6 +344,25 @@ export async function setContactSubmissionEmailStatus(id: number, sent: boolean,
     "UPDATE amd_contact_submissions SET email_sent = ?, email_error = ? WHERE id = ?",
     [sent ? 1 : 0, error ? error.slice(0, 500) : null, id],
   );
+}
+export async function getContactSubmissions(limit = 200): Promise<ContactSubmissionRecord[]> {
+  await ensureSchema();
+  const safeLimit = Math.min(Math.max(Math.trunc(limit), 1), 500);
+  const [rows] = await getPool().query<ContactSubmissionRow[]>(
+    `SELECT id, name, email, company, phone, message, email_sent, email_error, created_at
+     FROM amd_contact_submissions ORDER BY created_at DESC, id DESC LIMIT ${safeLimit}`,
+  );
+  return rows.map((row) => ({
+    id: row.id,
+    name: row.name,
+    email: row.email,
+    company: row.company,
+    phone: row.phone,
+    message: row.message,
+    emailSent: Boolean(row.email_sent),
+    emailError: row.email_error || "",
+    createdAt: row.created_at instanceof Date ? row.created_at.toISOString() : String(row.created_at),
+  }));
 }
 export async function createContent(kind: ContentKind, value: PortfolioProject | ServiceItem | BlogArticle) {
   await ensureSchema();
