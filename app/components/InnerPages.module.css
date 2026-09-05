@@ -27,3 +27,12 @@
   .mobileNav b{font-weight:400;font-size:37px}
   .menuButton{color:#fff;background:#17174fb8;border:1px solid #5bb8e894;border-radius:999px;height:42px;padding:0 16px;font-size:16px;display:block}
 }
+/* Requested blog listing mobile typography. */
+@media(max-width:760px){
+  .shell :global(.inner-kicker){color:var(--blue);letter-spacing:0;margin:0 0 26px;font:21px/1.3 monospace;position:relative}
+  .shell :global(.inner-hero h1){overflow-wrap:anywhere;max-width:100%;font-size:clamp(44px,12vw,64px);line-height:.92}
+  .shell :global(.inner-hero-copy){max-width:100%;font-size:20px;line-height:1.5}
+  .shell :global(.inner-hero){gap:30px;min-height:57svh;padding:126px 18px 64px}
+  .shell :global(.blog-card-content p){color:#666b80;-webkit-line-clamp:3;-webkit-box-orient:vertical;margin:0;font-size:17px;line-height:1.55;display:-webkit-box;overflow:hidden}
+  .shell :global(.blog-card-title h2){letter-spacing:0;margin:0 0 16px;font-size:clamp(24px,2vw,36px);font-weight:400;line-height:1.04}
+}

@@ -43,3 +43,15 @@
   .projectCard,.projectCard.medium,.projectCard.large,.projectCard.xlarge{width:100%;align-self:stretch}.projectImage{aspect-ratio:1.45/1}.projectMeta{display:grid;gap:12px}.projectMeta h3{font-size:clamp(27px,8vw,36px)}.projectMeta p{font-size:14px}.projectMeta small{white-space:normal}
   .outro{min-height:70svh;padding:85px 18px}.outro h2{font-size:clamp(46px,14vw,62px);line-height:.88}.outro a{width:100%;min-width:0}
 }
+/* Requested portfolio mobile typography. */
+@media(max-width:760px){
+  .heroTitle{font-size:clamp(52px,20vw,82px);line-height:.8}
+  .heroCopy>p{color:var(--blue);letter-spacing:0;margin:0 0 30px;font:21px/1.2 monospace}
+  .heroCopy>span{width:100%;max-width:330px;font-size:22px;line-height:1.45}
+  .projectsIntro p{color:var(--blue);letter-spacing:0;margin:0;font:26px/1.2 monospace}
+  .projectsIntro span{font-size:20px;line-height:1.5}
+  .projectMeta p{font-size:22px}
+  .projectMeta small{color:var(--blue);white-space:nowrap;font:18px/1.2 monospace}
+  .outro>p{color:var(--blue);letter-spacing:0;font:19px/1.2 monospace}
+  .outro a{width:100%;min-width:0;font-size:23px}
+}
