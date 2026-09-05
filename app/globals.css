@@ -318,3 +318,8 @@ body{font-size:var(--type-body);line-height:var(--type-leading);font-family:var(
   .footer-mail{font-size:18px}
   .footer-base,.copyright{font-size:17px}
 }
+
+/* Requested mobile fact value positioning. */
+@media(max-width:760px){
+  .fact strong{z-index:2;font-size:46px;font-weight:400;position:absolute;bottom:84px;right:28px}
+}

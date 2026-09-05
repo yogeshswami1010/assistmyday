@@ -34,3 +34,8 @@
   .related header>p{color:var(--accent);letter-spacing:0;font:23px monospace}
   .related small{color:var(--accent);font:17px monospace}
   .related>div>a>span{font:17px monospace}}
+
+/* Requested mobile article section label size. */
+@media(max-width:760px){
+  .contentSection>span{color:#6268eb;margin-bottom:20px;font:21px monospace;display:block}
+}

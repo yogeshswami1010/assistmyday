@@ -36,3 +36,8 @@
   .shell :global(.blog-card-content p){color:#666b80;-webkit-line-clamp:3;-webkit-box-orient:vertical;margin:0;font-size:17px;line-height:1.55;display:-webkit-box;overflow:hidden}
   .shell :global(.blog-card-title h2){letter-spacing:0;margin:0 0 16px;font-size:clamp(24px,2vw,36px);font-weight:400;line-height:1.04}
 }
+
+/* Requested mobile contact form label size. */
+@media(max-width:760px){
+  .shell :global(.contact-form label){gap:9px;font:15px monospace;display:grid}
+}
