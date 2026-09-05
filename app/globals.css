@@ -297,3 +297,15 @@ body{font-size:var(--type-body);line-height:var(--type-leading);font-family:var(
   .footer-intro{max-width:100%;font-size:20px;line-height:1.5}
   .footer-info p{font-size:20px}
 }
+/* Additional requested mobile typography adjustments. */
+@media(max-width:760px){
+  .facts-title h2,.work-intro h2,.story-head h2{letter-spacing:0;line-height:1;font-size:41px!important}
+  .fact>p{font-size:20px}
+  .facts-title p{text-align:left;font-size:24px}
+  .about-side a,.work-intro a,.work-outro a,.view-services,.lab-link,.collab,.work-meta>a,.story-actions a{font-size:20px;line-height:1.3}
+  .work-intro a{align-self:flex-start;font-size:18px;width:182px}
+  .about-side p{font-size:18px;line-height:1.45}
+  .about-mantra{font-size:30px;bottom:245px;left:18px}
+  .about>h2{font-size:37px;line-height:1.02}
+  .about .left{left:18px;font-size:38px}
+}
