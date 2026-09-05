@@ -116,7 +116,21 @@ async function initializeSchema() {
     updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
   ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci`);
   await pool.query("CREATE TABLE IF NOT EXISTS amd_media (id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY, filename VARCHAR(255) NOT NULL, content_type VARCHAR(80) NOT NULL, data LONGBLOB NOT NULL, size_bytes INT UNSIGNED NOT NULL, created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci");
-  await pool.query(`CREATE TABLE IF NOT EXISTS amd_blogs (
+  await pool.query(`CREATE TABLE IF NOT EXISTS amd_contact_submissions (
+    id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(160) NOT NULL,
+    email VARCHAR(254) NOT NULL,
+    company VARCHAR(180) NOT NULL DEFAULT '',
+    phone VARCHAR(60) NOT NULL DEFAULT '',
+    message TEXT NOT NULL,
+    ip_address VARCHAR(64) NOT NULL DEFAULT '',
+    user_agent VARCHAR(500) NOT NULL DEFAULT '',
+    email_sent TINYINT(1) NOT NULL DEFAULT 0,
+    email_error VARCHAR(500) NULL,
+    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    INDEX created_at_idx (created_at),
+    INDEX email_idx (email)
+  ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci`);  await pool.query(`CREATE TABLE IF NOT EXISTS amd_blogs (
     id INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
     slug VARCHAR(180) NOT NULL UNIQUE,
     category VARCHAR(120) NOT NULL,
@@ -292,6 +306,34 @@ export async function getMedia(id: number) {
   };
 }
 
+export type ContactSubmission = {
+  name: string;
+  email: string;
+  company: string;
+  phone: string;
+  message: string;
+  ipAddress?: string;
+  userAgent?: string;
+};
+
+export async function createContactSubmission(value: ContactSubmission) {
+  await ensureSchema();
+  const [result] = await getPool().execute<ResultSetHeader>(
+    `INSERT INTO amd_contact_submissions
+      (name, email, company, phone, message, ip_address, user_agent)
+      VALUES (?, ?, ?, ?, ?, ?, ?)`,
+    [value.name, value.email, value.company, value.phone, value.message, value.ipAddress || "", value.userAgent || ""],
+  );
+  return result.insertId;
+}
+
+export async function setContactSubmissionEmailStatus(id: number, sent: boolean, error = "") {
+  await ensureSchema();
+  await getPool().execute(
+    "UPDATE amd_contact_submissions SET email_sent = ?, email_error = ? WHERE id = ?",
+    [sent ? 1 : 0, error ? error.slice(0, 500) : null, id],
+  );
+}
 export async function createContent(kind: ContentKind, value: PortfolioProject | ServiceItem | BlogArticle) {
   await ensureSchema();
   const pool = getPool();

@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import InnerPages from "../components/InnerPages";
+import ContactForm from "./ContactForm";
 
 export const metadata: Metadata = {
   title: "Contact | Assistmyday",
@@ -21,15 +22,7 @@ export default function ContactPage() {
             <p><strong>Call</strong><br /><a href="tel:+19053748878">+1 (905) 374-8878</a></p>
             <p><strong>Visit</strong><br />110 James St, Suite 411<br />St. Catharines, ON L2R 7E8</p>
           </div>
-          <form className="contact-form" action="mailto:info@assistmyday.com" method="post" encType="text/plain">
-            <label>YOUR NAME<input type="text" name="name" autoComplete="name" required /></label>
-            <label>WORK EMAIL<input type="email" name="email" autoComplete="email" required /></label>
-            <label>COMPANY<input type="text" name="company" autoComplete="organization" /></label>
-            <label>PHONE<input type="tel" name="phone" autoComplete="tel" /></label>
-            <label>HOW CAN WE HELP?<textarea name="message" rows={6} required /></label>
-            <p className="contact-form-note">Submitting opens your email application with the project details.</p>
-            <button type="submit">SEND PROJECT DETAILS ↗</button>
-          </form>
+          <ContactForm />
         </div>
       </section>
     </InnerPages>
