@@ -252,13 +252,6 @@ export default function HomeExperience({ services, portfolio }: { services: Serv
       </section>
       </div>
 
-      <section className="mantra scene-dark" data-scrollscene>
-        <div className="sticky">
-          <p>ONE PARTNER.<br />FROM IDEA TO IMPACT.</p>
-          <div className="mantra-track"><span>DISCOVER</span><b>＋</b><span>BUILD</span><b>＋</b><span>SCALE</span></div>
-          <div className="wipe-bars"><i /><i /><i /><i /><i /></div>
-        </div>
-      </section>
 
       <section id="facts" className="facts scene-light">
         <div className="facts-title"><h2>One team.<br />Every digital layer.</h2><p>Strategy to launch.<br />Traffic to revenue.</p></div>
