@@ -261,3 +261,8 @@ body{font-size:var(--type-body);line-height:var(--type-leading);font-family:var(
     transform:translate(-50%,calc(-50% + 43svh - var(--finale-travel)*65svh))!important;
   }
 }
+/* Keep the Discover / Build / Scale section static on every screen size. */
+.mantra{height:auto!important;min-height:100svh}
+.mantra .sticky{position:relative!important;top:auto!important;height:100svh;min-height:650px}
+.mantra-track{left:50%!important;top:50%!important;transform:translate3d(-50%,-50%,0)!important}
+.wipe-bars{display:none!important}
