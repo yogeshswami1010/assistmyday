@@ -87,9 +87,19 @@ export async function POST(request: NextRequest) {
     await setContactSubmissionEmailStatus(submissionId, true);
   } catch (error) {
     const message = error instanceof Error ? error.message : "Unknown email error";
+    const smtpError = error as { code?: unknown; command?: unknown; responseCode?: unknown };
+    const diagnostic = {
+      code: typeof smtpError.code === "string" ? smtpError.code : "SMTP_ERROR",
+      command: typeof smtpError.command === "string" ? smtpError.command : undefined,
+      responseCode: typeof smtpError.responseCode === "number" ? smtpError.responseCode : undefined,
+    };
     await setContactSubmissionEmailStatus(submissionId, false, message);
-    console.error("Contact submission saved, but email delivery failed.", error);
-    return NextResponse.json({ error: "Your message was saved, but email delivery failed. We will still review it.", saved: true }, { status: 502 });
+    console.error("Contact submission saved, but email delivery failed.", { ...diagnostic, error });
+    return NextResponse.json({
+      error: "Your message was saved, but email delivery failed. We will still review it.",
+      saved: true,
+      diagnostic,
+    }, { status: 502 });
   }
 
   return NextResponse.json({ ok: true });
