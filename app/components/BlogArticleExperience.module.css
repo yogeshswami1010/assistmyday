@@ -24,4 +24,13 @@
   .body{display:flex;flex-direction:column}
   .content{order:1}
   .toc{order:2;position:relative;top:auto;margin-top:70px}
-}
+  .toc>p{color:#6268eb;letter-spacing:0;margin:0 0 30px;font:21px monospace}
+  .toc small{color:var(--accent);font:20px monospace}
+  .toc nav a{color:#5f6479;border-bottom:1px solid #17174f26;grid-template-columns:30px 1fr;gap:10px;padding:17px 0;font-size:20px;line-height:1.35;transition:color .25s,padding-left .25s;display:grid}
+  .sidebarSection>p{color:#6268eb;letter-spacing:0;margin:0 0 15px;font:22px monospace}
+  .category{color:#454b63;border-top:1px solid #17174f26;border-bottom:1px solid #17174f26;padding:14px 0;font-size:15px;display:block}
+  .recentPosts a{color:#5f6479;border-bottom:1px solid #17174f26;grid-template-columns:26px 1fr;gap:9px;padding:13px 0;font-size:16px;line-height:1.3;transition:color .25s,padding-left .25s;display:grid}
+  .contactLink{border-bottom:1px solid #17174f;justify-content:space-between;margin-top:35px;padding:14px 0;font:17px monospace;display:flex}
+  .related header>p{color:var(--accent);letter-spacing:0;font:23px monospace}
+  .related small{color:var(--accent);font:17px monospace}
+  .related>div>a>span{font:17px monospace}}
