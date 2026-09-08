@@ -73,3 +73,5 @@
 
 .process{height:320svh;min-height:0;padding:0 5vw}.processSticky{position:sticky;top:108px;min-height:calc(100svh - 108px);padding:70px 0;display:flex;flex-direction:column;justify-content:center}
 @media(max-width:900px){.process{height:300svh;padding:0 18px}.processSticky{top:88px;min-height:calc(100svh - 88px);padding:48px 0}}
+
+.timelineLine{background:transparent}.processStep:not(.processActive){opacity:0;visibility:hidden;transform:translateY(24px)}.processStep.processActive{visibility:visible}

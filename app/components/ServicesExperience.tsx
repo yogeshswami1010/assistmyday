@@ -75,10 +75,10 @@ export default function ServicesExperience({ services }: { services: ServiceItem
         const processRect = processSection.getBoundingClientRect();
         const processTravel = Math.max(1, processRect.height - window.innerHeight);
         const processTarget = Math.min(1, Math.max(0, -processRect.top / processTravel));
-        root.style.setProperty("--process-progress", processTarget.toFixed(4));
+        const activeCount = Math.min(processSteps.length, Math.floor(processTarget * processSteps.length) + 1);
+        root.style.setProperty("--process-progress", (activeCount / processSteps.length).toFixed(4));
         processSteps.forEach((step, index) => {
-          const threshold = index / processSteps.length;
-          step.classList.toggle(styles.processActive, processTarget >= threshold);
+          step.classList.toggle(styles.processActive, index < activeCount);
         });
       }      const smoothing = 1 - Math.exp(-elapsed / 110);
       const previous = renderedProgress ?? target;
