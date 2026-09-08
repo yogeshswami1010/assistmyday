@@ -26,7 +26,8 @@ export default function PortfolioExperience({ projects }: { projects: PortfolioP
     const stage = stageRef.current;
     const pin = pinRef.current;
     const canvas = canvasRef.current;
-    if (!stage || !pin || !canvas) return;
+    const pathMap = pathsRef.current;
+    if (!stage || !pin || !canvas || !pathMap) return;
 
     const floatingCards = Array.from(pin.querySelectorAll<HTMLElement>(`.${styles.floatCard}`));
     const title = pin.querySelector<HTMLElement>(`.${styles.heroTitle}`);
