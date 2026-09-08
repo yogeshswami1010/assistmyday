@@ -138,11 +138,12 @@ export default function ServicesExperience({ services }: { services: ServiceItem
               <div className={styles.panelContent}>
                 <div className={styles.panelTop}>
                   <span>{service.number}</span>
-                  <p>{service.label}</p>
-                  <div className={`${styles.motif} ${styles[service.motif]}`} aria-hidden="true"><i /><i /><i /><b /></div>
                 </div>
                 <div className={styles.panelBody}>
-                  <h3>{service.title}</h3>
+                  <div className={styles.panelHeading}>
+                    <h3>{service.title}</h3>
+                    <div className={`${styles.motif} ${styles[service.motif]}`} aria-hidden="true"><i /><i /><i /><b /></div>
+                  </div>
                   <p>{service.copy}</p>
                 </div>
                 <div className={styles.panelFooter}>
