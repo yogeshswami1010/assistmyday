@@ -436,7 +436,6 @@ export default function HomeExperience({ services, portfolio }: { services: Serv
 
       <section id="portfolio" className="motion-lab scene-light" data-scrollscene>
         <div className="sticky lab-sticky">
-          <h2 className="design-in">DIGITAL</h2><h2 className="motion-word">DELIVERED</h2>
           <p className="lab-center">SELECTED SOFTWARE AND MARKETING WORK<br />FOR AMBITIOUS BUSINESSES.</p>
           <p className="lab-copy">Software, web platforms, strategy,<br />creative, campaigns, and growth.</p>
           <a href="/contact" className="lab-link">TALK TO OUR TEAM <span>→</span></a>
