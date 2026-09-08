@@ -46,7 +46,7 @@ export default function ServicesExperience({ services }: { services: ServiceItem
     reveals.forEach((element) => observer.observe(element));
 
     const panels = Array.from(root.querySelectorAll<HTMLElement>(`.${styles.servicePanel}`));
-    const timeline = root.querySelector<HTMLElement>(`.${styles.timeline}`);
+    const processSection = root.querySelector<HTMLElement>(`.${styles.process}`);
     const processSteps = Array.from(root.querySelectorAll<HTMLElement>(`.${styles.processStep}`));
     const onPointerMove = (event: PointerEvent) => {
       const panel = (event.target as HTMLElement).closest<HTMLElement>(`.${styles.servicePanel}`);
@@ -71,9 +71,10 @@ export default function ServicesExperience({ services }: { services: ServiceItem
         const panelProgress = Math.min(1, Math.max(0, (window.innerHeight - panelRect.top) / (window.innerHeight + panelRect.height)));
         panel.style.setProperty("--panel-progress", panelProgress.toFixed(4));
       });
-      if (timeline) {
-        const timelineRect = timeline.getBoundingClientRect();
-        const processTarget = Math.min(1, Math.max(0, (window.innerHeight * 0.78 - timelineRect.top) / (window.innerHeight * 0.5 + timelineRect.height)));
+      if (processSection) {
+        const processRect = processSection.getBoundingClientRect();
+        const processTravel = Math.max(1, processRect.height - window.innerHeight);
+        const processTarget = Math.min(1, Math.max(0, -processRect.top / processTravel));
         root.style.setProperty("--process-progress", processTarget.toFixed(4));
         processSteps.forEach((step, index) => {
           const threshold = index / processSteps.length;
@@ -159,18 +160,20 @@ export default function ServicesExperience({ services }: { services: ServiceItem
       </section>
 
       <section className={styles.process} aria-labelledby="process-title">
-        <div className={`${styles.processHeading} ${styles.reveal}`}>
-          <p>HOW WE WORK</p>
-          <h2 id="process-title">From first question<br />to <em>lasting impact.</em></h2>
-        </div>
-        <div className={styles.timeline}>
-          <div className={styles.timelineLine} aria-hidden="true"><i /></div>
-          {process.map(([number, title, copy], index) => (
-            <article className={`${styles.processStep} ${styles.reveal}`} style={{ transitionDelay: `${index * 90}ms` }} key={number}>
-              <span>{number}</span><b aria-hidden="true" />
-              <h3>{title}</h3><p>{copy}</p>
-            </article>
-          ))}
+        <div className={styles.processSticky}>
+          <div className={`${styles.processHeading} ${styles.reveal}`}>
+            <p>HOW WE WORK</p>
+            <h2 id="process-title">From first question<br />to <em>lasting impact.</em></h2>
+          </div>
+          <div className={styles.timeline}>
+            <div className={styles.timelineLine} aria-hidden="true"><i /></div>
+            {process.map(([number, title, copy], index) => (
+              <article className={`${styles.processStep} ${styles.reveal}`} style={{ transitionDelay: `${index * 90}ms` }} key={number}>
+                <span>{number}</span><b aria-hidden="true" />
+                <h3>{title}</h3><p>{copy}</p>
+              </article>
+            ))}
+          </div>
         </div>
       </section>
 
