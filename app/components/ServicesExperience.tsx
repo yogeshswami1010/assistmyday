@@ -115,7 +115,7 @@ export default function ServicesExperience({ services }: { services: ServiceItem
 
         <div className={styles.serviceList}>
           {services.map((service, index) => (
-            <article className={`${styles.servicePanel} ${styles.reveal}`} key={service.number}>
+            <article className={`${styles.servicePanel} ${styles.reveal}`} style={{ zIndex: index + 1 }} key={service.number}>
               <div className={styles.panelGlow} aria-hidden="true" />
               <div className={styles.chapterNumber} aria-hidden="true">{String(index + 1).padStart(2, "0")}</div>
               <div className={styles.panelVisual}>
