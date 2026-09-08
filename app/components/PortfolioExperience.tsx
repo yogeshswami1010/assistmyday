@@ -35,7 +35,8 @@ export default function PortfolioExperience({ projects }: { projects: PortfolioP
     const scrollCue = pin.querySelector<HTMLElement>(`.${styles.scrollCue}`);
     const ctx = canvas.getContext("2d");
     const projectGrid = pathMap.parentElement;
-    const projectCards = projectGrid ? Array.from(projectGrid.querySelectorAll<HTMLElement>(`.${styles.projectCard}`)) : [];
+    if (!projectGrid) return;
+    const projectCards = Array.from(projectGrid.querySelectorAll<HTMLElement>(`.${styles.projectCard}`));
     const connectorPaths = Array.from(pathMap.querySelectorAll<SVGPathElement>("path"));
     let raf = 0;
     let mouseX = 0;
