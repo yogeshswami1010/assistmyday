@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { useEffect, useRef } from "react";
 import type { ServiceItem } from "../../lib/content-types";
 import styles from "./ServicesExperience.module.css";
@@ -21,6 +22,13 @@ const technologyStack = [
   ["05", "Commerce", ["Shopify", "WooCommerce", "Payments", "Conversion systems"]],
   ["06", "Cloud & DevOps", ["AWS", "Cloudflare", "GitHub Actions", "Managed deployment"]],
   ["07", "Growth Stack", ["SEO", "Paid media", "Analytics", "CRM automation"]],
+] as const;
+
+const serviceVisuals = [
+  "/services/service-software-ai.png",
+  "/services/service-websites.png",
+  "/services/service-marketing.png",
+  "/services/service-creative.png",
 ] as const;
 
 export default function ServicesExperience({ services }: { services: ServiceItem[] }) {
@@ -123,18 +131,24 @@ export default function ServicesExperience({ services }: { services: ServiceItem
             <article className={`${styles.servicePanel} ${styles.reveal}`} key={service.number}>
               <div className={styles.panelGlow} aria-hidden="true" />
               <div className={styles.chapterNumber} aria-hidden="true">{String(index + 1).padStart(2, "0")}</div>
-              <div className={styles.panelTop}>
+              <div className={styles.panelVisual}>
+                <Image src={serviceVisuals[index % serviceVisuals.length]} alt="" fill sizes="(max-width: 900px) 100vw, 50vw" />
                 <span>{service.number}</span>
-                <p>{service.label}</p>
-                <div className={`${styles.motif} ${styles[service.motif]}`} aria-hidden="true"><i /><i /><i /><b /></div>
               </div>
-              <div className={styles.panelBody}>
-                <h3>{service.title}</h3>
-                <p>{service.copy}</p>
-              </div>
-              <div className={styles.panelFooter}>
-                <ul>{service.items.map((item) => <li key={item}>{item}</li>)}</ul>
-                <a href="/contact" aria-label={`Discuss ${service.title}`}>START A PROJECT <span>↗</span></a>
+              <div className={styles.panelContent}>
+                <div className={styles.panelTop}>
+                  <span>{service.number}</span>
+                  <p>{service.label}</p>
+                  <div className={`${styles.motif} ${styles[service.motif]}`} aria-hidden="true"><i /><i /><i /><b /></div>
+                </div>
+                <div className={styles.panelBody}>
+                  <h3>{service.title}</h3>
+                  <p>{service.copy}</p>
+                </div>
+                <div className={styles.panelFooter}>
+                  <div><p>OUR CORE CAPABILITIES</p><ul>{service.items.map((item) => <li key={item}>{item}</li>)}</ul></div>
+                  <a href="/contact" aria-label={`Discuss ${service.title}`}>START A PROJECT <span>↗</span></a>
+                </div>
               </div>
             </article>
           ))}
