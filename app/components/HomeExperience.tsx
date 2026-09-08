@@ -27,6 +27,51 @@ export default function HomeExperience({ services, portfolio }: { services: Serv
   const [cursor, setCursor] = useState({ x: -100, y: -100 });  const [reviewPage, setReviewPage] = useState(0);
   const [reviewsPerPage, setReviewsPerPage] = useState(3);
   const portfolioSliderRef = useRef<HTMLDivElement>(null);
+  const servicesSectionRef = useRef<HTMLElement>(null);
+  const servicesAudioRef = useRef<HTMLAudioElement>(null);
+
+  useEffect(() => {
+    const section = servicesSectionRef.current;
+    const audio = servicesAudioRef.current;
+    if (!section || !audio) return;
+
+    let sectionIsVisible = false;
+    audio.volume = 0.45;
+
+    const playWhileVisible = () => {
+      if (!sectionIsVisible || document.hidden) return;
+      void audio.play().catch(() => {
+        // Audible autoplay may be blocked until the visitor first interacts.
+      });
+    };
+    const stopAudio = () => {
+      audio.pause();
+      audio.currentTime = 0;
+    };
+    const observer = new IntersectionObserver(([entry]) => {
+      sectionIsVisible = entry.isIntersecting;
+      if (sectionIsVisible) playWhileVisible();
+      else stopAudio();
+    }, { threshold: 0 });
+    const retryAfterInteraction = () => playWhileVisible();
+    const handleVisibilityChange = () => {
+      if (document.hidden) audio.pause();
+      else playWhileVisible();
+    };
+
+    observer.observe(section);
+    document.addEventListener("pointerdown", retryAfterInteraction, { passive: true });
+    document.addEventListener("keydown", retryAfterInteraction);
+    document.addEventListener("visibilitychange", handleVisibilityChange);
+
+    return () => {
+      observer.disconnect();
+      document.removeEventListener("pointerdown", retryAfterInteraction);
+      document.removeEventListener("keydown", retryAfterInteraction);
+      document.removeEventListener("visibilitychange", handleVisibilityChange);
+      stopAudio();
+    };
+  }, []);
 
   useEffect(() => {
     const media = window.matchMedia("(max-width: 760px)");
@@ -329,7 +374,8 @@ export default function HomeExperience({ services, portfolio }: { services: Serv
         </div>
       </section>
 
-      <section id="services" className="services scene-dark" data-scrollscene>
+      <section ref={servicesSectionRef} id="services" className="services scene-dark" data-scrollscene>
+        <audio ref={servicesAudioRef} src="/audio/thunder.mp3" loop preload="metadata" aria-hidden="true" />
         <div className="sticky service-sticky">
           <video
             className="services-bg-video"
