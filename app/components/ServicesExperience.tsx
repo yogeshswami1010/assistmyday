@@ -76,7 +76,7 @@ export default function ServicesExperience({ services }: { services: ServiceItem
         const processTarget = Math.min(1, Math.max(0, (window.innerHeight * 0.78 - timelineRect.top) / (window.innerHeight * 0.5 + timelineRect.height)));
         root.style.setProperty("--process-progress", processTarget.toFixed(4));
         processSteps.forEach((step, index) => {
-          const threshold = index === 0 ? 0.04 : index / processSteps.length;
+          const threshold = index / processSteps.length;
           step.classList.toggle(styles.processActive, processTarget >= threshold);
         });
       }      const smoothing = 1 - Math.exp(-elapsed / 110);

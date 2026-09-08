@@ -69,4 +69,4 @@
 .experience{overflow:clip}.services,.serviceList{overflow:visible}
 @media(min-width:901px){.servicePanel{position:sticky;top:108px;margin-bottom:clamp(100px,16vh,180px)!important;box-shadow:0 24px 72px rgba(4,5,11,.22)}.servicePanel:last-child{margin-bottom:0!important}}
 
-.processStep{opacity:.28;transform:translateY(24px);transition:opacity .55s ease,transform .7s cubic-bezier(.16,1,.3,1)}.processStep.processActive{opacity:1;transform:none}.processStep>b{background:#252948;transition:background .35s ease,box-shadow .35s ease}.processStep.processActive>b{background:var(--blue);box-shadow:0 0 0 1px rgba(91,184,232,.7),0 0 18px rgba(91,184,232,.55)}
+.processStep{opacity:0;transform:translateY(24px);transition:opacity .55s ease,transform .7s cubic-bezier(.16,1,.3,1)}.processStep.processActive{opacity:1;transform:none}.processStep>b{background:#252948;transition:background .35s ease,box-shadow .35s ease}.processStep.processActive>b{background:var(--blue);box-shadow:0 0 0 1px rgba(91,184,232,.7),0 0 18px rgba(91,184,232,.55)}
