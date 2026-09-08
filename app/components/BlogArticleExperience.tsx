@@ -29,7 +29,7 @@ export default function BlogArticleExperience({ article, related, recent }: { ar
     const sections = root.querySelectorAll<HTMLElement>(`.${styles.contentSection}`);
     const observer = new IntersectionObserver(
       (entries) => entries.forEach((entry) => entry.isIntersecting && entry.target.classList.add(styles.visible)),
-      { threshold: 0.12, rootMargin: "0px 0px -10%" },
+      { threshold: 0.01, rootMargin: "0px 0px -10%" },
     );
     sections.forEach((section) => observer.observe(section));
     return () => {
@@ -66,7 +66,7 @@ export default function BlogArticleExperience({ article, related, recent }: { ar
         <div className={styles.content}>
           {article.image && <div className={styles.contentFeature}><Image src={article.image} alt={article.title} fill sizes="(max-width: 900px) 100vw, 60vw" unoptimized /></div>}
           {article.contentHtml ? (
-            <section id="article-content" className={styles.contentSection}>
+            <section id="article-content" className={`${styles.contentSection} ${styles.visible}`}>
               <span>01</span>
               <div className={styles.richContent} dangerouslySetInnerHTML={{ __html: article.contentHtml }} />
             </section>
