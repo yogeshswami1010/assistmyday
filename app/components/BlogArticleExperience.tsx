@@ -45,7 +45,7 @@ export default function BlogArticleExperience({ article, related, recent }: { ar
       <header className={styles.hero}>
         <div className={styles.heroNoise} aria-hidden="true" />
         {article.image && <div className={styles.heroImage} aria-hidden="true"><Image src={article.image} alt="" fill sizes="100vw" priority unoptimized /></div>}
-        <div className={styles.heroMeta}><Link href="/blog">← ALL INSIGHTS</Link><span>{article.category}</span><span>{article.date}</span><span>{article.readTime}</span></div>
+        <div className={styles.heroMeta}><Link href="/blog">← ALL INSIGHTS</Link><span>{article.category}</span><time>PUBLISHED {article.date}</time><span>{article.readTime}</span></div>
         <h1>{article.title}</h1>
       </header>
 

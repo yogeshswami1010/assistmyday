@@ -41,6 +41,7 @@ export default async function BlogPage() {
                   )}
                 </a>
                 <div className="blog-card-content">
+                  <time className="blog-card-date">PUBLISHED {article.date}</time>
                   <a className="blog-card-title" href={href}><h2>{article.title}</h2></a>
                   <p>{article.excerpt}</p>
                 </div>
