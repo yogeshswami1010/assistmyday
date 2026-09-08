@@ -10,20 +10,26 @@ export async function POST(request: Request) {
   if (!isAdminAuthConfigured()) {
     return NextResponse.json({ error: "Admin access has not been configured yet." }, { status: 503 });
   }
-  const ip = request.headers.get("x-forwarded-for")?.split(",")[0]?.trim() || "local";
-  const now = Date.now();
-  const current = attempts.get(ip);
-  if (current && current.resetAt > now && current.count >= 6) {
-    return NextResponse.json({ error: "Too many attempts. Try again in 15 minutes." }, { status: 429 });
-  }
+
   const body = await request.json().catch(() => null) as { email?: string; password?: string } | null;
   const email = body?.email || "";
   const password = body?.password || "";
-  if (!verifyAdminCredentials(email, password)) {
-    attempts.set(ip, current && current.resetAt > now ? { ...current, count: current.count + 1 } : { count: 1, resetAt: now + 15 * 60 * 1000 });
-    return NextResponse.json({ error: "Incorrect email or password." }, { status: 401 });
+  const ip = request.headers.get("x-forwarded-for")?.split(",")[0]?.trim() || "local";
+
+  if (verifyAdminCredentials(email, password)) {
+    attempts.delete(ip);
+    await createAdminSession(email);
+    return NextResponse.json({ ok: true });
   }
-  attempts.delete(ip);
-  await createAdminSession(email);
-  return NextResponse.json({ ok: true });
+
+  const now = Date.now();
+  const current = attempts.get(ip);
+  if (current && current.resetAt > now && current.count >= 6) {
+    return NextResponse.json({ error: "Too many incorrect attempts. Correct credentials can still sign in immediately." }, { status: 429 });
+  }
+
+  attempts.set(ip, current && current.resetAt > now
+    ? { ...current, count: current.count + 1 }
+    : { count: 1, resetAt: now + 15 * 60 * 1000 });
+  return NextResponse.json({ error: "Incorrect email or password." }, { status: 401 });
 }
