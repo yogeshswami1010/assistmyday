@@ -106,19 +106,6 @@ export default function ServicesExperience({ services }: { services: ServiceItem
         <div className={styles.heroCue}><span>↓</span> EXPLORE CAPABILITIES</div>
       </section>
 
-      <section className={styles.expertise} aria-labelledby="expertise-title">
-        <div className={`${styles.expertiseIntro} ${styles.reveal}`}>
-          <p>✦ WHAT WE DO BEST</p>
-          <h2 id="expertise-title">Areas of <em>expertise.</em></h2>
-        </div>
-        <ol className={styles.expertiseList}>{services.map((service, index) => <li className={styles.reveal} style={{ transitionDelay: `${index * 70}ms` }} key={service.number}><small>{service.number}</small><span>{service.title}</span><b>↗</b></li>)}</ol>
-        <div className={`${styles.expertiseFoot} ${styles.reveal}`}><p>Focused disciplines where strategy, design, technology, and growth work as one.</p><a href="/portfolio">VIEW OUR PROJECTS <span>↗</span></a></div>
-      </section>
-
-      <div className={styles.marquee} aria-hidden="true">
-        <div>SOFTWARE <i>＋</i> WEBSITES <i>＋</i> MARKETING <i>＋</i> BRAND <i>＋</i> AUTOMATION <i>＋</i> SOFTWARE <i>＋</i> WEBSITES <i>＋</i></div>
-      </div>
-
       <section className={styles.services} aria-label="Service capabilities">
         <header className={`${styles.sectionHeader} ${styles.reveal}`}>
 
