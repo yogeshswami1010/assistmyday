@@ -45,3 +45,6 @@
 .related small{color:var(--accent);font:16px monospace}
 .related h3{letter-spacing:0;max-width:650px;margin:auto 0 35px;font-size:clamp(28px,3vw,33px);font-weight:400;line-height:1}
 .related>div>a>span{font:16px monospace}
+/* Requested article sidebar labels on all screen sizes. */
+.sidebarSection>p{color:#6268eb;letter-spacing:0;margin:0 0 15px;font:20px monospace}
+.toc>p{color:#6268eb;letter-spacing:0;margin:0 0 30px;font:20px monospace}
