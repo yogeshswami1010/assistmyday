@@ -20,6 +20,7 @@ export default function PortfolioExperience({ projects }: { projects: PortfolioP
   const stageRef = useRef<HTMLElement>(null);
   const pinRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const pathsRef = useRef<SVGSVGElement>(null);
 
   useEffect(() => {
     const stage = stageRef.current;
@@ -32,6 +33,9 @@ export default function PortfolioExperience({ projects }: { projects: PortfolioP
     const mark = pin.querySelector<HTMLElement>(`.${styles.heroMark}`);
     const scrollCue = pin.querySelector<HTMLElement>(`.${styles.scrollCue}`);
     const ctx = canvas.getContext("2d");
+    const projectGrid = pathMap.parentElement;
+    const projectCards = projectGrid ? Array.from(projectGrid.querySelectorAll<HTMLElement>(`.${styles.projectCard}`)) : [];
+    const connectorPaths = Array.from(pathMap.querySelectorAll<SVGPathElement>("path"));
     let raf = 0;
     let mouseX = 0;
     let mouseY = 0;
@@ -47,6 +51,37 @@ export default function PortfolioExperience({ projects }: { projects: PortfolioP
       ctx?.setTransform(ratio, 0, 0, ratio, 0, 0);
     };
 
+    const layoutProjectPaths = () => {
+      if (!projectGrid) return;
+      const gridRect = projectGrid.getBoundingClientRect();
+      pathMap.setAttribute("viewBox", `0 0 ${gridRect.width} ${gridRect.height}`);
+      connectorPaths.forEach((path, index) => {
+        const current = projectCards[index]?.getBoundingClientRect();
+        const next = projectCards[index + 1]?.getBoundingClientRect();
+        if (!current || !next) return;
+        const startX = current.left - gridRect.left + current.width * 0.5;
+        const startY = current.bottom - gridRect.top + 18;
+        const endX = next.left - gridRect.left + next.width * 0.5;
+        const endY = next.top - gridRect.top - 18;
+        const bend = Math.max(90, (endY - startY) * 0.42);
+        path.setAttribute("d", `M ${startX} ${startY} C ${startX} ${startY + bend}, ${endX} ${endY - bend}, ${endX} ${endY}`);
+        const length = path.getTotalLength();
+        path.dataset.length = String(length);
+        path.style.strokeDasharray = String(length);
+        path.style.strokeDashoffset = String(length);
+      });
+    };
+
+    const drawProjectPaths = () => {
+      connectorPaths.forEach((path, index) => {
+        const next = projectCards[index + 1]?.getBoundingClientRect();
+        const length = Number(path.dataset.length || 0);
+        if (!next || !length) return;
+        const pathProgress = clamp((window.innerHeight * 1.15 - next.top) / (window.innerHeight * 0.8));
+        path.style.strokeDashoffset = String(length * (1 - pathProgress));
+        path.style.opacity = String(clamp(pathProgress * 1.8));
+      });
+    };
     const drawLines = (progress: number) => {
       if (!ctx) return;
       const width = pin.clientWidth;
@@ -103,6 +138,7 @@ export default function PortfolioExperience({ projects }: { projects: PortfolioP
       }
       if (scrollCue) scrollCue.style.opacity = String(clamp(0.62 - progress * 2));
       drawLines(progress);
+      drawProjectPaths();
       raf = progress === target ? 0 : requestAnimationFrame(update);
     };
 
@@ -118,7 +154,8 @@ export default function PortfolioExperience({ projects }: { projects: PortfolioP
     resizeCanvas();
     update();
     window.addEventListener("scroll", requestUpdate, { passive: true });
-    window.addEventListener("resize", resizeCanvas);
+    const onResize = () => { resizeCanvas(); layoutProjectPaths(); requestUpdate(); };
+    window.addEventListener("resize", onResize);
     window.addEventListener("pointermove", onPointerMove, { passive: true });
 
     const observer = new IntersectionObserver(
@@ -131,7 +168,7 @@ export default function PortfolioExperience({ projects }: { projects: PortfolioP
       if (raf) cancelAnimationFrame(raf);
       observer.disconnect();
       window.removeEventListener("scroll", requestUpdate);
-      window.removeEventListener("resize", resizeCanvas);
+      window.removeEventListener("resize", onResize);
       window.removeEventListener("pointermove", onPointerMove);
     };
   }, []);
@@ -171,6 +208,10 @@ export default function PortfolioExperience({ projects }: { projects: PortfolioP
         </header>
 
         <div className={styles.projectGrid}>
+          <svg ref={pathsRef} className={styles.projectPaths} preserveAspectRatio="none" aria-hidden="true">
+            <defs><linearGradient id="portfolio-path-gradient" x1="0" y1="0" x2="1" y2="1"><stop stopColor="#5bb8e8" /><stop offset="1" stopColor="#6268eb" /></linearGradient></defs>
+            {projects.slice(0, -1).map((project) => <path key={`path-${project.title}`} />)}
+          </svg>
           {projects.map((project, index) => (
             <article className={`${styles.projectCard} ${styles[project.size]} ${styles[project.side]}`} key={project.title}>
               <a className={styles.projectImage} href={project.projectUrl || "/contact"} aria-label={`View ${project.title}`}>
