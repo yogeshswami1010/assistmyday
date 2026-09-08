@@ -144,7 +144,7 @@ export default function ServicesExperience({ services }: { services: ServiceItem
       </section>
 
       <section className={styles.stack} aria-labelledby="stack-title">
-        <header className={`${styles.stackHeader} ${styles.reveal}`}><p>✦ TECHNOLOGY STACK</p><h2 id="stack-title">Built for performance.<br /><em>Ready to scale.</em></h2><span>We choose proven technologies around the product, team, and growth objective—not trends for their own sake.</span></header>
+        <header className={`${styles.stackHeader} ${styles.reveal}`}><h2 id="stack-title">✦ Technology Stack</h2><span>We choose proven technologies around the product, team, and growth objective—not trends for their own sake.</span></header>
         <div className={styles.stackGrid}>{technologyStack.map(([number, title, items], index) => <article className={styles.reveal} style={{ transitionDelay: `${(index % 3) * 70}ms` }} key={number}><small>{number}</small><h3>{title}</h3><ul>{items.map((item) => <li key={item}>{item}</li>)}</ul></article>)}</div>
       </section>
 
