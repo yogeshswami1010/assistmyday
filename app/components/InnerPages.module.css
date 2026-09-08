@@ -44,3 +44,11 @@
 
 /* Requested navigation separator styling. */
 .navSeparator{color:#fff;flex:none;font-size:22px;line-height:1}
+.mobileSocials{display:none}
+@media(max-width:900px){
+  .mobileSocials{display:block;margin-top:auto;padding-top:18px;border-top:1px solid rgba(23,23,79,.18)}
+  .mobileSocials>small{display:block;margin-bottom:13px;color:#6268eb;font:14px/1 monospace}
+  .mobileSocials>div{display:grid;grid-template-columns:1fr 1fr;gap:10px 18px}
+  .mobileNav .mobileSocials a{min-height:0;padding:8px 0;display:flex;align-items:center;justify-content:space-between;border-top:0;color:var(--navy);font:13px/1 monospace}
+  .mobileNav .mobileSocials a b{font-size:14px;color:var(--blue)}
+}

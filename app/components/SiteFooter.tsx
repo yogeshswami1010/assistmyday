@@ -1,5 +1,13 @@
 import Image from "next/image";
 import FooterNavigation from "./FooterNavigation";
+import styles from "./SiteFooter.module.css";
+
+const socialLinks = [
+  { label: "FACEBOOK", href: "https://www.facebook.com/people/Assist-My-Day/61558295810267/" },
+  { label: "INSTAGRAM", href: "https://www.instagram.com/assistmyday/?igsh=dXA3ZTFlaWg2NHVz" },
+  { label: "LINKEDIN", href: "https://www.linkedin.com/company/assistmyday/" },
+  { label: "TIKTOK", href: "https://www.tiktok.com/@assistmyday" },
+];
 
 export default function SiteFooter({ id, topHref = "#" }: { id?: string; topHref?: string }) {
   return (
@@ -20,6 +28,10 @@ export default function SiteFooter({ id, topHref = "#" }: { id?: string; topHref
           <div><small>VISIT US</small><p>110 James St, Suite 411<br />St. Catharines, ON L2R 7E8</p></div>
         </div>
       </div>
+      <nav className={styles.socials} aria-label="Social media">
+        <small>FOLLOW ASSISTMYDAY</small>
+        <div>{socialLinks.map((item) => <a href={item.href} key={item.label} target="_blank" rel="noopener noreferrer">{item.label}<span>↗</span></a>)}</div>
+      </nav>
       <div className="footer-base">
         <p className="copyright">© ASSISTMYDAY® 2026</p>
         <p>ST. CATHARINES — CANADA</p>

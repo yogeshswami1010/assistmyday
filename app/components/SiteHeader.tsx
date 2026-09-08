@@ -13,6 +13,13 @@ const navigation = [
   { label: "CONTACT", href: "/contact" },
 ];
 
+const socialLinks = [
+  { label: "FACEBOOK", href: "https://www.facebook.com/people/Assist-My-Day/61558295810267/" },
+  { label: "INSTAGRAM", href: "https://www.instagram.com/assistmyday/?igsh=dXA3ZTFlaWg2NHVz" },
+  { label: "LINKEDIN", href: "https://www.linkedin.com/company/assistmyday/" },
+  { label: "TIKTOK", href: "https://www.tiktok.com/@assistmyday" },
+];
+
 export default function SiteHeader({ active }: { active: string }) {
   const [menuOpen, setMenuOpen] = useState(false);
 
@@ -48,6 +55,10 @@ export default function SiteHeader({ active }: { active: string }) {
             <small>{String(index + 1).padStart(2, "0")}</small><span>{item.label}</span><b>↗</b>
           </Link>
         ))}
+        <div className={styles.mobileSocials}>
+          <small>FOLLOW US</small>
+          <div>{socialLinks.map((item) => <a href={item.href} key={item.label} target="_blank" rel="noopener noreferrer">{item.label}<b>↗</b></a>)}</div>
+        </div>
       </nav>
     </>
   );
