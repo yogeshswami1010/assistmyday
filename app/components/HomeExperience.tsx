@@ -276,7 +276,7 @@ export default function HomeExperience({ services, portfolio }: { services: Serv
           <div className="hero-title"><h1>Software that scales.</h1><h1>Marketing that <em>converts.</em></h1></div>
           <div className="hero-status">
             <div className="est"><span>◎</span><small>ST. CATHARINES</small></div>
-            <p>Custom software, high-performance websites, and<br />full-funnel digital marketing built around your growth.</p>
+            <p>Custom software, high-performance websites, and full-funnel digital marketing built around your growth.</p>
           </div>
           <p className="drag-hint">DRAG TO ROTATE</p>
           <div className="hero-finale">
