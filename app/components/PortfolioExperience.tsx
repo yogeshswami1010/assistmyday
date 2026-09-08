@@ -153,9 +153,12 @@ export default function PortfolioExperience({ projects }: { projects: PortfolioP
     };
 
     resizeCanvas();
+    layoutProjectPaths();
     update();
     window.addEventListener("scroll", requestUpdate, { passive: true });
     const onResize = () => { resizeCanvas(); layoutProjectPaths(); requestUpdate(); };
+    const pathResizeObserver = new ResizeObserver(() => { layoutProjectPaths(); requestUpdate(); });
+    pathResizeObserver.observe(projectGrid);
     window.addEventListener("resize", onResize);
     window.addEventListener("pointermove", onPointerMove, { passive: true });
 
@@ -168,6 +171,7 @@ export default function PortfolioExperience({ projects }: { projects: PortfolioP
     return () => {
       if (raf) cancelAnimationFrame(raf);
       observer.disconnect();
+      pathResizeObserver.disconnect();
       window.removeEventListener("scroll", requestUpdate);
       window.removeEventListener("resize", onResize);
       window.removeEventListener("pointermove", onPointerMove);
