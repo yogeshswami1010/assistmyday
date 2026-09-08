@@ -13,6 +13,16 @@ const process = [
   ["04", "Grow", "We optimize performance, expand capabilities, and improve results over time."],
 ] as const;
 
+const technologyStack = [
+  ["01", "AI & Automation", ["OpenAI integrations", "AI assistants", "n8n workflows", "Intelligent search"]],
+  ["02", "Front-end", ["React", "Next.js", "TypeScript", "GSAP & WebGL"]],
+  ["03", "Back-end", ["Node.js", "APIs", "Authentication", "Business logic"]],
+  ["04", "Data & CMS", ["MySQL", "MongoDB", "WordPress", "Headless CMS"]],
+  ["05", "Commerce", ["Shopify", "WooCommerce", "Payments", "Conversion systems"]],
+  ["06", "Cloud & DevOps", ["AWS", "Cloudflare", "GitHub Actions", "Managed deployment"]],
+  ["07", "Growth Stack", ["SEO", "Paid media", "Analytics", "CRM automation"]],
+] as const;
+
 export default function ServicesExperience({ services }: { services: ServiceItem[] }) {
   const rootRef = useRef<HTMLDivElement>(null);
 
@@ -46,6 +56,11 @@ export default function ServicesExperience({ services }: { services: ServiceItem
       const rect = root.getBoundingClientRect();
       const total = Math.max(1, root.offsetHeight - window.innerHeight);
       const target = Math.min(1, Math.max(0, -rect.top / total));
+      panels.forEach((panel) => {
+        const panelRect = panel.getBoundingClientRect();
+        const panelProgress = Math.min(1, Math.max(0, (window.innerHeight - panelRect.top) / (window.innerHeight + panelRect.height)));
+        panel.style.setProperty("--panel-progress", panelProgress.toFixed(4));
+      });
       const smoothing = 1 - Math.exp(-elapsed / 110);
       const previous = renderedProgress ?? target;
       const next = previous + (target - previous) * smoothing;
@@ -83,6 +98,15 @@ export default function ServicesExperience({ services }: { services: ServiceItem
         <div className={styles.heroCue}><span>↓</span> EXPLORE CAPABILITIES</div>
       </section>
 
+      <section className={styles.expertise} aria-labelledby="expertise-title">
+        <div className={`${styles.expertiseIntro} ${styles.reveal}`}>
+          <p>✦ WHAT WE DO BEST</p>
+          <h2 id="expertise-title">Areas of <em>expertise.</em></h2>
+        </div>
+        <ol className={styles.expertiseList}>{services.map((service, index) => <li className={styles.reveal} style={{ transitionDelay: `${index * 70}ms` }} key={service.number}><small>{service.number}</small><span>{service.title}</span><b>↗</b></li>)}</ol>
+        <div className={`${styles.expertiseFoot} ${styles.reveal}`}><p>Focused disciplines where strategy, design, technology, and growth work as one.</p><a href="/portfolio">VIEW OUR PROJECTS <span>↗</span></a></div>
+      </section>
+
       <div className={styles.marquee} aria-hidden="true">
         <div>SOFTWARE <i>＋</i> WEBSITES <i>＋</i> MARKETING <i>＋</i> BRAND <i>＋</i> AUTOMATION <i>＋</i> SOFTWARE <i>＋</i> WEBSITES <i>＋</i></div>
       </div>
@@ -95,9 +119,10 @@ export default function ServicesExperience({ services }: { services: ServiceItem
         </header>
 
         <div className={styles.serviceList}>
-          {services.map((service) => (
+          {services.map((service, index) => (
             <article className={`${styles.servicePanel} ${styles.reveal}`} key={service.number}>
               <div className={styles.panelGlow} aria-hidden="true" />
+              <div className={styles.chapterNumber} aria-hidden="true">{String(index + 1).padStart(2, "0")}</div>
               <div className={styles.panelTop}>
                 <span>{service.number}</span>
                 <p>{service.label}</p>
@@ -114,6 +139,11 @@ export default function ServicesExperience({ services }: { services: ServiceItem
             </article>
           ))}
         </div>
+      </section>
+
+      <section className={styles.stack} aria-labelledby="stack-title">
+        <header className={`${styles.stackHeader} ${styles.reveal}`}><p>✦ TECHNOLOGY STACK</p><h2 id="stack-title">Built for performance.<br /><em>Ready to scale.</em></h2><span>We choose proven technologies around the product, team, and growth objective—not trends for their own sake.</span></header>
+        <div className={styles.stackGrid}>{technologyStack.map(([number, title, items], index) => <article className={styles.reveal} style={{ transitionDelay: `${(index % 3) * 70}ms` }} key={number}><small>{number}</small><h3>{title}</h3><ul>{items.map((item) => <li key={item}>{item}</li>)}</ul></article>)}</div>
       </section>
 
       <section className={styles.process} aria-labelledby="process-title">
