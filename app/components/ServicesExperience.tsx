@@ -46,6 +46,8 @@ export default function ServicesExperience({ services }: { services: ServiceItem
     reveals.forEach((element) => observer.observe(element));
 
     const panels = Array.from(root.querySelectorAll<HTMLElement>(`.${styles.servicePanel}`));
+    const timeline = root.querySelector<HTMLElement>(`.${styles.timeline}`);
+    const processSteps = Array.from(root.querySelectorAll<HTMLElement>(`.${styles.processStep}`));
     const onPointerMove = (event: PointerEvent) => {
       const panel = (event.target as HTMLElement).closest<HTMLElement>(`.${styles.servicePanel}`);
       if (!panel) return;
@@ -69,7 +71,15 @@ export default function ServicesExperience({ services }: { services: ServiceItem
         const panelProgress = Math.min(1, Math.max(0, (window.innerHeight - panelRect.top) / (window.innerHeight + panelRect.height)));
         panel.style.setProperty("--panel-progress", panelProgress.toFixed(4));
       });
-      const smoothing = 1 - Math.exp(-elapsed / 110);
+      if (timeline) {
+        const timelineRect = timeline.getBoundingClientRect();
+        const processTarget = Math.min(1, Math.max(0, (window.innerHeight * 0.78 - timelineRect.top) / (window.innerHeight * 0.5 + timelineRect.height)));
+        root.style.setProperty("--process-progress", processTarget.toFixed(4));
+        processSteps.forEach((step, index) => {
+          const threshold = index === 0 ? 0.04 : index / processSteps.length;
+          step.classList.toggle(styles.processActive, processTarget >= threshold);
+        });
+      }      const smoothing = 1 - Math.exp(-elapsed / 110);
       const previous = renderedProgress ?? target;
       const next = previous + (target - previous) * smoothing;
       renderedProgress = Math.abs(target - next) < 0.0002 ? target : next;
