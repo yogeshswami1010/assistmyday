@@ -38,15 +38,23 @@ export default function ServicesExperience({ services }: { services: ServiceItem
     panels.forEach((panel) => panel.addEventListener("pointermove", onPointerMove));
 
     let raf = 0;
+    let renderedProgress: number | undefined;
+    let previousFrameTime = performance.now();
+    const updateProgress = (frameTime: number) => {
+      const elapsed = Math.min(40, Math.max(1, frameTime - previousFrameTime));
+      previousFrameTime = frameTime;
+      const rect = root.getBoundingClientRect();
+      const total = Math.max(1, root.offsetHeight - window.innerHeight);
+      const target = Math.min(1, Math.max(0, -rect.top / total));
+      const smoothing = 1 - Math.exp(-elapsed / 110);
+      const previous = renderedProgress ?? target;
+      const next = previous + (target - previous) * smoothing;
+      renderedProgress = Math.abs(target - next) < 0.0002 ? target : next;
+      root.style.setProperty("--page-progress", renderedProgress.toFixed(4));
+      raf = renderedProgress === target ? 0 : requestAnimationFrame(updateProgress);
+    };
     const onScroll = () => {
-      if (raf) return;
-      raf = requestAnimationFrame(() => {
-        raf = 0;
-        const rect = root.getBoundingClientRect();
-        const total = Math.max(1, root.offsetHeight - window.innerHeight);
-        const progress = Math.min(1, Math.max(0, -rect.top / total));
-        root.style.setProperty("--page-progress", progress.toFixed(4));
-      });
+      if (!raf) raf = requestAnimationFrame(updateProgress);
     };
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });

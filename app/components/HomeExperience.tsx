@@ -24,7 +24,8 @@ const googleReviews = [
 
 
 export default function HomeExperience({ services, portfolio }: { services: ServiceItem[]; portfolio: PortfolioProject[] }) {
-  const [cursor, setCursor] = useState({ x: -100, y: -100 });  const [reviewPage, setReviewPage] = useState(0);
+  const cursorRef = useRef<HTMLDivElement>(null);
+  const [reviewPage, setReviewPage] = useState(0);
   const [reviewsPerPage, setReviewsPerPage] = useState(3);
   const portfolioSliderRef = useRef<HTMLDivElement>(null);
   const servicesSectionRef = useRef<HTMLElement>(null);
@@ -142,8 +143,11 @@ export default function HomeExperience({ services, portfolio }: { services: Serv
     let renderedPageProgress: number | undefined;
     const renderedProgress = new Map<HTMLElement, number>();
     const reducedMotion = matchMedia("(prefers-reduced-motion: reduce)").matches;
-    const smoothing = reducedMotion ? 1 : 0.115;
-    const render = () => {
+    let previousFrameTime = performance.now();
+    const render = (frameTime = performance.now()) => {
+      const elapsed = Math.min(40, Math.max(1, frameTime - previousFrameTime));
+      previousFrameTime = frameTime;
+      const smoothing = reducedMotion ? 1 : 1 - Math.exp(-elapsed / 125);
       let keepAnimating = false;
       document.querySelectorAll<HTMLElement>("[data-scrollscene]").forEach((el) => {
         const span = Math.max(el.offsetHeight - innerHeight, 1);
@@ -240,7 +244,9 @@ export default function HomeExperience({ services, portfolio }: { services: Serv
       raf = keepAnimating ? requestAnimationFrame(render) : 0;
     };
     const onScroll = () => { if (!raf) raf = requestAnimationFrame(render); };
-    const onMove = (e: MouseEvent) => setCursor({ x: e.clientX, y: e.clientY });
+    const onMove = (e: MouseEvent) => {
+      if (cursorRef.current) cursorRef.current.style.transform = `translate3d(${e.clientX}px,${e.clientY}px,0)`;
+    };
     render();
     addEventListener("scroll", onScroll, { passive: true });
     addEventListener("resize", onScroll);
@@ -255,7 +261,7 @@ export default function HomeExperience({ services, portfolio }: { services: Serv
 
   return (
     <main>
-      <div className="cursor-dot" style={{ transform: `translate(${cursor.x}px,${cursor.y}px)` }} />
+      <div ref={cursorRef} className="cursor-dot" />
       <div className="page-progress" />
 
       <SiteHeader active="HOME" />

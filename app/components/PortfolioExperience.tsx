@@ -35,6 +35,8 @@ export default function PortfolioExperience({ projects }: { projects: PortfolioP
     let raf = 0;
     let mouseX = 0;
     let mouseY = 0;
+    let renderedProgress: number | undefined;
+    let previousFrameTime = performance.now();
 
     const resizeCanvas = () => {
       const ratio = Math.min(window.devicePixelRatio || 1, 2);
@@ -68,11 +70,17 @@ export default function PortfolioExperience({ projects }: { projects: PortfolioP
       }
     };
 
-    const update = () => {
-      raf = 0;
+    const update = (frameTime = performance.now()) => {
+      const elapsed = Math.min(40, Math.max(1, frameTime - previousFrameTime));
+      previousFrameTime = frameTime;
       const rect = stage.getBoundingClientRect();
       const distance = Math.max(1, stage.offsetHeight - pin.offsetHeight);
-      const progress = clamp(-rect.top / distance);
+      const target = clamp(-rect.top / distance);
+      const smoothing = 1 - Math.exp(-elapsed / 110);
+      const previous = renderedProgress ?? target;
+      const next = previous + (target - previous) * smoothing;
+      const progress = Math.abs(target - next) < 0.0002 ? target : next;
+      renderedProgress = progress;
       const ease = 1 - Math.pow(1 - progress, 3);
 
       floatingCards.forEach((card, index) => {
@@ -95,6 +103,7 @@ export default function PortfolioExperience({ projects }: { projects: PortfolioP
       }
       if (scrollCue) scrollCue.style.opacity = String(clamp(0.62 - progress * 2));
       drawLines(progress);
+      raf = progress === target ? 0 : requestAnimationFrame(update);
     };
 
     const requestUpdate = () => {

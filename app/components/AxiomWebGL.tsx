@@ -290,7 +290,7 @@ export default function AxiomWebGL() {
       trigger: hero,
       start: "top top",
       end: "bottom bottom",
-      scrub: true,
+      scrub: 0.65,
       invalidateOnRefresh: true,
       onUpdate: (self) => {
         scrollProgress = self.progress;
