@@ -61,11 +61,15 @@ export default function PortfolioExperience({ projects }: { projects: PortfolioP
         const current = projectCards[index]?.getBoundingClientRect();
         const next = projectCards[index + 1]?.getBoundingClientRect();
         if (!current || !next) return;
-        const startX = current.left - gridRect.left + current.width * 0.5;
-        const startY = current.bottom - gridRect.top + 18;
-        const endX = next.left - gridRect.left + next.width * 0.5;
-        const endY = next.top - gridRect.top - 18;
-        const bend = Math.max(90, (endY - startY) * 0.42);
+        const titleRect = projectCards[index]?.querySelector("h3")?.getBoundingClientRect();
+        if (!titleRect) return;
+        const travelsRight = next.left + next.width * 0.5 > current.left + current.width * 0.5;
+        const startX = (travelsRight ? titleRect.right : titleRect.left) - gridRect.left;
+        const startY = titleRect.top - gridRect.top + titleRect.height * 0.52;
+        const endX = (travelsRight ? next.left : next.right) - gridRect.left;
+        const endY = next.top - gridRect.top + Math.min(34, next.height * 0.06);
+        const verticalDistance = Math.max(80, endY - startY);
+        const bend = verticalDistance * 0.46;
         path.setAttribute("d", `M ${startX} ${startY} C ${startX} ${startY + bend}, ${endX} ${endY - bend}, ${endX} ${endY}`);
         const length = path.getTotalLength();
         path.dataset.length = String(length);
@@ -82,6 +86,7 @@ export default function PortfolioExperience({ projects }: { projects: PortfolioP
         const pathProgress = clamp((window.innerHeight * 1.15 - next.top) / (window.innerHeight * 0.8));
         path.style.strokeDashoffset = String(length * (1 - pathProgress));
         path.style.opacity = String(clamp(pathProgress * 1.8));
+        if (pathProgress >= 0.96) projectCards[index + 1]?.classList.add(styles.visible);
       });
     };
     const drawLines = (progress: number) => {
@@ -163,15 +168,10 @@ export default function PortfolioExperience({ projects }: { projects: PortfolioP
     window.addEventListener("resize", onResize);
     window.addEventListener("pointermove", onPointerMove, { passive: true });
 
-    const observer = new IntersectionObserver(
-      (entries) => entries.forEach((entry) => entry.isIntersecting && entry.target.classList.add(styles.visible)),
-      { threshold: 0.16, rootMargin: "0px 0px -8%" },
-    );
-    document.querySelectorAll(`.${styles.projectCard}`).forEach((card) => observer.observe(card));
+    projectCards[0]?.classList.add(styles.visible);
 
     return () => {
       if (raf) cancelAnimationFrame(raf);
-      observer.disconnect();
       pathResizeObserver.disconnect();
       window.removeEventListener("scroll", requestUpdate);
       window.removeEventListener("resize", onResize);
