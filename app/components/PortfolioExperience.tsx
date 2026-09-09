@@ -90,7 +90,10 @@ export default function PortfolioExperience({ projects }: { projects: PortfolioP
         const next = projectCards[connectionIndex + 1]?.getBoundingClientRect();
         const length = Number(path.dataset.length || 0);
         if (!next || !length) return;
-        const pathProgress = clamp((window.innerHeight * 1.15 - next.top) / (window.innerHeight * 0.8));
+        const nextImage = projectCards[connectionIndex + 1]?.querySelector<HTMLElement>(`.${styles.projectImage}`);
+        const startAt = window.innerHeight * 1.12;
+        const revealAt = Math.max(window.innerHeight * 0.48, window.innerHeight - (nextImage?.offsetHeight || next.height * 0.7) - 28);
+        const pathProgress = clamp((startAt - next.top) / Math.max(1, startAt - revealAt));
         const branchProgress = clamp(pathProgress * 1.08 - Math.abs(branchIndex - 1) * 0.08);
         path.style.strokeDashoffset = String(length * (1 - branchProgress));
         path.style.opacity = String(clamp(branchProgress * 1.8));
