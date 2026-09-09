@@ -58,19 +58,24 @@ export default function PortfolioExperience({ projects }: { projects: PortfolioP
       const gridRect = projectGrid.getBoundingClientRect();
       pathMap.setAttribute("viewBox", `0 0 ${gridRect.width} ${gridRect.height}`);
       connectorPaths.forEach((path, index) => {
-        const current = projectCards[index]?.getBoundingClientRect();
-        const next = projectCards[index + 1]?.getBoundingClientRect();
+        const connectionIndex = Math.floor(index / 3);
+        const branchIndex = index % 3;
+        const current = projectCards[connectionIndex]?.getBoundingClientRect();
+        const next = projectCards[connectionIndex + 1]?.getBoundingClientRect();
         if (!current || !next) return;
-        const titleRect = projectCards[index]?.querySelector("h3")?.getBoundingClientRect();
+        const titleRect = projectCards[connectionIndex]?.querySelector("h3")?.getBoundingClientRect();
         if (!titleRect) return;
         const travelsRight = next.left + next.width * 0.5 > current.left + current.width * 0.5;
         const startX = (travelsRight ? titleRect.right : titleRect.left) - gridRect.left;
         const startY = titleRect.top - gridRect.top + titleRect.height * 0.52;
         const endX = (travelsRight ? next.left : next.right) - gridRect.left;
-        const endY = next.top - gridRect.top + Math.min(34, next.height * 0.06);
+        const endY = next.top - gridRect.top + Math.min(28, next.height * 0.06);
         const verticalDistance = Math.max(80, endY - startY);
-        const bend = verticalDistance * 0.46;
-        path.setAttribute("d", `M ${startX} ${startY} C ${startX} ${startY + bend}, ${endX} ${endY - bend}, ${endX} ${endY}`);
+        const horizontalDirection = travelsRight ? 1 : -1;
+        const spread = (branchIndex - 1) * Math.min(170, gridRect.width * 0.075);
+        const controlOneX = startX + horizontalDirection * Math.abs(endX - startX) * 0.22 + spread;
+        const controlTwoX = endX - horizontalDirection * Math.abs(endX - startX) * 0.22 + spread;
+        path.setAttribute("d", `M ${startX} ${startY} C ${controlOneX} ${startY + verticalDistance * 0.42}, ${controlTwoX} ${endY - verticalDistance * 0.42}, ${endX} ${endY}`);
         const length = path.getTotalLength();
         path.dataset.length = String(length);
         path.style.strokeDasharray = String(length);
@@ -80,13 +85,16 @@ export default function PortfolioExperience({ projects }: { projects: PortfolioP
 
     const drawProjectPaths = () => {
       connectorPaths.forEach((path, index) => {
-        const next = projectCards[index + 1]?.getBoundingClientRect();
+        const connectionIndex = Math.floor(index / 3);
+        const branchIndex = index % 3;
+        const next = projectCards[connectionIndex + 1]?.getBoundingClientRect();
         const length = Number(path.dataset.length || 0);
         if (!next || !length) return;
         const pathProgress = clamp((window.innerHeight * 1.15 - next.top) / (window.innerHeight * 0.8));
-        path.style.strokeDashoffset = String(length * (1 - pathProgress));
-        path.style.opacity = String(clamp(pathProgress * 1.8));
-        if (pathProgress >= 0.96) projectCards[index + 1]?.classList.add(styles.visible);
+        const branchProgress = clamp(pathProgress * 1.08 - Math.abs(branchIndex - 1) * 0.08);
+        path.style.strokeDashoffset = String(length * (1 - branchProgress));
+        path.style.opacity = String(clamp(branchProgress * 1.8));
+        if (pathProgress >= 0.99) projectCards[connectionIndex + 1]?.classList.add(styles.visible);
       });
     };
     const drawLines = (progress: number) => {
@@ -216,7 +224,7 @@ export default function PortfolioExperience({ projects }: { projects: PortfolioP
         <div className={styles.projectGrid}>
           <svg ref={pathsRef} className={styles.projectPaths} preserveAspectRatio="none" aria-hidden="true">
             <defs><linearGradient id="portfolio-path-gradient" x1="0" y1="0" x2="1" y2="1"><stop stopColor="#5bb8e8" /><stop offset="1" stopColor="#6268eb" /></linearGradient></defs>
-            {projects.slice(0, -1).map((project) => <path key={`path-${project.title}`} />)}
+            {projects.slice(0, -1).flatMap((project) => [0, 1, 2].map((branch) => <path key={`path-${project.title}-${branch}`} />))}
           </svg>
           {projects.map((project, index) => (
             <article className={`${styles.projectCard} ${styles[project.size]} ${styles[project.side]}`} key={project.title}>
