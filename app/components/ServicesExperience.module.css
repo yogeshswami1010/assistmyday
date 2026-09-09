@@ -75,3 +75,21 @@
 @media(max-width:900px){.process{height:300svh;padding:0 18px}.processSticky{top:88px;min-height:calc(100svh - 88px);padding:48px 0}}
 
 .timelineLine{background:transparent}.processStep:not(.processActive){opacity:0;visibility:hidden;transform:translateY(24px)}.processStep.processActive{visibility:visible}
+
+/* Mobile process: replace the desktop pinned sequence with a readable vertical timeline. */
+@media(max-width:760px){
+  .process{height:auto;min-height:0;padding:78px 18px 88px}
+  .processSticky{position:relative;top:auto;min-height:0;padding:0;display:block}
+  .processHeading{display:block;margin-bottom:52px}
+  .processHeading>p{margin:0 0 18px;font-size:17px;line-height:1.2}
+  .processHeading h2{font-size:clamp(40px,11vw,54px);line-height:.96}
+  .timeline{display:grid;grid-template-columns:1fr;gap:0;padding-left:38px}
+  .timeline::before{content:"";position:absolute;top:7px;bottom:0;left:7px;width:1px;background:linear-gradient(var(--blue),rgba(98,104,235,.25))}
+  .timelineLine{display:none}
+  .processStep,.processStep:not(.processActive){min-height:0;padding:0 0 42px;opacity:1;visibility:visible;transform:none;border:0}
+  .processStep:last-child{padding-bottom:0}
+  .processStep>span{display:block;margin-bottom:10px;color:rgba(233,233,229,.62);font:16px/1.2 monospace}
+  .processStep>b{display:block;top:5px;left:-37px;width:13px;height:13px;background:var(--blue)}
+  .processStep h3{margin:0 0 12px;font-size:clamp(28px,8vw,36px);line-height:1.05}
+  .processStep p{max-width:100%;margin:0;font-size:17px;line-height:1.5}
+}
