@@ -458,11 +458,12 @@ export default function AxiomWebGL() {
     <div
       ref={hostRef}
       className="webgl-logo-stage"
+      style={{ touchAction: "pan-y" }}
       role="application"
       tabIndex={0}
       aria-label="Interactive 3D Assistmyday logo. Drag to rotate and scroll to move through the mark."
     >
-      <canvas ref={canvasRef} className="webgl-logo-canvas" />
+      <canvas ref={canvasRef} className="webgl-logo-canvas" style={{ touchAction: "pan-y" }} />
     </div>
   );
 }
