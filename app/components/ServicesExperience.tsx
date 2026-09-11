@@ -15,13 +15,15 @@ const process = [
 ] as const;
 
 const technologyStack = [
-  ["01", "AI & Automation", ["OpenAI integrations", "AI assistants", "n8n workflows", "Intelligent search"]],
-  ["02", "Front-end", ["React", "Next.js", "TypeScript", "GSAP & WebGL"]],
-  ["03", "Back-end", ["Node.js", "APIs", "Authentication", "Business logic"]],
-  ["04", "Data & CMS", ["MySQL", "MongoDB", "WordPress", "Headless CMS"]],
-  ["05", "Commerce", ["Shopify", "WooCommerce", "Payments", "Conversion systems"]],
-  ["06", "Cloud & DevOps", ["AWS", "Cloudflare", "GitHub Actions", "Managed deployment"]],
-  ["07", "Growth Stack", ["SEO", "Paid media", "Analytics", "CRM automation"]],
+  ["01", "AI & Automation", ["OpenAI API", "AI assistants", "n8n workflows", "RAG & intelligent search", "OCR & data extraction", "Workflow agents"]],
+  ["02", "Front-end", ["React", "Next.js", "TypeScript", "Vue.js", "Tailwind CSS", "GSAP & Three.js"]],
+  ["03", "Back-end", ["Node.js", "Python", "REST & GraphQL APIs", "Authentication", "Microservices", "Webhooks"]],
+  ["04", "Data & Databases", ["MySQL", "PostgreSQL", "MongoDB", "Redis", "Supabase", "Data warehousing"]],
+  ["05", "Commerce", ["Shopify", "WooCommerce", "Stripe", "PayPal", "Catalog integrations", "Conversion optimization"]],
+  ["06", "Cloud & DevOps", ["AWS", "Microsoft Azure", "Cloudflare", "Docker", "GitHub Actions", "CI/CD monitoring"]],
+  ["07", "Growth Stack", ["Technical SEO", "Google Ads", "Meta Ads", "GA4 & Tag Manager", "CRM automation", "Email marketing"]],
+  ["08", "CMS", ["WordPress", "Webflow", "Strapi", "Contentful", "Sanity", "Shopify CMS"]],
+  ["09", "IT & Infrastructure", ["Microsoft 365", "Google Workspace", "DNS & domains", "Email migration", "Server administration", "Security & backups"]],
 ] as const;
 
 const serviceVisuals = [
