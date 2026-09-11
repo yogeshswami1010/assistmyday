@@ -13,9 +13,8 @@
 .heroTitle{margin:0;font-size:clamp(86px,10vw,265px);line-height:.7;letter-spacing:0;font-weight:400;will-change:transform,opacity;text-shadow:0 10px 60px rgba(0,0,0,.65)}
 .heroTitle em{font-family:Georgia,serif;font-weight:400;color:var(--blue)}
 .heroCopy>span{display:block;width:min(92vw,620px);margin:46px auto 0;color:rgba(216,216,216,.72);font-size:18px;line-height:1.5}
-.heroMark{position:absolute;z-index:4;width:clamp(168px,20vw,330px);aspect-ratio:1;border:1px solid rgba(91,184,232,.2);border-radius:50%;display:flex;align-items:center;justify-content:center;gap:9px;will-change:transform,opacity}
-.heroMark span{display:block;width:9%;height:39%;border-radius:999px;background:linear-gradient(#5bb8e8,#6268eb);transform:skew(-20deg);box-shadow:0 0 32px rgba(91,184,232,.25)}
-.heroMark span:nth-child(2){height:55%}.heroMark span:nth-child(3){height:45%}.heroMark i{position:absolute;width:5%;aspect-ratio:1;border-radius:50%;background:#5bb8e8;left:24%;bottom:29%}
+.heroMark{position:absolute;z-index:4;width:clamp(190px,20vw,340px);aspect-ratio:240/190;display:flex;align-items:center;justify-content:center;will-change:transform,opacity;filter:drop-shadow(0 22px 42px rgba(0,0,0,.48))}
+.heroMarkImage{display:block;width:100%;height:100%;object-fit:contain}
 .scrollCue{position:absolute;z-index:6;bottom:35px;left:50%;transform:translateX(-50%);display:flex;align-items:center;gap:10px;color:rgba(216,216,216,.62);font:10px/1 monospace;letter-spacing:0;will-change:opacity}
 .scrollCue i{display:grid;place-items:center;width:26px;height:26px;border:1px solid rgba(216,216,216,.4);border-radius:50%;font-style:normal}
 .projects{position:relative;z-index:10;padding:130px 5vw 180px;background:var(--ink)}

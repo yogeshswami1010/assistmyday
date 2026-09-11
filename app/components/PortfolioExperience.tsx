@@ -204,7 +204,7 @@ export default function PortfolioExperience({ projects }: { projects: PortfolioP
           </div>
 
           <div className={styles.heroMark} aria-hidden="true">
-            <span /><span /><span /><i />
+            <Image className={styles.heroMarkImage} src="/assistmyday-mark.svg" alt="" width={240} height={190} priority />
           </div>
           <div className={styles.heroCopy}>
             <p>ASSISTMYDAY / SELECTED PROJECTS</p>
