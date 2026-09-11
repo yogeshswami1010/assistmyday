@@ -43,6 +43,17 @@ const globalDatabase = globalThis as typeof globalThis & {
   assistmydaySchemaReady?: Promise<void>;
 };
 
+const portfolioCategoryMigrations = [
+  ["signarama-brampton", "Website / Lead generation", "Website / Lead generation / Social Media Management / SEO"],
+  ["signarama-toronto", "SEO / Content experience", "Website / Lead generation / Social Media Management / SEO"],
+  ["rio-immigration", "Web platform / Strategy", "Website / Lead generation / Social Media Management / SEO / CRM Tool"],
+  ["consortium-staffing", "Recruitment / Digital product", "Website / Social Media Management / SEO"],
+  ["the-burke-group", "Brand platform / Executive search", "Website"],
+  ["amd-studios", "Website / Conversion design", "Website / Lead generation / Social Media Management / SEO"],
+  ["geosolar", "Marketing / Sustainability", "Website / Social Media Management / SEO"],
+  ["vishal-bangarh", "Real estate / Lead generation", "Website / Social Media Management / SEO"],
+] as const;
+
 export function isDatabaseConfigured() {
   return Boolean(
     process.env.DATABASE_URL ||
@@ -170,6 +181,9 @@ async function initializeSchema() {
       [item.title, item.slug, item.category, item.image, item.projectUrl, item.description, item.size, item.side, item.sortOrder, item.published ? 1 : 0],
     );
   });
+  for (const [slug, previousCategory, category] of portfolioCategoryMigrations) {
+    await pool.execute("UPDATE amd_portfolio SET category = ? WHERE slug = ? AND category = ?", [category, slug, previousCategory]);
+  }
   await seedTable("amd_services", serviceSeeds, async (item) => {
     await pool.execute(
       `INSERT INTO amd_services (number_label, title, label, copy, items_json, motif, sort_order, published)
