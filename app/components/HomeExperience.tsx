@@ -8,9 +8,9 @@ import SiteHeader from "./SiteHeader";
 import type { PortfolioProject, ServiceItem } from "../../lib/content-types";
 
 const work = [
-  { title: "Custom Software Platforms", copy: "Purpose-built portals, dashboards, and workflow systems that simplify operations and support growth.", tags: ["CMS", "CRM", "PORTALS", "AUTOMATION"], kind: "tower" },
-  { title: "High-Performance Websites", copy: "Conversion-focused websites and commerce experiences engineered for speed, clarity, and measurable action.", tags: ["WEB DESIGN", "E-COMMERCE", "UX / UI", "SEO"], kind: "music" },
-  { title: "Growth Marketing Systems", copy: "Connected SEO, paid media, content, and analytics programs that turn attention into qualified demand.", tags: ["PAID MEDIA", "SOCIAL", "CONTENT", "ANALYTICS"], kind: "house" },
+  { title: "Custom Software Platforms", copy: "Purpose-built portals, dashboards, and workflow systems that simplify operations and support growth.", tags: ["CMS", "CRM", "PORTALS", "AUTOMATION"], image: "/images/service-cards/cms-platform.png", kind: "tower" },
+  { title: "High-Performance Websites", copy: "Conversion-focused websites and commerce experiences engineered for speed, clarity, and measurable action.", tags: ["WEB DESIGN", "E-COMMERCE", "UX / UI", "SEO"], image: "/images/service-cards/high-performance-website.png", kind: "music" },
+  { title: "Growth Marketing Systems", copy: "Connected SEO, paid media, content, and analytics programs that turn attention into qualified demand.", tags: ["PAID MEDIA", "SOCIAL", "CONTENT", "ANALYTICS"], image: "/images/service-cards/growth-analytics.png", kind: "house" },
 ];
 const googleReviews = [
   { name: "greenbeecleaners", time: "A year ago", comment: "We sincerely appreciate your dedication to excellence and the positive impact you make. Your team consistently goes above and beyond, and we’re grateful for your willingness to take on extra responsibilities. Thank you for your efficiency and hard work—we truly appreciate it." },
@@ -355,9 +355,7 @@ export default function HomeExperience({ services, portfolio }: { services: Serv
             {work.map((item) => (
               <article className="work-card" key={item.title}>
                 <div className={`project-visual ${item.kind}`}>
-                  {item.kind === "tower" && <><div className="sun" /><div className="mega-tower" /><strong>Work smarter.</strong><small>SOFTWARE<br />PLATFORMS</small></>}
-                  {item.kind === "music" && <><div className="red-beam" /><div className="artist">↗</div><strong>Fast journeys.<br />More action.</strong></>}
-                  {item.kind === "house" && <><div className="villa" /><strong>BE FOUND.<br />BE CHOSEN.</strong><small>GROWTH<br />MARKETING</small></>}
+                  <Image className="work-card-image" src={item.image} alt={`${item.title} interface preview`} fill sizes="(max-width: 760px) 92vw, 50vw" />
                 </div>
                 <div className="work-meta"><div><h3>{item.title}</h3><p>{item.copy}</p><ul className="work-tags" aria-label={`${item.title} capabilities`}>{item.tags.map((tag) => <li key={tag}>{tag}</li>)}</ul></div><a href="/contact">START A PROJECT <span>→</span></a></div>
               </article>
