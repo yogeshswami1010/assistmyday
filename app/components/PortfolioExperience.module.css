@@ -37,7 +37,7 @@
 @media(prefers-reduced-motion:reduce){.floatCard{animation:none;opacity:.22}.projectCard,.projectCard.left,.projectCard.right{opacity:1;transform:none;transition:none}.projectImage img,.projectImage::after,.projectImage>span{transition:none}}
 
 @media(max-width:560px){
-  .heroStage{height:125svh}.heroPin{top:88px;height:calc(100svh - 88px);padding:0 16px}.heroCopy{width:100%}.heroTitle{font-size:clamp(52px,17vw,82px);line-height:.8}.heroCopy>span{width:100%;max-width:330px;font-size:16px;line-height:1.45}.scrollCue{bottom:22px}
+  .heroStage{height:auto;min-height:0}.heroPin{position:relative;top:auto;height:auto;min-height:0;padding:132px 16px 72px}.heroCopy{width:100%}.heroTitle{font-size:clamp(52px,17vw,82px);line-height:.8}.heroCopy>span{width:100%;max-width:330px;font-size:16px;line-height:1.45}.scrollCue{display:none}
   .projects{padding:85px 18px 110px}.projectsHeader{margin-bottom:70px}.projectsIntro span{font-size:15px;line-height:1.5}.projectsHeader h2{font-size:clamp(52px,16vw,72px)}
   .projectCard,.projectCard.medium,.projectCard.large,.projectCard.xlarge{width:90%;align-self:center}.projectCard.left{align-self:flex-start}.projectCard.right{align-self:flex-end}.projectImage{aspect-ratio:1.75/1}.projectMeta{display:grid;gap:12px}.projectMeta h3{font-size:clamp(27px,8vw,36px)}.projectMeta p{font-size:14px}.projectMeta small{white-space:normal}
   .outro{min-height:70svh;padding:85px 18px}.outro h2{font-size:clamp(46px,14vw,62px);line-height:.88}.outro a{width:100%;min-width:0}
