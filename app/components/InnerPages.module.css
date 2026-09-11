@@ -52,3 +52,20 @@
   .mobileNav .mobileSocials a{min-height:0;padding:8px 0;display:flex;align-items:center;justify-content:space-between;border-top:0;color:var(--navy);font:13px/1 monospace}
   .mobileNav .mobileSocials a b{font-size:14px;color:var(--blue)}
 }
+
+/* Blog pagination: nine newest posts per page. */
+.shell :global(#latest-posts){scroll-margin-top:110px}
+.shell :global(.blog-pagination){margin-top:64px;padding-top:26px;border-top:1px solid rgba(23,23,79,.18);display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:24px;font:14px/1.2 monospace}
+.shell :global(.blog-pagination>div){display:flex;align-items:center;justify-content:center;gap:8px;flex-wrap:wrap}
+.shell :global(.blog-pagination a),.shell :global(.blog-pagination>span){min-height:42px;display:inline-flex;align-items:center;justify-content:center;color:var(--navy)}
+.shell :global(.blog-pagination>a:first-child),.shell :global(.blog-pagination>span:first-child){justify-self:start}
+.shell :global(.blog-pagination>a:last-child),.shell :global(.blog-pagination>span:last-child){justify-self:end}
+.shell :global(.blog-pagination>span[aria-disabled="true"]){color:#9a9dae}
+.shell :global(.blog-pagination>div a){width:42px;border:1px solid rgba(23,23,79,.2);border-radius:50%;transition:background .25s,color .25s,border-color .25s}
+.shell :global(.blog-pagination>div a:hover),.shell :global(.blog-pagination>div a[aria-current="page"]){background:var(--navy);border-color:var(--navy);color:#fff}
+@media(max-width:560px){
+  .shell :global(.blog-pagination){margin-top:46px;grid-template-columns:1fr 1fr;gap:22px 12px;font-size:13px}
+  .shell :global(.blog-pagination>div){grid-column:1/-1;grid-row:1}
+  .shell :global(.blog-pagination>a:last-child),.shell :global(.blog-pagination>span:last-child){grid-column:2}
+  .shell :global(.blog-pagination>div a){width:38px;min-height:38px}
+}
