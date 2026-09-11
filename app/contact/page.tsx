@@ -11,7 +11,7 @@ export default function ContactPage() {
   return (
     <InnerPages active="CONTACT">
       <section className="inner-hero">
-        <div><p className="inner-kicker">START A CONVERSATION</p><h1>Bring us the challenge. We&apos;ll build the <em>way forward.</em></h1></div>
+        <div><p className="inner-kicker">START A CONVERSATION</p><h1>Every challenge has a creative way forward. <em>Let&rsquo;s find yours.</em></h1></div>
         <p className="inner-hero-copy">Tell us what you are trying to improve, launch, automate, or grow. We will help turn it into a focused digital plan.</p>
       </section>
       <section className="inner-section">
