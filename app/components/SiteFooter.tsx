@@ -35,6 +35,7 @@ export default function SiteFooter({ id, topHref = "#" }: { id?: string; topHref
       <div className="footer-base">
         <p className="copyright">© ASSISTMYDAY® 2026</p>
         <p>ST. CATHARINES — CANADA</p>
+        <a href="/privacy-policy">PRIVACY POLICY</a>
         <a href={topHref}>BACK TO TOP <span>↑</span></a>
       </div>
     </footer>
