@@ -231,7 +231,7 @@ export default function PortfolioExperience({ projects }: { projects: PortfolioP
           </svg>
           {projects.map((project, index) => (
             <article className={`${styles.projectCard} ${styles[project.size]} ${styles[project.side]}`} key={project.title}>
-              <a className={styles.projectImage} href={project.projectUrl || "/contact"} aria-label={`View ${project.title}`}>
+              <a className={styles.projectImage} href={project.projectUrl || "/contact"} target={project.projectUrl?.startsWith("http") ? "_blank" : undefined} rel={project.projectUrl?.startsWith("http") ? "noopener noreferrer" : undefined} aria-label={`View ${project.title}`}>
                 <Image src={project.image} alt={`${project.title} website`} width={1904} height={870} unoptimized />
                 <span>VIEW PROJECT ↗</span>
               </a>

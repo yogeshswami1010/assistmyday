@@ -53,6 +53,16 @@ const portfolioCategoryMigrations = [
   ["geosolar", "Marketing / Sustainability", "Website / Social Media Management / SEO"],
   ["vishal-bangarh", "Real estate / Lead generation", "Website / Social Media Management / SEO"],
 ] as const;
+const portfolioLinkMigrations = [
+  ["signarama-brampton", "https://signarama-bramptonwest.ca/"],
+  ["signarama-toronto", "https://signarama-toronto.ca/"],
+  ["rio-immigration", "https://rioimm.ca/"],
+  ["consortium-staffing", "https://consortiumstaffing.ca/"],
+  ["the-burke-group", "https://theburkegroup.com/"],
+  ["amd-studios", "https://amdstudios.ca/"],
+  ["geosolar", "https://geosolarheater.com/"],
+  ["vishal-bangarh", "https://vishalbangarh.com/"],
+] as const;
 
 export function isDatabaseConfigured() {
   return Boolean(
@@ -183,6 +193,9 @@ async function initializeSchema() {
   });
   for (const [slug, previousCategory, category] of portfolioCategoryMigrations) {
     await pool.execute("UPDATE amd_portfolio SET category = ? WHERE slug = ? AND category = ?", [category, slug, previousCategory]);
+  }
+  for (const [slug, projectUrl] of portfolioLinkMigrations) {
+    await pool.execute("UPDATE amd_portfolio SET project_url = ? WHERE slug = ? AND project_url = '/contact'", [projectUrl, slug]);
   }
   await seedTable("amd_services", serviceSeeds, async (item) => {
     await pool.execute(
