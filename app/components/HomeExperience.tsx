@@ -330,27 +330,14 @@ export default function HomeExperience({ services, portfolio }: { services: Serv
           <article className="fact team">
             <small>DELIVERY MODEL</small>
             <video
-              className="fact-video fact-video-hover"
+              className="fact-video fact-video-loop"
               src="/rushi.mp4"
+              autoPlay
+              loop
               muted
               playsInline
               preload="auto"
-              tabIndex={0}
-              aria-label="Team presentation. Hover, focus, or tap to play."
-              onMouseEnter={(event) => { void event.currentTarget.play(); }}
-              onMouseLeave={(event) => {
-                event.currentTarget.pause();
-                event.currentTarget.currentTime = 0;
-              }}
-              onFocus={(event) => { void event.currentTarget.play(); }}
-              onBlur={(event) => {
-                event.currentTarget.pause();
-                event.currentTarget.currentTime = 0;
-              }}
-              onClick={(event) => {
-                if (event.currentTarget.paused) void event.currentTarget.play();
-                else event.currentTarget.pause();
-              }}
+              aria-label="Team delivery model presentation"
             />
             <strong>AGILE</strong><p>Senior thinking, clear milestones,<br />and continuous improvement.</p>
           </article>
