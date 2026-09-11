@@ -255,7 +255,7 @@ body{font-size:var(--type-body);line-height:var(--type-leading);font-family:var(
 }
 /* Keep the mobile hero finale lower and shorten its trailing space. */
 @media(max-width:760px){
-  .hero{height:130svh!important;min-height:0!important}
+  .hero{height:105svh!important;min-height:0!important}
   .hero-finale{
     --finale-travel:clamp(0,var(--hero-p),1);
     --finale-fade-in:clamp(0,calc(var(--hero-p)*8),1);
