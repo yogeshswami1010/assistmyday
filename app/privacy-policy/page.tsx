@@ -43,7 +43,7 @@ export default function PrivacyPolicyPage() {
             <p>Capitalized words have the meanings described below, whether they appear in singular or plural form.</p>
             <dl>
               <div><dt>You</dt><dd>The person using the service, or the business or legal entity on whose behalf that person is acting.</dd></div>
-              <div><dt>Company</dt><dd>Assist My Day, 111 Fourth Ave, Suite 168, St. Catharines, ON L2S 3P5, referred to as “the Company,” “we,” “us,” or “our.”</dd></div>
+              <div><dt>Company</dt><dd>Assist My Day, 110 James St, Suite 411, St. Catharines, ON L2R 7E8, referred to as “the Company,” “we,” “us,” or “our.”</dd></div>
               <div><dt>Affiliate</dt><dd>An entity that controls, is controlled by, or is under common control with another party.</dd></div>
               <div><dt>Account</dt><dd>A unique account created for you to access our service or parts of it.</dd></div>
               <div><dt>Website and Service</dt><dd>The Assist My Day website, accessible at <a href="https://www.assistmyday.com">www.assistmyday.com</a>.</dd></div>
