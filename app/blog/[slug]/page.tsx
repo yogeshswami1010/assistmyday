@@ -10,8 +10,7 @@ export const runtime = "nodejs";
 function absoluteImageUrl(image?: string) {
   if (!image) return undefined;
   if (image.startsWith("http://") || image.startsWith("https://")) return image;
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL;
-  if (!siteUrl) return undefined;
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://assistmyday.com";
   try { return new URL(image, siteUrl).toString(); } catch { return undefined; }
 }
 

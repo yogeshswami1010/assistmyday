@@ -46,7 +46,7 @@ export default function PrivacyPolicyPage() {
               <div><dt>Company</dt><dd>Assist My Day, 73 Ontario Street, Unit 103 A, St. Catharines, ON L2R 5J5, referred to as “the Company,” “we,” “us,” or “our.”</dd></div>
               <div><dt>Affiliate</dt><dd>An entity that controls, is controlled by, or is under common control with another party.</dd></div>
               <div><dt>Account</dt><dd>A unique account created for you to access our service or parts of it.</dd></div>
-              <div><dt>Website and Service</dt><dd>The Assist My Day website, accessible at <a href="https://www.assistmyday.com">www.assistmyday.com</a>.</dd></div>
+              <div><dt>Website and Service</dt><dd>The Assist My Day website, accessible at <a href="https://assistmyday.com">assistmyday.com</a>.</dd></div>
               <div><dt>Service Provider</dt><dd>A person or company that processes data on our behalf to provide, support, or analyze the service.</dd></div>
               <div><dt>Personal Data</dt><dd>Information relating to an identified or identifiable individual.</dd></div>
               <div><dt>Cookies</dt><dd>Small files placed on a computer, mobile device, or other device that store browsing information.</dd></div>
