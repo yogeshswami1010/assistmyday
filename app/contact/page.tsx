@@ -20,7 +20,7 @@ export default function ContactPage() {
             <h2>Let&apos;s talk about what comes next.</h2>
             <p><strong>Email</strong><br /><a href="mailto:info@assistmyday.com">info@assistmyday.com</a></p>
             <p><strong>Call</strong><br /><a href="tel:+19053748878">+1 (905) 374-8878</a></p>
-            <p><strong>Visit</strong><br />110 James St, Suite 411<br />St. Catharines, ON L2R 7E8</p>
+            <p><strong>Visit</strong><br />73 Ontario Street, Unit 103 A<br />St. Catharines, ON L2R 5J5</p>
           </div>
           <ContactForm />
         </div>

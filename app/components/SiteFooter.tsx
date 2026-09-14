@@ -25,7 +25,7 @@ export default function SiteFooter({ id, topHref = "#" }: { id?: string; topHref
         <div className="footer-brand-lockup"><Image src="/assistmyday-logo-white.png" alt="Assistmyday" width={2424} height={462} unoptimized className="footer-logo" /></div>
         <div className="footer-info">
           <div><small>CALL ANYTIME</small><p><a href="tel:+19053748878">+1 (905) 374-8878</a><br />St. Catharines, Ontario</p></div>
-          <div><small>VISIT US</small><p>110 James St, Suite 411<br />St. Catharines, ON L2R 7E8</p></div>
+          <div><small>VISIT US</small><p>73 Ontario Street, Unit 103 A<br />St. Catharines, ON L2R 5J5</p></div>
         </div>
       </div>
       <nav className={styles.socials} aria-label="Social media">
