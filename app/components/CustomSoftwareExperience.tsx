@@ -32,7 +32,24 @@ export default function CustomSoftwareExperience() {
       { threshold: 0.12, rootMargin: "0px 0px -7%" },
     );
     items.forEach((item) => observer.observe(item));
-    return () => observer.disconnect();
+    const onPointerMove = (event: PointerEvent) => {
+      const x = event.clientX / window.innerWidth - 0.5;
+      const y = event.clientY / window.innerHeight - 0.5;
+      root.style.setProperty("--pointer-x", x.toFixed(3));
+      root.style.setProperty("--pointer-y", y.toFixed(3));
+    };
+    const onScroll = () => {
+      const progress = Math.min(1, window.scrollY / Math.max(1, document.documentElement.scrollHeight - innerHeight));
+      root.style.setProperty("--scroll-progress", progress.toFixed(4));
+    };
+    window.addEventListener("pointermove", onPointerMove, { passive: true });
+    window.addEventListener("scroll", onScroll, { passive: true });
+    onScroll();
+    return () => {
+      observer.disconnect();
+      window.removeEventListener("pointermove", onPointerMove);
+      window.removeEventListener("scroll", onScroll);
+    };
   }, []);
 
   return (
@@ -41,7 +58,7 @@ export default function CustomSoftwareExperience() {
         <div className={styles.grid} aria-hidden="true" />
         <div className={styles.heroTop}><p>ASSISTMYDAY / SERVICES / 01</p><span>CUSTOM SOFTWARE DEVELOPMENT</span></div>
         <div className={styles.systemMap} aria-hidden="true">
-          <span className={styles.core}>YOUR<br />BUSINESS</span>
+          <span className={styles.core}><b>LIVE</b>YOUR<br />BUSINESS</span>
           <i className={styles.nodeOne}>PORTAL</i><i className={styles.nodeTwo}>DATA</i>
           <i className={styles.nodeThree}>CRM</i><i className={styles.nodeFour}>AUTOMATION</i>
         </div>
@@ -55,16 +72,18 @@ export default function CustomSoftwareExperience() {
         <div className={styles.scrollCue}><span>↓</span> EXPLORE THE SYSTEM</div>
       </section>
 
+      <div className={styles.marquee} aria-hidden="true"><div>PLATFORMS <i>✦</i> PORTALS <i>✦</i> AUTOMATION <i>✦</i> INTEGRATIONS <i>✦</i> DASHBOARDS <i>✦</i> PLATFORMS <i>✦</i> PORTALS <i>✦</i> AUTOMATION <i>✦</i> INTEGRATIONS <i>✦</i> DASHBOARDS <i>✦</i></div></div>
+
       <section className={styles.intro}>
         <p className={styles.eyebrow}>THE RIGHT FIT</p>
         <div className={`${styles.introCopy} ${styles.reveal}`}>
           <h2>When off-the-shelf<br />software creates<br /><em>more work.</em></h2>
           <p>Custom software gives your team one connected system instead of scattered spreadsheets, manual handoffs, and tools that never quite fit. We focus every decision on clarity, adoption, and measurable operational value.</p>
         </div>
-        <div className={styles.outcomes}>
-          <article><strong>01</strong><p>Reduce repetitive work</p></article>
-          <article><strong>02</strong><p>Connect essential systems</p></article>
-          <article><strong>03</strong><p>Turn data into decisions</p></article>
+        <div className={`${styles.outcomes} ${styles.reveal}`}>
+          <article><strong>01</strong><span>EFFICIENCY</span><p>Reduce repetitive work</p><b>−42%</b></article>
+          <article><strong>02</strong><span>CONNECTION</span><p>Connect essential systems</p><b>01</b></article>
+          <article><strong>03</strong><span>CLARITY</span><p>Turn data into decisions</p><b>24/7</b></article>
         </div>
       </section>
 
@@ -72,7 +91,7 @@ export default function CustomSoftwareExperience() {
         <header className={`${styles.sectionHeader} ${styles.reveal}`}><p>WHAT WE BUILD</p><h2 id="capabilities-title">One foundation.<br /><em>Many possibilities.</em></h2></header>
         <div className={styles.capabilities}>{capabilities.map(([number, title, copy], index) => (
           <article className={`${styles.capability} ${styles.reveal}`} style={{ transitionDelay: `${index * 70}ms` }} key={number}>
-            <div><span>{number}</span><b aria-hidden="true">↗</b></div><h3>{title}</h3><p>{copy}</p>
+            <div><span>{number}</span><b aria-hidden="true">↗</b></div><div className={styles.capabilityGraphic} aria-hidden="true"><i /><i /><i /></div><h3>{title}</h3><p>{copy}</p>
           </article>
         ))}</div>
       </section>
