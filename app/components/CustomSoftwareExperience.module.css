@@ -39,3 +39,16 @@
 @media(max-width:900px){.heroContent{padding-top:28vh}.systemMap{right:-12%}.outcomes article:nth-child(2){transform:none}.outcomes article:nth-child(2):hover{transform:translateY(-10px)}.capability{min-height:470px}.process article:nth-child(even),.process article:nth-child(even):hover{transform:none}}
 @media(max-width:560px){.heroContent{padding-top:28vh}.grid{transform:perspective(620px) rotateX(64deg) translateY(22%)}.systemMap{right:-46%;top:15%}.marquee{transform:rotate(-2deg) scale(1.04)}.marquee div{padding:14px 0;font-size:22px}.intro{padding-top:120px}.intro:before{top:48px}.outcomes{gap:12px}.outcomes article{min-height:190px}.outcomes p{font-size:22px}.outcomes b{font-size:68px}.capabilities{gap:12px}.capability{min-height:420px;padding:25px;border-radius:16px}.capabilityGraphic{right:24px;top:68px;width:112px;height:112px}.capability h3{margin-top:160px}.process{gap:10px}.process article,.process article+article{padding:24px 24px 32px;border-left:1px solid rgba(255,255,255,.11)}.process .dot,.process article+article .dot{left:24px;top:65px}.process article:after{left:34px;top:69px}.process h3{margin-top:82px}.stack{gap:7px}.stack span{min-height:130px}.cta:before{width:120vw}}
 @media(prefers-reduced-motion:reduce){.core:after,.systemMap i,.marquee div,.cta:before,.heroContent em:after{animation:none}.systemMap{transform:none}}
+
+/* Four-card capability rail requested for One foundation / Many possibilities. */
+.capabilities{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;border:0}
+.capability{min-height:490px;padding:26px;border-radius:18px}
+.capability:nth-child(2),.capability:nth-child(3){background:linear-gradient(145deg,#eaf7ff,#cfe8fa);color:#17174f}
+.capability:nth-child(4){background:linear-gradient(160deg,#171a56,#090a1d)}
+.capabilityGraphic{right:24px;top:76px;width:105px;height:105px}
+.capability h3{margin-top:205px;font-size:clamp(29px,2.25vw,43px);line-height:.96}
+.capability p{font-size:16px;line-height:1.5}
+.capability:hover{transform:translateY(-12px) rotate(.35deg)}
+.capability:nth-child(even):hover{transform:translateY(-12px) rotate(-.35deg)}
+@media(max-width:1100px){.capabilities{grid-template-columns:repeat(2,minmax(0,1fr))}.capability{min-height:450px}.capability h3{font-size:clamp(34px,4vw,48px)}}
+@media(max-width:700px){.capabilities{display:flex;gap:12px;margin-inline:-18px;padding:0 18px 16px;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none}.capabilities::-webkit-scrollbar{display:none}.capability{flex:0 0 min(82vw,350px);min-height:430px;scroll-snap-align:center}.capability h3{font-size:36px}}
