@@ -2,6 +2,7 @@
 
 import { useEffect, useRef } from "react";
 import Link from "next/link";
+import ContactForm from "../contact/ContactForm";
 import styles from "./CustomSoftwareExperience.module.css";
 
 const capabilities = [
@@ -108,9 +109,14 @@ export default function CustomSoftwareExperience() {
         <div className={styles.stack}>{stack.map((item, index) => <span className={styles.reveal} style={{ transitionDelay: `${(index % 4) * 60}ms` }} key={item}><small>{String(index + 1).padStart(2, "0")}</small>{item}</span>)}</div>
       </section>
 
-      <section className={styles.cta}>
-        <p>HAVE A SYSTEM IN MIND?</p><h2>Let’s turn the way you work<br />into a <em>competitive advantage.</em></h2>
-        <Link href="/contact">START A CONVERSATION <span>↗</span></Link>
+      <section className={styles.contactSection} aria-labelledby="software-contact-title">
+        <div className={`${styles.contactIntro} ${styles.reveal}`}>
+          <p>START A SOFTWARE PROJECT</p>
+          <h2 id="software-contact-title">Tell us what<br />needs to work <em>better.</em></h2>
+          <span>Share the workflow, system, or operational challenge you want to improve. We’ll respond with practical next steps.</span>
+          <div><a href="mailto:info@assistmyday.com">info@assistmyday.com</a><a href="tel:+19053748878">+1 (905) 374-8878</a></div>
+        </div>
+        <div className={`${styles.contactFormWrap} ${styles.reveal}`}><ContactForm /></div>
       </section>
     </div>
   );
