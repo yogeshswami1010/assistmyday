@@ -58,10 +58,17 @@ export default function CustomSoftwareExperience() {
       <section className={styles.hero} aria-labelledby="software-title">
         <div className={styles.grid} aria-hidden="true" />
         <div className={styles.heroTop}><p>ASSISTMYDAY / SERVICES / 01</p><span>CUSTOM SOFTWARE DEVELOPMENT</span></div>
-        <div className={styles.systemMap} aria-hidden="true">
-          <span className={styles.core} aria-hidden="true" />
-          <i className={styles.nodeOne}>PORTAL</i><i className={styles.nodeTwo}>DATA</i>
-          <i className={styles.nodeThree}>CRM</i><i className={styles.nodeFour}>AUTOMATION</i>
+        <div className={styles.softwareVisual} aria-hidden="true">
+          <div className={styles.softwareHeader}><span>PRODUCT SYSTEM / 01</span><b>● OPERATIONAL</b></div>
+          <div className={styles.softwareCanvas}>
+            <div className={styles.softwareCore}><small>CORE</small><strong>AMD</strong><i /></div>
+            <div className={`${styles.softwareModule} ${styles.modulePortal}`}><small>01</small><span>CLIENT<br/>PORTAL</span></div>
+            <div className={`${styles.softwareModule} ${styles.moduleData}`}><small>02</small><span>LIVE<br/>DATA</span></div>
+            <div className={`${styles.softwareModule} ${styles.moduleCrm}`}><small>03</small><span>CRM<br/>SYNC</span></div>
+            <div className={`${styles.softwareModule} ${styles.moduleFlow}`}><small>04</small><span>AUTO<br/>FLOW</span></div>
+            <svg viewBox="0 0 600 330" preserveAspectRatio="none"><path d="M300 165 L105 75 M300 165 L495 75 M300 165 L105 260 M300 165 L495 260"/></svg>
+          </div>
+          <div className={styles.softwareFooter}><span>4 CONNECTED MODULES</span><span>SYNC 12ms</span></div>
         </div>
         <div className={styles.heroContent}>
           <div><small>SYSTEMS THAT SCALE</small><h1 id="software-title">Software built<br />around <em>your business.</em></h1></div>
