@@ -97,6 +97,87 @@ export default function HomeExperience({ services, portfolio }: { services: Serv
   }, []);
 
   useEffect(() => {
+    const hero = document.querySelector<HTMLElement>("[data-hero-scroll]");
+    if (!hero) return;
+
+    let context: AudioContext | null = null;
+    let master: GainNode | null = null;
+    let heroVisible = true;
+
+    const setAmbienceLevel = (level: number) => {
+      if (!context || !master) return;
+      const now = context.currentTime;
+      master.gain.cancelScheduledValues(now);
+      master.gain.setValueAtTime(master.gain.value, now);
+      master.gain.linearRampToValueAtTime(level, now + 1.4);
+    };
+
+    const createAmbience = () => {
+      if (context) {
+        void context.resume();
+        setAmbienceLevel(heroVisible ? 0.035 : 0);
+        return;
+      }
+
+      context = new AudioContext();
+      master = context.createGain();
+      master.gain.value = 0;
+      master.connect(context.destination);
+
+      const filter = context.createBiquadFilter();
+      filter.type = "lowpass";
+      filter.frequency.value = 420;
+      filter.Q.value = 3.5;
+      filter.connect(master);
+
+      const drone = context.createOscillator();
+      const harmonic = context.createOscillator();
+      const droneGain = context.createGain();
+      const harmonicGain = context.createGain();
+      drone.type = "sine";
+      drone.frequency.value = 55;
+      harmonic.type = "triangle";
+      harmonic.frequency.value = 82.5;
+      droneGain.gain.value = 0.72;
+      harmonicGain.gain.value = 0.16;
+      drone.connect(droneGain).connect(filter);
+      harmonic.connect(harmonicGain).connect(filter);
+
+      const lfo = context.createOscillator();
+      const lfoGain = context.createGain();
+      lfo.frequency.value = 0.09;
+      lfoGain.gain.value = 150;
+      lfo.connect(lfoGain).connect(filter.frequency);
+
+      drone.start();
+      harmonic.start();
+      lfo.start();
+      setAmbienceLevel(heroVisible ? 0.035 : 0);
+    };
+
+    const observer = new IntersectionObserver(([entry]) => {
+      heroVisible = entry.isIntersecting;
+      setAmbienceLevel(heroVisible && !document.hidden ? 0.035 : 0);
+    }, { threshold: 0.08 });
+    const handleVisibility = () => setAmbienceLevel(heroVisible && !document.hidden ? 0.035 : 0);
+
+    observer.observe(hero);
+    document.addEventListener("pointerdown", createAmbience, { capture: true, once: true });
+    document.addEventListener("keydown", createAmbience, { capture: true, once: true });
+    document.addEventListener("touchstart", createAmbience, { capture: true, once: true, passive: true });
+    document.addEventListener("visibilitychange", handleVisibility);
+
+    return () => {
+      observer.disconnect();
+      document.removeEventListener("pointerdown", createAmbience, true);
+      document.removeEventListener("keydown", createAmbience, true);
+      document.removeEventListener("touchstart", createAmbience, true);
+      document.removeEventListener("visibilitychange", handleVisibility);
+      if (context) void context.close();
+    };
+  }, []);
+
+  useEffect(() => {
     const media = window.matchMedia("(max-width: 760px)");
     const updateReviewsPerPage = () => {
       setReviewsPerPage(media.matches ? 1 : 3);
