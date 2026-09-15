@@ -320,12 +320,12 @@ export default function HomeExperience({ services, portfolio }: { services: Serv
               aria-label="Featured and awards presentation"
             />
             <b className="w-dot">A.</b><strong>360°</strong>
-            <p>Brand, content, search, paid media,<br />conversion, and analytics.</p>
+            <p>Branding, content research, paid marketing,<br />lead conversion and analytics.</p>
           </article>
           <article className="fact projects">
             <small>CONNECTED CAPABILITIES</small>
             <div className="count-circle">08<sup>+</sup></div>
-            <p>Product, engineering, marketing,<br />creative, and optimization.</p>
+            <p>Product marketing, creativity,<br />and brand optimization.</p>
           </article>
           <article className="fact team">
             <small>DELIVERY MODEL</small>
@@ -339,7 +339,7 @@ export default function HomeExperience({ services, portfolio }: { services: Serv
               preload="auto"
               aria-label="Team delivery model presentation"
             />
-            <strong>AGILE</strong><p>Senior thinking, clear milestones,<br />and continuous improvement.</p>
+            <strong>AGILE</strong><p>Critical thinking, clear milestones<br />and continuous improvement.</p>
           </article>
         </div>
         <div className="partners"><p>WHAT WE BUILD</p><div><b>WEBSITES</b><b>WEB APPS</b><b>AUTOMATION</b><b>ECOMMERCE</b><b>CAMPAIGNS</b></div></div>
