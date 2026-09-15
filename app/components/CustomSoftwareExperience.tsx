@@ -58,7 +58,7 @@ export default function CustomSoftwareExperience() {
         <div className={styles.grid} aria-hidden="true" />
         <div className={styles.heroTop}><p>ASSISTMYDAY / SERVICES / 01</p><span>CUSTOM SOFTWARE DEVELOPMENT</span></div>
         <div className={styles.systemMap} aria-hidden="true">
-          <span className={styles.core}><b>LIVE</b>YOUR<br />BUSINESS</span>
+          <span className={styles.core} aria-hidden="true" />
           <i className={styles.nodeOne}>PORTAL</i><i className={styles.nodeTwo}>DATA</i>
           <i className={styles.nodeThree}>CRM</i><i className={styles.nodeFour}>AUTOMATION</i>
         </div>
