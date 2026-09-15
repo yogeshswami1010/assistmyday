@@ -97,3 +97,6 @@
   .stackGrid h3{margin:28px 0 28px;font-size:clamp(28px,2.5vw,44px);font-weight:400}
   .stackGrid small{color:#6268eb;font:22px monospace}
 }
+
+/* Service titles link to their individual detail pages. */
+.panelBody h3 a{color:inherit;text-decoration:none;transition:color .3s,text-shadow .3s}.panelBody h3 a:hover,.panelBody h3 a:focus-visible{color:#4b4fd8;text-shadow:0 12px 35px rgba(98,104,235,.18)}.servicePanel:nth-child(even) .panelBody h3 a:hover,.servicePanel:nth-child(even) .panelBody h3 a:focus-visible{color:#5bb8e8}

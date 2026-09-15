@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import { useEffect, useRef } from "react";
 import type { ServiceItem } from "../../lib/content-types";
 import styles from "./ServicesExperience.module.css";
@@ -141,7 +142,7 @@ export default function ServicesExperience({ services }: { services: ServiceItem
                 </div>
                 <div className={styles.panelBody}>
                   <div className={styles.panelHeading}>
-                    <h3>{service.title}</h3>
+                    <h3><Link href={["/services/custom-software-development", "/services/websites-ecommerce", "/services/performance-marketing", "/services/brand-content-social"][index] || "/services"}>{service.title}</Link></h3>
                     <div className={`${styles.motif} ${styles[service.motif]}`} aria-hidden="true"><i /><i /><i /><b /></div>
                   </div>
                   <p>{service.copy}</p>
