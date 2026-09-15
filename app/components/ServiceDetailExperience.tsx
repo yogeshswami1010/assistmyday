@@ -30,7 +30,14 @@ export default function ServiceDetailExperience({ detail }: { detail: ServiceDet
   return <div ref={rootRef} className={styles.experience}>
     <section className={styles.hero} aria-labelledby={`service-${detail.number}`}>
       <div className={styles.grid} aria-hidden="true" /><div className={styles.heroTop}><p>ASSISTMYDAY / SERVICES / {detail.number}</p><span>{detail.title.toUpperCase()}</span></div>
-      <div className={styles.systemMap} aria-hidden="true"><span className={styles.core} />{detail.nodes.map((node, index) => <i className={[styles.nodeOne,styles.nodeTwo,styles.nodeThree,styles.nodeFour][index]} key={node}>{node}</i>)}</div>
+      {detail.number === "02" && <div className={styles.webVisual} aria-hidden="true">
+        <div className={styles.webWindow}><div className={styles.webChrome}><i/><i/><i/><span>assistmyday / storefront</span></div><div className={styles.webPage}><div className={styles.webPageTop}><b>NEW EXPERIENCE</b><span>MENU ↗</span></div><strong>Designed to<br/>convert.</strong><div className={styles.webButton}>EXPLORE COLLECTION ↗</div><div className={styles.webTiles}><i/><i/><i/></div></div></div>
+        <div className={styles.webMobile}><div className={styles.webMobileTop}/><strong>SHOP<br/>SMARTER.</strong><div className={styles.webMobileCard}/><div className={styles.webMobileButton}/></div>
+      </div>}
+      {detail.number === "03" && <div className={styles.marketingVisual} aria-hidden="true">
+        <div className={styles.marketingTop}><span>GROWTH SIGNAL</span><b>● LIVE</b></div><div className={styles.marketingChart}><div className={styles.marketingGrid}/><div className={styles.marketingBars}>{[28,42,36,54,49,67,62,76,71,88,82,100].map((height,index)=><i key={index} style={{height:`${height}%`,animationDelay:`${index*85}ms`}} />)}</div><div className={styles.marketingLine}/></div><div className={styles.marketingBottom}><span>SEARCH <b>↗</b></span><span>PAID <b>↗</b></span><span>CONVERSION <b>↗</b></span></div>
+      </div>}
+      {detail.number === "04" && <div className={styles.brandVisual} aria-hidden="true"><div className={styles.brandCircle}/><div className={styles.brandType}><span>IDENTITY / 04</span><strong>Be<br/><em>known.</em></strong><p>ONE VOICE. EVERY CHANNEL.</p></div><div className={styles.brandTags}><span>VOICE</span><span>CONTENT</span><span>COMMUNITY</span></div></div>}
       <div className={styles.heroContent}><div><small>{detail.kicker}</small><h1 id={`service-${detail.number}`}>{detail.hero[0]}<br /><em>{detail.hero[1]}</em></h1></div><div className={styles.heroIntro}><p>{detail.intro}</p><a href="#service-contact">DISCUSS YOUR PROJECT <span>↗</span></a></div></div>
       <div className={styles.scrollCue}><span>↓</span> EXPLORE THE SERVICE</div>
     </section>
