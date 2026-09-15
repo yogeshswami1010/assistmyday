@@ -84,3 +84,8 @@
 @media(max-width:900px){.softwareVisual,.brandVisual{right:-8%;top:15%;width:62vw;height:40%;opacity:.63}.softwareCanvas{min-height:210px}.brandType{display:none}}
 @media(max-width:560px){.softwareVisual,.brandVisual{right:-50%;top:17%;width:105vw;height:34%;opacity:.42}.softwareHeader,.softwareFooter{padding-inline:12px}.softwareModule{width:80px;padding:8px}.softwareCore{width:82px;height:82px}.brandVisual{right:-40%;width:100vw}.brandBoardGrid{grid-template-columns:.75fr 1.25fr}.brandBoardTop b{display:none}}
 @media(prefers-reduced-motion:reduce){.softwareCanvas path,.softwareCore,.softwareModule,.brandMonogram span,.brandPalette i,.brandSocial b,.brandBoardFoot span{animation:none}}
+
+/* Keep service hero visuals clear of the fixed navigation. */
+.softwareVisual,.webVisual,.marketingVisual,.brandVisual{top:140px;max-height:calc(100% - 300px)}
+@media(max-width:900px){.softwareVisual,.webVisual,.marketingVisual,.brandVisual{top:120px;max-height:calc(100% - 270px)}}
+@media(max-width:560px){.softwareVisual,.webVisual,.marketingVisual,.brandVisual{top:105px;max-height:calc(100% - 230px)}}
