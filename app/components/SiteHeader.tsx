@@ -22,6 +22,7 @@ const socialLinks = [
 
 export default function SiteHeader({ active }: { active: string }) {
   const [menuOpen, setMenuOpen] = useState(false);
+  const [servicesOpen, setServicesOpen] = useState(false);
 
   return (
     <>
@@ -35,7 +36,10 @@ export default function SiteHeader({ active }: { active: string }) {
           <nav className={styles.desktopNav} aria-label="Main navigation">
             {navigation.slice(0, -1).map((item, index) => (
               <Fragment key={item.label}>
-                <Link href={item.href} aria-current={active === item.label ? "page" : undefined}>{item.label}</Link>
+                {item.label === "SERVICES" ? <div className={styles.desktopServices}>
+                  <Link href={item.href} aria-current={active === item.label ? "page" : undefined}>{item.label}</Link>
+                  <div className={styles.desktopSubmenu}><Link href="/services/custom-software-development">Custom Software Development <span>↗</span></Link></div>
+                </div> : <Link href={item.href} aria-current={active === item.label ? "page" : undefined}>{item.label}</Link>}
                 {index < navigation.length - 2 && <span className={styles.navSeparator} aria-hidden="true">/</span>}
               </Fragment>
             ))}
@@ -51,9 +55,17 @@ export default function SiteHeader({ active }: { active: string }) {
 
       <nav id="site-mobile-nav" className={menuOpen ? [styles.mobileNav, styles.mobileNavOpen].join(" ") : styles.mobileNav} aria-label="Mobile navigation">
         {navigation.map((item, index) => (
-          <Link key={item.label} href={item.href} onClick={() => setMenuOpen(false)} aria-current={active === item.label ? "page" : undefined}>
-            <small>{String(index + 1).padStart(2, "0")}</small><span>{item.label}</span><b>↗</b>
-          </Link>
+          <div className={styles.mobileNavItem} key={item.label}>
+            <Link href={item.href} onClick={() => setMenuOpen(false)} aria-current={active === item.label ? "page" : undefined}>
+              <small>{String(index + 1).padStart(2, "0")}</small><span>{item.label}</span><b>↗</b>
+            </Link>
+            {item.label === "SERVICES" && <>
+              <button type="button" className={styles.mobileSubmenuToggle} aria-label="Show Services submenu" aria-expanded={servicesOpen} aria-controls="mobile-services-submenu" onClick={() => setServicesOpen((value) => !value)}>{servicesOpen ? "−" : "+"}</button>
+              <div id="mobile-services-submenu" className={`${styles.mobileSubmenu} ${servicesOpen ? styles.mobileSubmenuOpen : ""}`}>
+                <Link href="/services/custom-software-development" onClick={() => setMenuOpen(false)}>Custom Software Development <b>↗</b></Link>
+              </div>
+            </>}
+          </div>
         ))}
         <div className={styles.mobileSocials}>
           <small>FOLLOW US</small>

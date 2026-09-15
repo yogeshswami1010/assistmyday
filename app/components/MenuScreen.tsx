@@ -1,6 +1,6 @@
 "use client";
 
-import type { CSSProperties } from "react";
+import { useState, type CSSProperties } from "react";
 import styles from "./MenuScreen.module.css";
 
 const links = [
@@ -12,6 +12,7 @@ const links = [
 ];
 
 export default function MenuScreen({ open, onClose }: { open: boolean; onClose: () => void }) {
+  const [servicesOpen, setServicesOpen] = useState(false);
   return (
     <aside className={`${styles.screen} ${open ? styles.open : ""}`} aria-hidden={!open}>
       <div className={styles.ambient} aria-hidden="true"><i /><i /><i /></div>
@@ -24,10 +25,10 @@ export default function MenuScreen({ open, onClose }: { open: boolean; onClose: 
       <div className={styles.layout}>
         <nav aria-label="Main navigation">
           {links.map((item, index) => (
+            <div className={styles.navItem} key={item.label}>
             <a
               href={item.href}
               onClick={onClose}
-              key={item.label}
               style={{ "--delay": `${index * 55}ms` } as CSSProperties}
               tabIndex={open ? 0 : -1}
             >
@@ -36,6 +37,13 @@ export default function MenuScreen({ open, onClose }: { open: boolean; onClose: 
               <em>{item.note}</em>
               <b aria-hidden="true">↗</b>
             </a>
+            {item.label === "SERVICES" && <>
+              <button className={styles.submenuToggle} type="button" aria-label="Show Services submenu" aria-expanded={servicesOpen} aria-controls="services-submenu" onClick={() => setServicesOpen((value) => !value)} tabIndex={open ? 0 : -1}>{servicesOpen ? "−" : "+"}</button>
+              <div id="services-submenu" className={`${styles.submenu} ${servicesOpen ? styles.submenuOpen : ""}`}>
+                <a href="/services/custom-software-development" onClick={onClose} tabIndex={open && servicesOpen ? 0 : -1}><small>01 / SOFTWARE</small><span>Custom Software Development</span><b aria-hidden="true">↗</b></a>
+              </div>
+            </>}
+            </div>
           ))}
         </nav>
 
