@@ -30,6 +30,7 @@ export default function HomeExperience({ services, portfolio }: { services: Serv
   const portfolioSliderRef = useRef<HTMLDivElement>(null);
   const servicesSectionRef = useRef<HTMLElement>(null);
   const servicesAudioRef = useRef<HTMLAudioElement>(null);
+  const heroAudioRef = useRef<HTMLAudioElement>(null);
 
   useEffect(() => {
     const section = servicesSectionRef.current;
@@ -98,82 +99,43 @@ export default function HomeExperience({ services, portfolio }: { services: Serv
 
   useEffect(() => {
     const hero = document.querySelector<HTMLElement>("[data-hero-scroll]");
-    if (!hero) return;
+    const audio = heroAudioRef.current;
+    if (!hero || !audio) return;
 
-    let context: AudioContext | null = null;
-    let master: GainNode | null = null;
-    let heroVisible = true;
+    let heroVisible = false;
+    audio.volume = 0.32;
 
-    const setAmbienceLevel = (level: number) => {
-      if (!context || !master) return;
-      const now = context.currentTime;
-      master.gain.cancelScheduledValues(now);
-      master.gain.setValueAtTime(master.gain.value, now);
-      master.gain.linearRampToValueAtTime(level, now + 1.4);
+    const playWhenVisible = () => {
+      if (!heroVisible || document.hidden) return;
+      void audio.play().catch(() => {
+        // Browsers may require an initial interaction before audible playback.
+      });
     };
-
-    const createAmbience = () => {
-      if (context) {
-        void context.resume();
-        setAmbienceLevel(heroVisible ? 0.035 : 0);
-        return;
-      }
-
-      context = new AudioContext();
-      master = context.createGain();
-      master.gain.value = 0;
-      master.connect(context.destination);
-
-      const filter = context.createBiquadFilter();
-      filter.type = "lowpass";
-      filter.frequency.value = 420;
-      filter.Q.value = 3.5;
-      filter.connect(master);
-
-      const drone = context.createOscillator();
-      const harmonic = context.createOscillator();
-      const droneGain = context.createGain();
-      const harmonicGain = context.createGain();
-      drone.type = "sine";
-      drone.frequency.value = 55;
-      harmonic.type = "triangle";
-      harmonic.frequency.value = 82.5;
-      droneGain.gain.value = 0.72;
-      harmonicGain.gain.value = 0.16;
-      drone.connect(droneGain).connect(filter);
-      harmonic.connect(harmonicGain).connect(filter);
-
-      const lfo = context.createOscillator();
-      const lfoGain = context.createGain();
-      lfo.frequency.value = 0.09;
-      lfoGain.gain.value = 150;
-      lfo.connect(lfoGain).connect(filter.frequency);
-
-      drone.start();
-      harmonic.start();
-      lfo.start();
-      setAmbienceLevel(heroVisible ? 0.035 : 0);
+    const stopWhenHidden = () => {
+      audio.pause();
+      audio.currentTime = 0;
     };
-
     const observer = new IntersectionObserver(([entry]) => {
-      heroVisible = entry.isIntersecting;
-      setAmbienceLevel(heroVisible && !document.hidden ? 0.035 : 0);
-    }, { threshold: 0.08 });
-    const handleVisibility = () => setAmbienceLevel(heroVisible && !document.hidden ? 0.035 : 0);
+      heroVisible = entry.isIntersecting && entry.intersectionRatio >= 0.08;
+      if (heroVisible) playWhenVisible();
+      else stopWhenHidden();
+    }, { threshold: [0, 0.08, 0.25] });
+    const handleVisibilityChange = () => {
+      if (document.hidden) audio.pause();
+      else playWhenVisible();
+    };
 
     observer.observe(hero);
-    document.addEventListener("pointerdown", createAmbience, { capture: true, once: true });
-    document.addEventListener("keydown", createAmbience, { capture: true, once: true });
-    document.addEventListener("touchstart", createAmbience, { capture: true, once: true, passive: true });
-    document.addEventListener("visibilitychange", handleVisibility);
+    document.addEventListener("pointerdown", playWhenVisible, { passive: true });
+    document.addEventListener("keydown", playWhenVisible);
+    document.addEventListener("visibilitychange", handleVisibilityChange);
 
     return () => {
       observer.disconnect();
-      document.removeEventListener("pointerdown", createAmbience, true);
-      document.removeEventListener("keydown", createAmbience, true);
-      document.removeEventListener("touchstart", createAmbience, true);
-      document.removeEventListener("visibilitychange", handleVisibility);
-      if (context) void context.close();
+      document.removeEventListener("pointerdown", playWhenVisible);
+      document.removeEventListener("keydown", playWhenVisible);
+      document.removeEventListener("visibilitychange", handleVisibilityChange);
+      stopWhenHidden();
     };
   }, []);
 
@@ -375,6 +337,7 @@ export default function HomeExperience({ services, portfolio }: { services: Serv
         </div>
 
       <section id="home" className="hero scene-dark" data-hero-scroll>
+        <audio ref={heroAudioRef} src="/audio/hero-sci-fi-ambient.mp3" loop preload="auto" aria-hidden="true" />
         <div className="hero-sticky">
           <div className="grain" />
           <div className="hero-3d">
