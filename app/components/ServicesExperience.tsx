@@ -148,7 +148,7 @@ export default function ServicesExperience({ services }: { services: ServiceItem
                 </div>
                 <div className={styles.panelFooter}>
                   <div><p>OUR CORE CAPABILITIES</p><ul>{service.items.map((item) => <li key={item}>{item}</li>)}</ul></div>
-                  <a href={index === 0 ? "/services/custom-software-development" : "/contact"} aria-label={index === 0 ? `Explore ${service.title}` : `Discuss ${service.title}`}>{index === 0 ? "EXPLORE SERVICE" : "START A PROJECT"} <span>↗</span></a>
+                  <a href={["/services/custom-software-development", "/services/websites-ecommerce", "/services/performance-marketing", "/services/brand-content-social"][index] || "/contact"} aria-label={`Explore ${service.title}`}>EXPLORE SERVICE <span>↗</span></a>
                 </div>
               </div>
             </article>

@@ -41,6 +41,9 @@ export default function MenuScreen({ open, onClose }: { open: boolean; onClose: 
               <button className={styles.submenuToggle} type="button" aria-label="Show Services submenu" aria-expanded={servicesOpen} aria-controls="services-submenu" onClick={() => setServicesOpen((value) => !value)} tabIndex={open ? 0 : -1}>{servicesOpen ? "−" : "+"}</button>
               <div id="services-submenu" className={`${styles.submenu} ${servicesOpen ? styles.submenuOpen : ""}`}>
                 <a href="/services/custom-software-development" onClick={onClose} tabIndex={open && servicesOpen ? 0 : -1}><small>01 / SOFTWARE</small><span>Custom Software Development</span><b aria-hidden="true">↗</b></a>
+                <a href="/services/websites-ecommerce" onClick={onClose} tabIndex={open && servicesOpen ? 0 : -1}><small>02 / WEB</small><span>Websites &amp; E-commerce</span><b aria-hidden="true">↗</b></a>
+                <a href="/services/performance-marketing" onClick={onClose} tabIndex={open && servicesOpen ? 0 : -1}><small>03 / GROWTH</small><span>Performance Marketing</span><b aria-hidden="true">↗</b></a>
+                <a href="/services/brand-content-social" onClick={onClose} tabIndex={open && servicesOpen ? 0 : -1}><small>04 / BRAND</small><span>Brand, Content &amp; Social</span><b aria-hidden="true">↗</b></a>
               </div>
             </>}
             </div>

@@ -25,3 +25,9 @@
 @media(max-width:900px){.submenuToggle{right:10px;top:calc(5.5vh - 18px)}.submenu>a{grid-template-columns:100px 1fr auto!important;padding-left:42px!important}.submenu>a span{font-size:19px!important}}
 @media(max-width:560px){.submenuToggle{right:5px;top:calc(6.15vh - 17px);width:34px;height:34px}.submenu>a{grid-template-columns:1fr auto!important;gap:5px!important;padding:0 12px 0 38px!important}.submenu>a small{display:none}.submenu>a span{font-size:16px!important}.submenuOpen>a{min-height:62px!important}}
 @media(prefers-reduced-motion:reduce){.submenu,.submenuToggle{transition:none}}
+
+/* Expanded four-service submenu. */
+.desktopSubmenu{width:360px}.desktopSubmenu a+a{border-top:1px solid rgba(91,184,232,.16)}
+.submenu>a+ a{border-top:1px solid rgba(91,184,232,.2)!important}
+.submenuOpen>a{min-height:58px!important}
+@media(max-width:560px){.submenuOpen>a{min-height:52px!important}}

@@ -38,7 +38,12 @@ export default function SiteHeader({ active }: { active: string }) {
               <Fragment key={item.label}>
                 {item.label === "SERVICES" ? <div className={styles.desktopServices}>
                   <Link href={item.href} aria-current={active === item.label ? "page" : undefined}>{item.label}</Link>
-                  <div className={styles.desktopSubmenu}><Link href="/services/custom-software-development">Custom Software Development <span>↗</span></Link></div>
+                  <div className={styles.desktopSubmenu}>
+                    <Link href="/services/custom-software-development">Custom Software Development <span>↗</span></Link>
+                    <Link href="/services/websites-ecommerce">Websites &amp; E-commerce <span>↗</span></Link>
+                    <Link href="/services/performance-marketing">Performance Marketing <span>↗</span></Link>
+                    <Link href="/services/brand-content-social">Brand, Content &amp; Social <span>↗</span></Link>
+                  </div>
                 </div> : <Link href={item.href} aria-current={active === item.label ? "page" : undefined}>{item.label}</Link>}
                 {index < navigation.length - 2 && <span className={styles.navSeparator} aria-hidden="true">/</span>}
               </Fragment>
@@ -63,6 +68,9 @@ export default function SiteHeader({ active }: { active: string }) {
               <button type="button" className={styles.mobileSubmenuToggle} aria-label="Show Services submenu" aria-expanded={servicesOpen} aria-controls="mobile-services-submenu" onClick={() => setServicesOpen((value) => !value)}>{servicesOpen ? "−" : "+"}</button>
               <div id="mobile-services-submenu" className={`${styles.mobileSubmenu} ${servicesOpen ? styles.mobileSubmenuOpen : ""}`}>
                 <Link href="/services/custom-software-development" onClick={() => setMenuOpen(false)}>Custom Software Development <b>↗</b></Link>
+                <Link href="/services/websites-ecommerce" onClick={() => setMenuOpen(false)}>Websites &amp; E-commerce <b>↗</b></Link>
+                <Link href="/services/performance-marketing" onClick={() => setMenuOpen(false)}>Performance Marketing <b>↗</b></Link>
+                <Link href="/services/brand-content-social" onClick={() => setMenuOpen(false)}>Brand, Content &amp; Social <b>↗</b></Link>
               </div>
             </>}
           </div>
