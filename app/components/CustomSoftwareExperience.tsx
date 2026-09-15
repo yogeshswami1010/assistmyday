@@ -75,7 +75,7 @@ export default function CustomSoftwareExperience() {
 
       <div className={styles.marquee} aria-hidden="true"><div>PLATFORMS <i>✦</i> PORTALS <i>✦</i> AUTOMATION <i>✦</i> INTEGRATIONS <i>✦</i> DASHBOARDS <i>✦</i> PLATFORMS <i>✦</i> PORTALS <i>✦</i> AUTOMATION <i>✦</i> INTEGRATIONS <i>✦</i> DASHBOARDS <i>✦</i></div></div>
 
-      <section className={styles.intro}>
+      <section className={styles.intro} data-section-marker="01 / WHY CUSTOM">
         <p className={styles.eyebrow}>THE RIGHT FIT</p>
         <div className={`${styles.introCopy} ${styles.reveal}`}>
           <h2>When off-the-shelf<br />software creates<br /><em>more work.</em></h2>

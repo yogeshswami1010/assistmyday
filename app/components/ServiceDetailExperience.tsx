@@ -5,7 +5,7 @@ import ContactForm from "../contact/ContactForm";
 import styles from "./CustomSoftwareExperience.module.css";
 
 export type ServiceDetail = {
-  number: string; title: string; kicker: string; hero: [string, string]; intro: string;
+  number: string; title: string; chapterMarker: string; kicker: string; hero: [string, string]; intro: string;
   nodes: string[]; marquee: string[]; fitTitle: [string, string]; fitCopy: string;
   outcomes: [string, string, string][]; sectionLabel: string; sectionTitle: [string, string];
   capabilities: [string, string, string][]; processIntro: string;
@@ -35,7 +35,7 @@ export default function ServiceDetailExperience({ detail }: { detail: ServiceDet
       <div className={styles.scrollCue}><span>↓</span> EXPLORE THE SERVICE</div>
     </section>
     <div className={styles.marquee} aria-hidden="true"><div>{rail.map((item,index)=><span key={`${item}-${index}`}>{item} <i>✦</i> </span>)}</div></div>
-    <section className={styles.intro}><p className={styles.eyebrow}>THE RIGHT FIT</p><div className={`${styles.introCopy} ${styles.reveal}`}><h2>{detail.fitTitle[0]}<br /><em>{detail.fitTitle[1]}</em></h2><p>{detail.fitCopy}</p></div><div className={`${styles.outcomes} ${styles.reveal}`}>{detail.outcomes.map(([label,text,value],index)=><article key={label}><strong>0{index+1}</strong><span>{label}</span><p>{text}</p><b>{value}</b></article>)}</div></section>
+    <section className={styles.intro} data-section-marker={detail.chapterMarker}><p className={styles.eyebrow}>THE RIGHT FIT</p><div className={`${styles.introCopy} ${styles.reveal}`}><h2>{detail.fitTitle[0]}<br /><em>{detail.fitTitle[1]}</em></h2><p>{detail.fitCopy}</p></div><div className={`${styles.outcomes} ${styles.reveal}`}>{detail.outcomes.map(([label,text,value],index)=><article key={label}><strong>0{index+1}</strong><span>{label}</span><p>{text}</p><b>{value}</b></article>)}</div></section>
     <section className={styles.capabilitySection}><header className={`${styles.sectionHeader} ${styles.reveal}`}><p>{detail.sectionLabel}</p><h2>{detail.sectionTitle[0]}<br /><em>{detail.sectionTitle[1]}</em></h2></header><div className={styles.capabilities}>{detail.capabilities.map(([number,title,copy],index)=><article className={`${styles.capability} ${styles.reveal}`} style={{transitionDelay:`${index*70}ms`}} key={number}><div><span>{number}</span><b>↗</b></div><div className={styles.capabilityGraphic} aria-hidden="true"><i/><i/><i/></div><h3>{title}</h3><p>{copy}</p></article>)}</div></section>
     <section className={styles.processSection}><header className={`${styles.processHeader} ${styles.reveal}`}><p>HOW WE DELIVER</p><h2>Clear milestones.<br /><em>Visible progress.</em></h2><span>{detail.processIntro}</span></header><div className={styles.process}>{detail.process.map(([number,title,copy])=><article className={styles.reveal} key={number}><span>{number}</span><div className={styles.dot}/><h3>{title}</h3><p>{copy}</p></article>)}</div></section>
     <section className={styles.stackSection}><div className={`${styles.stackIntro} ${styles.reveal}`}><p>{detail.stackLabel}</p><h2>{detail.stackTitle[0]}<br /><em>{detail.stackTitle[1]}</em></h2></div><div className={styles.stack}>{detail.stack.map((item,index)=><span className={styles.reveal} style={{transitionDelay:`${index%4*60}ms`}} key={item}><small>{String(index+1).padStart(2,"0")}</small>{item}</span>)}</div></section>
