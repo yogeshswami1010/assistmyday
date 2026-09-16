@@ -94,3 +94,9 @@
 .heroContent{grid-template-columns:minmax(0,1fr);max-width:min(1180px,70vw)}
 @media(max-width:900px){.heroContent{max-width:88vw}}
 @media(max-width:560px){.heroContent{max-width:100%}}
+
+/* Requested shared service-section heading typography. */
+.sectionHeader>p,.processHeader>p,.stackIntro>p{margin:8px 0 0;color:#4b4fd8;font:36px/1 monospace;letter-spacing:0;text-align:left}
+.intro h2,.sectionHeader h2,.processHeader h2,.stackIntro h2{margin:0;font-size:clamp(52px,5.8vw,108px);font-weight:400;line-height:.88;letter-spacing:0;text-align:left}
+@media(max-width:900px){.sectionHeader>p,.processHeader>p,.stackIntro>p{font-size:30px}.stackIntro{align-items:start}}
+@media(max-width:560px){.sectionHeader>p,.processHeader>p,.stackIntro>p{font-size:22px;line-height:1.15}.intro h2,.sectionHeader h2,.processHeader h2,.stackIntro h2{font-size:clamp(42px,12vw,58px);line-height:.92}}
