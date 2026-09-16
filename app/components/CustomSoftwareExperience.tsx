@@ -102,7 +102,7 @@ export default function CustomSoftwareExperience() {
       </section>
 
       <section className={styles.processSection} aria-labelledby="delivery-title">
-        <header className={`${styles.processHeader} ${styles.reveal}`}><p>HOW WE DELIVER</p><h2 id="delivery-title">Clear milestones.<br /><em>Visible progress.</em></h2><span>You stay close to the work through practical decisions, working releases, and direct access to the people building your product.</span></header>
+        <header className={`${styles.processHeader} ${styles.reveal}`}><p>HOW WE DELIVER</p><h2 id="delivery-title">Clear milestones.<br /><em>Visible progress.</em></h2></header>
         <div className={styles.process}>{process.map(([number, title, copy]) => (
           <article className={styles.reveal} key={number}><span>{number}</span><div className={styles.dot} /><h3>{title}</h3><p>{copy}</p></article>
         ))}</div>
