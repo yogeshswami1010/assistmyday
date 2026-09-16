@@ -107,3 +107,17 @@
 .processHeader h2{grid-column:2}
 @media(max-width:900px){.processHeader{grid-template-columns:.4fr 1.6fr}.processHeader h2{grid-column:2}}
 @media(max-width:560px){.intro h2,.sectionHeader h2,.processHeader h2,.stackIntro h2{font-size:clamp(42px,12vw,58px);line-height:.92}.processHeader{grid-template-columns:.32fr 1.68fr}}
+
+/* Requested shared service-page detail typography. */
+.scrollCue{color:#e9e9e580;display:flex;align-items:center;gap:11px;font:17px monospace}
+.eyebrow{color:#4b4fd8;margin:0 0 70px;font:21px monospace}
+.outcomes span{position:absolute;top:26px;right:22px;color:#6268eb;font:23px monospace}
+.outcomes b{position:absolute;right:9px;bottom:-5px;color:#6268eb1c;font:90px/1 monospace}
+.capability span{color:#6268eb;font:29px monospace}
+.capability b{display:none;font-size:24px;font-weight:400}
+.process span{color:#e9e9e580;font:25px monospace}
+.process p{max-width:260px;margin:0;color:#e9e9e58c;font-size:17px;line-height:1.55}
+.stack small{color:#6268eb;font:20px monospace}
+.contactIntro>p{margin:0 0 35px;color:var(--blue);font:20px monospace}
+.contactIntro a{width:max-content;color:#e9e9e5cc;font:20px monospace;transition:color .25s}
+@media(max-width:560px){.scrollCue{font-size:14px}.eyebrow{margin-bottom:45px;font-size:18px}.outcomes span{font-size:17px}.outcomes b{font-size:68px}.capability span{font-size:23px}.process span{font-size:20px}.process p{max-width:100%;font-size:17px}.stack small{font-size:16px}.contactIntro>p,.contactIntro a{font-size:17px}}
