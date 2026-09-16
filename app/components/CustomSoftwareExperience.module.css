@@ -126,6 +126,8 @@
 @media(max-width:560px){
   .hero{min-height:auto;padding:118px 18px 42px;justify-content:flex-start}
   .heroTop{order:0}
+  .heroTop p{margin:0;color:var(--blue);font-size:18px}
+  .heroContent small{font-size:19px}
   .heroContent{order:1;padding-top:54px}
   .softwareVisual,.webVisual,.marketingVisual,.brandVisual{
     position:relative;
