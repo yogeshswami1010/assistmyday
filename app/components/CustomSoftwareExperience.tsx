@@ -72,10 +72,7 @@ export default function CustomSoftwareExperience() {
         </div>
         <div className={styles.heroContent}>
           <div><small>SYSTEMS THAT SCALE</small><h1 id="software-title">Software built<br />around <em>your business.</em></h1></div>
-          <div className={styles.heroIntro}>
-            <p>We design and develop platforms, portals, dashboards, and automations around the way your organization actually works.</p>
-            <Link href="/contact">DISCUSS YOUR PROJECT <span>↗</span></Link>
-          </div>
+
         </div>
         <div className={styles.scrollCue}><span>↓</span> EXPLORE THE SYSTEM</div>
       </section>

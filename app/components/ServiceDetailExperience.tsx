@@ -47,7 +47,7 @@ export default function ServiceDetailExperience({ detail }: { detail: ServiceDet
         </div>
         <div className={styles.brandBoardFoot}><span>VOICE</span><span>IDENTITY</span><span>CONTENT</span><span>SOCIAL</span></div>
       </div>}
-      <div className={styles.heroContent}><div><small>{detail.kicker}</small><h1 id={`service-${detail.number}`}>{detail.hero[0]}<br /><em>{detail.hero[1]}</em></h1></div><div className={styles.heroIntro}><p>{detail.intro}</p><a href="#service-contact">DISCUSS YOUR PROJECT <span>↗</span></a></div></div>
+      <div className={styles.heroContent}><div><small>{detail.kicker}</small><h1 id={`service-${detail.number}`}>{detail.hero[0]}<br /><em>{detail.hero[1]}</em></h1></div></div>
       <div className={styles.scrollCue}><span>↓</span> EXPLORE THE SERVICE</div>
     </section>
     <div className={styles.marquee} aria-hidden="true"><div>{rail.map((item,index)=><span key={`${item}-${index}`}>{item} <i>✦</i> </span>)}</div></div>

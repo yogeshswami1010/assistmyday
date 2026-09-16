@@ -89,3 +89,8 @@
 .softwareVisual,.webVisual,.marketingVisual,.brandVisual{top:140px;max-height:calc(100% - 300px)}
 @media(max-width:900px){.softwareVisual,.webVisual,.marketingVisual,.brandVisual{top:120px;max-height:calc(100% - 270px)}}
 @media(max-width:560px){.softwareVisual,.webVisual,.marketingVisual,.brandVisual{top:105px;max-height:calc(100% - 230px)}}
+
+/* Hero simplified: title and service-specific animation only. */
+.heroContent{grid-template-columns:minmax(0,1fr);max-width:min(1180px,70vw)}
+@media(max-width:900px){.heroContent{max-width:88vw}}
+@media(max-width:560px){.heroContent{max-width:100%}}
