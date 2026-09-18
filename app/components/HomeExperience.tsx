@@ -102,11 +102,12 @@ export default function HomeExperience({ services, portfolio }: { services: Serv
     const audio = heroAudioRef.current;
     if (!hero || !audio) return;
 
+    const desktopMedia = window.matchMedia("(min-width: 761px)");
     let heroVisible = false;
     audio.volume = 0.32;
 
     const playWhenVisible = () => {
-      if (!heroVisible || document.hidden) return;
+      if (!desktopMedia.matches || !heroVisible || document.hidden) return;
       void audio.play().catch(() => {
         // Browsers may require an initial interaction before audible playback.
       });
@@ -121,20 +122,26 @@ export default function HomeExperience({ services, portfolio }: { services: Serv
       else stopWhenHidden();
     }, { threshold: [0, 0.08, 0.25] });
     const handleVisibilityChange = () => {
-      if (document.hidden) audio.pause();
+      if (document.hidden || !desktopMedia.matches) audio.pause();
       else playWhenVisible();
+    };
+    const handleViewportChange = () => {
+      if (desktopMedia.matches) playWhenVisible();
+      else stopWhenHidden();
     };
 
     observer.observe(hero);
     document.addEventListener("pointerdown", playWhenVisible, { passive: true });
     document.addEventListener("keydown", playWhenVisible);
     document.addEventListener("visibilitychange", handleVisibilityChange);
+    desktopMedia.addEventListener("change", handleViewportChange);
 
     return () => {
       observer.disconnect();
       document.removeEventListener("pointerdown", playWhenVisible);
       document.removeEventListener("keydown", playWhenVisible);
       document.removeEventListener("visibilitychange", handleVisibilityChange);
+      desktopMedia.removeEventListener("change", handleViewportChange);
       stopWhenHidden();
     };
   }, []);
