@@ -1,4 +1,4 @@
-import { createHmac, randomBytes, timingSafeEqual } from "node:crypto";
+import { createHash, createHmac, timingSafeEqual } from "node:crypto";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 
@@ -15,8 +15,9 @@ export function isAdminAuthConfigured() {
 function secret() {
   const configuredSecret = process.env.ADMIN_AUTH_SECRET;
   if (configuredSecret && configuredSecret.length >= 32) return configuredSecret;
-  globalAuth.assistmydayEphemeralAuthSecret ??= randomBytes(32);
-  return globalAuth.assistmydayEphemeralAuthSecret;
+  return createHash("sha256")
+    .update(`assistmyday:${process.env.ADMIN_EMAIL || ""}:${process.env.ADMIN_PASSWORD || ""}`)
+    .digest();
 }
 
 function sameValue(left: string, right: string) {
