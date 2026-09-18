@@ -236,7 +236,7 @@ export default function PortfolioExperience({ projects }: { projects: PortfolioP
                 <span>VIEW PROJECT ↗</span>
               </a>
               <div className={styles.projectMeta}>
-                <div><h3>{project.title}</h3><p className={styles.projectServices}>{project.category}</p><p className={styles.projectSummary}>{project.description}</p></div>
+                <div><h3>{project.title}</h3><p>{project.category}</p></div>
                 <small>{String(index + 1).padStart(2, "0")} / {String(projects.length).padStart(2, "0")}</small>
               </div>
             </article>

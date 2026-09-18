@@ -102,23 +102,14 @@ const importedArticles = (importedArticleData as BlogArticle[]).map((article) =>
   contentHtml: article.contentHtml ? sanitizeBlogHtml(article.contentHtml) : "",
 }));
 
-export function sortArticlesNewestFirst<T extends Pick<BlogArticle, "date" | "sortOrder">>(items: T[]) {
-  return [...items].sort((a, b) => {
-    const aTime = Date.parse(a.date);
-    const bTime = Date.parse(b.date);
-    const chronological = (Number.isNaN(bTime) ? 0 : bTime) - (Number.isNaN(aTime) ? 0 : aTime);
-    return chronological || a.sortOrder - b.sortOrder;
-  });
-}
-
-export const articles: BlogArticle[] = sortArticlesNewestFirst([
+export const articles: BlogArticle[] = [
   ...importedArticles,
   ...articleSeeds.map((article, index) => ({
     ...article,
     sortOrder: importedArticles.length + index + 1,
     published: true,
   })),
-]);
+];
 
 export function getArticle(slug: string) {
   return articles.find((article) => article.slug === slug);
