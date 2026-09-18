@@ -7,6 +7,7 @@ export type { ArticleSection, BlogArticle } from "../../lib/content-types";
 const articleSeeds: Omit<BlogArticle, "sortOrder" | "published">[] = [
   {
     slug: "when-custom-software-makes-sense",
+    image: "/imported-blog/custom-software-solutions-in-st-catharines-a-game-changer-for-local-businesses.webp",
     category: "SOFTWARE",
     title: "When custom software becomes the smarter business decision",
     excerpt: "A practical framework for deciding when off-the-shelf tools are holding your operations back.",
@@ -22,6 +23,7 @@ const articleSeeds: Omit<BlogArticle, "sortOrder" | "published">[] = [
   },
   {
     slug: "high-performance-website-strategy",
+    image: "/images/service-cards/high-performance-website.png",
     category: "WEB STRATEGY",
     title: "Why a high-performance website is more than a redesign",
     excerpt: "How positioning, user journeys, speed, and conversion architecture work together.",
@@ -37,6 +39,7 @@ const articleSeeds: Omit<BlogArticle, "sortOrder" | "published">[] = [
   },
   {
     slug: "workflows-to-automate-first",
+    image: "/imported-blog/the-rise-of-no-code-and-low-code-development-platforms.jpg",
     category: "AUTOMATION",
     title: "Five workflows worth automating before you add more headcount",
     excerpt: "Where growing teams can remove repetitive work and create more reliable operations.",
@@ -52,6 +55,7 @@ const articleSeeds: Omit<BlogArticle, "sortOrder" | "published">[] = [
   },
   {
     slug: "search-visibility-customer-intent",
+    image: "/imported-blog/local-seo-secrets-how-a-website-design-and-development-company-in-st-catharines-can-boost-your-rankings.webp",
     category: "SEO",
     title: "Building search visibility around real customer intent",
     excerpt: "A better approach to connecting technical SEO, useful content, and commercial priorities.",
@@ -67,6 +71,7 @@ const articleSeeds: Omit<BlogArticle, "sortOrder" | "published">[] = [
   },
   {
     slug: "paid-media-business-outcomes",
+    image: "/imported-blog/facebook-vs-google-ads-which-works-better-for-businesses-in-st-catharines.webp",
     category: "PAID MEDIA",
     title: "From campaign metrics to meaningful business outcomes",
     excerpt: "How to structure reporting around qualified demand, revenue, and better decisions.",
@@ -82,6 +87,7 @@ const articleSeeds: Omit<BlogArticle, "sortOrder" | "published">[] = [
   },
   {
     slug: "design-systems-for-growth",
+    image: "/imported-blog/top-graphic-design-trends-for-st-catharines-businesses-in-2025-2.webp",
     category: "BRAND",
     title: "Design systems that help growing companies move faster",
     excerpt: "Why a practical identity system improves consistency across teams, channels, and campaigns.",
