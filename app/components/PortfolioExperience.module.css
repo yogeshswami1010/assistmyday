@@ -66,3 +66,5 @@
   .outro h2{letter-spacing:0;margin:35px 0 60px;font-size:clamp(64px,6vw,145px);font-weight:400;line-height:.8}
   .outro a{letter-spacing:0;border-bottom:1px solid #5bb8e8cc;justify-content:space-between;gap:80px;min-width:260px;padding:16px 0;font:17px/1.2 monospace;display:flex}
 }
+.projectMeta>div{max-width:720px}.projectMeta .projectServices{color:var(--blue);font:14px/1.4 monospace}.projectMeta .projectSummary{margin-top:16px;color:rgba(216,216,216,.72);font-size:16px;line-height:1.55}
+@media(max-width:560px){.projectMeta .projectServices{font-size:13px}.projectMeta .projectSummary{margin-top:12px;font-size:15px;line-height:1.5}}

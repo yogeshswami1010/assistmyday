@@ -1,5 +1,5 @@
 import mysql, { type Pool, type ResultSetHeader, type RowDataPacket } from "mysql2/promise";
-import { articles as blogSeeds } from "../app/blog/articles";
+import { articles as blogSeeds, sortArticlesNewestFirst } from "../app/blog/articles";
 import { portfolioSeeds, serviceSeeds } from "./content-seeds";
 import type { BlogArticle, ContactSubmissionRecord, ContentKind, PortfolioProject, ServiceItem } from "./content-types";
 import { sanitizeBlogHtml } from "./content-validation";
@@ -264,9 +264,8 @@ async function getBlogArticlesFromDatabase(includeUnpublished = false) {
   const [rows] = await getPool().query<BlogRow[]>("SELECT * FROM amd_blogs ORDER BY sort_order, id");
   const merged = new Map(blogSeeds.map((item) => [item.slug, item]));
   rows.map(mapBlog).forEach((item) => merged.set(item.slug, item));
-  return Array.from(merged.values())
-    .filter((item) => includeUnpublished || item.published)
-    .sort((a, b) => a.sortOrder - b.sortOrder);
+  return sortArticlesNewestFirst(Array.from(merged.values())
+    .filter((item) => includeUnpublished || item.published));
 }
 
 async function getBlogArticleFromDatabase(slug: string, includeUnpublished = false) {
