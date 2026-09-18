@@ -4,6 +4,16 @@ const nextConfig: NextConfig = {
   async redirects() {
     return [
       {
+        source: "/portfolio_1/",
+        destination: "/portfolio",
+        statusCode: 301,
+      },
+      {
+        source: "/service/web-development",
+        destination: "/services/websites-ecommerce",
+        statusCode: 301,
+      },
+      {
         source: "/contact-us/",
         destination: "/contact",
         permanent: true,
