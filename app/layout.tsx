@@ -9,6 +9,10 @@ export const metadata: Metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || "https://assistmyday.com"),
   title: "Assistmyday — Digital Marketing & Software Development",
   description: "Custom software, high-performance websites, automation, and full-funnel digital marketing for ambitious businesses.",
+  icons: {
+    icon: [{ url: "/favicon.svg", type: "image/svg+xml" }],
+    shortcut: "/favicon.svg",
+  },
   openGraph: {
     title: "Assistmyday — Software That Scales. Marketing That Converts.",
     description: "An integrated software development and digital marketing partner for ambitious businesses.",
