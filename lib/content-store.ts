@@ -180,6 +180,12 @@ async function initializeSchema() {
     created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
   ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci`);
+  await pool.query(`CREATE TABLE IF NOT EXISTS amd_content_deletions (
+    kind VARCHAR(32) NOT NULL,
+    content_key VARCHAR(180) NOT NULL,
+    deleted_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY (kind, content_key)
+  ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci`);
   const [imageColumn] = await pool.query<RowDataPacket[]>("SHOW COLUMNS FROM amd_blogs LIKE 'image_url'");
   if (!imageColumn.length) await pool.query("ALTER TABLE amd_blogs ADD COLUMN image_url TEXT NULL AFTER title");
   const [contentColumn] = await pool.query<RowDataPacket[]>("SHOW COLUMNS FROM amd_blogs LIKE 'content_html'");
@@ -261,8 +267,13 @@ async function getServicesFromDatabase(includeUnpublished = false) {
 async function getBlogArticlesFromDatabase(includeUnpublished = false) {
   if (!isDatabaseConfigured()) return blogSeeds.filter((item) => includeUnpublished || item.published);
   await ensureSchema();
-  const [rows] = await getPool().query<BlogRow[]>("SELECT * FROM amd_blogs ORDER BY sort_order, id");
-  const merged = new Map(blogSeeds.map((item) => [item.slug, item]));
+  const pool = getPool();
+  const [[rows], [deletions]] = await Promise.all([
+    pool.query<BlogRow[]>("SELECT * FROM amd_blogs ORDER BY sort_order, id"),
+    pool.query<RowDataPacket[]>("SELECT content_key FROM amd_content_deletions WHERE kind = 'blogs'"),
+  ]);
+  const deletedSlugs = new Set(deletions.map((row) => String(row.content_key)));
+  const merged = new Map(blogSeeds.filter((item) => !deletedSlugs.has(item.slug)).map((item) => [item.slug, item]));
   rows.map(mapBlog).forEach((item) => merged.set(item.slug, item));
   return Array.from(merged.values())
     .filter((item) => includeUnpublished || item.published)
@@ -412,6 +423,7 @@ export async function createContent(kind: ContentKind, value: PortfolioProject |
   const [result] = await pool.execute<ResultSetHeader>(`INSERT INTO amd_blogs
     (slug, category, title, image_url, excerpt, display_date, read_time, accent, intro, content_html, sections_json, sort_order, published)
     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`, [item.slug, item.category, item.title, item.image || "", item.excerpt, item.date, item.readTime, item.accent, item.intro, item.contentHtml || "", JSON.stringify(item.sections), item.sortOrder, item.published ? 1 : 0]);
+  await pool.execute("DELETE FROM amd_content_deletions WHERE kind = 'blogs' AND content_key = ?", [item.slug]);
   return result.insertId;
 }
 
@@ -433,8 +445,25 @@ export async function updateContent(kind: ContentKind, id: number, value: Portfo
   }
 }
 
-export async function deleteContent(kind: ContentKind, id: number) {
+export async function deleteContent(kind: ContentKind, identifier: number | string) {
   await ensureSchema();
-  const table = kind === "portfolio" ? "amd_portfolio" : kind === "services" ? "amd_services" : "amd_blogs";
-  await getPool().execute(`DELETE FROM ${table} WHERE id = ?`, [id]);
+  const pool = getPool();
+  if (kind === "blogs") {
+    let slug = typeof identifier === "string" ? identifier : "";
+    if (typeof identifier === "number") {
+      const [rows] = await pool.execute<BlogRow[]>("SELECT * FROM amd_blogs WHERE id = ? LIMIT 1", [identifier]);
+      slug = rows[0]?.slug || "";
+    }
+    if (!slug) throw new Error("Blog record was not found.");
+    await pool.execute(
+      "INSERT INTO amd_content_deletions (kind, content_key) VALUES ('blogs', ?) ON DUPLICATE KEY UPDATE deleted_at = CURRENT_TIMESTAMP",
+      [slug],
+    );
+    if (typeof identifier === "number") await pool.execute("DELETE FROM amd_blogs WHERE id = ?", [identifier]);
+    else await pool.execute("DELETE FROM amd_blogs WHERE slug = ?", [slug]);
+    return;
+  }
+  if (typeof identifier !== "number") throw new Error("Invalid content record.");
+  const table = kind === "portfolio" ? "amd_portfolio" : "amd_services";
+  await pool.execute(`DELETE FROM ${table} WHERE id = ?`, [identifier]);
 }

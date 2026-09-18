@@ -81,8 +81,9 @@ export default function AdminPanel({ email, databaseReady, databaseMessage, init
   }
 
   async function remove(item: ManagedItem) {
-    if (!item.id || !window.confirm(`Delete “${item.title}”? This cannot be undone.`)) return;
-    const response = await fetch(`/api/admin/content/${active}/${item.id}`, { method: "DELETE" });
+    const identifier = item.id || (active === "blogs" ? (item as BlogArticle).slug : "");
+    if (!identifier || !window.confirm(`Delete “${item.title}”? This cannot be undone.`)) return;
+    const response = await fetch(`/api/admin/content/${active}/${encodeURIComponent(String(identifier))}`, { method: "DELETE" });
     const data = await response.json().catch(() => ({}));
     if (!response.ok) { window.alert(data.error || "Unable to delete content."); return; }
     await refresh(); router.refresh();

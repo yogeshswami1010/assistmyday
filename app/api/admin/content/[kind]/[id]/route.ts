@@ -29,9 +29,14 @@ export async function PUT(request: Request, { params }: { params: Promise<{ kind
 export async function DELETE(request: Request, { params }: { params: Promise<{ kind: string; id: string }> }) {
   if (!isSameOrigin(request)) return NextResponse.json({ error: "Invalid request origin." }, { status: 403 });
   if (!(await getAdminSession())) return NextResponse.json({ error: "Unauthorized." }, { status: 401 });
-  const { kind, id } = await context(params);
-  if (!isContentKind(kind) || !Number.isInteger(id) || id < 1) return NextResponse.json({ error: "Invalid content record." }, { status: 400 });
+  const values = await params;
+  const kind = values.kind;
+  const numericId = Number(values.id);
+  const identifier = Number.isInteger(numericId) && numericId > 0 ? numericId : decodeURIComponent(values.id);
+  if (!isContentKind(kind) || (typeof identifier === "string" && (kind !== "blogs" || !identifier))) {
+    return NextResponse.json({ error: "Invalid content record." }, { status: 400 });
+  }
   if (!isDatabaseConfigured()) return NextResponse.json({ error: "Database is not configured." }, { status: 503 });
-  await deleteContent(kind, id);
+  await deleteContent(kind, identifier);
   return NextResponse.json({ ok: true });
 }
