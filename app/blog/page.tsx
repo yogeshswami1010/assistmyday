@@ -1,23 +1,40 @@
 import type { Metadata } from "next";
 import Image from "next/image";
+import { cache } from "react";
 import InnerPages from "../components/InnerPages";
 import { getBlogArticles } from "../../lib/content-store";
 
 export const dynamic = "force-dynamic";
 export const runtime = "nodejs";
 
-export const metadata: Metadata = {
-  title: "Insights | Assistmyday",
-  description: "Practical thinking on software, web design, automation, SEO, and digital growth.",
-};
+type BlogPageProps = { searchParams?: Promise<{ page?: string }> };
 
 const POSTS_PER_PAGE = 9;
+const getCachedBlogArticles = cache(getBlogArticles);
 
-export default async function BlogPage({ searchParams }: { searchParams?: Promise<{ page?: string }> }) {
-  const articles = await getBlogArticles();
+async function getBlogPagination(searchParams: BlogPageProps["searchParams"]) {
+  const articles = await getCachedBlogArticles();
   const requestedPage = Number.parseInt((await searchParams)?.page || "1", 10);
   const totalPages = Math.max(1, Math.ceil(articles.length / POSTS_PER_PAGE));
   const currentPage = Math.min(totalPages, Math.max(1, Number.isFinite(requestedPage) ? requestedPage : 1));
+  return { articles, totalPages, currentPage };
+}
+
+export async function generateMetadata({ searchParams }: BlogPageProps): Promise<Metadata> {
+  const { currentPage } = await getBlogPagination(searchParams);
+  return {
+    title: "Insights | Assistmyday",
+    description: "Practical thinking on software, web design, automation, SEO, and digital growth.",
+    alternates: {
+      canonical: currentPage === 1
+        ? "https://assistmyday.com/blog"
+        : `https://assistmyday.com/blog?page=${currentPage}`,
+    },
+  };
+}
+
+export default async function BlogPage({ searchParams }: BlogPageProps) {
+  const { articles, totalPages, currentPage } = await getBlogPagination(searchParams);
   const visibleArticles = articles.slice((currentPage - 1) * POSTS_PER_PAGE, currentPage * POSTS_PER_PAGE);
   const pageHref = (page: number) => page === 1 ? "/blog#latest-posts" : `/blog?page=${page}#latest-posts`;
   return (
