@@ -311,12 +311,18 @@ export async function getServices(includeUnpublished = false, strict = false) {
 }
 
 export async function getBlogArticles(includeUnpublished = false, strict = false) {
+  const newestFirst = (a: BlogArticle, b: BlogArticle) => {
+    const aDate = Date.parse(a.date);
+    const bDate = Date.parse(b.date);
+    return (Number.isNaN(bDate) ? 0 : bDate) - (Number.isNaN(aDate) ? 0 : aDate)
+      || a.sortOrder - b.sortOrder;
+  };
   try {
-    return await getBlogArticlesFromDatabase(includeUnpublished);
+    return (await getBlogArticlesFromDatabase(includeUnpublished)).sort(newestFirst);
   } catch (error) {
     if (strict) throw error;
     console.error("Blog database unavailable; using built-in content.", error);
-    return blogSeeds.filter((item) => includeUnpublished || item.published);
+    return blogSeeds.filter((item) => includeUnpublished || item.published).sort(newestFirst);
   }
 }
 
