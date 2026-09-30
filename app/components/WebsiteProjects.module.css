@@ -17,3 +17,33 @@
 .grid p { color: #c4c8da; line-height: 1.6; font-size: 16px; }
 
 @media (max-width: 800px) { .grid { grid-template-columns: 1fr; gap: 34px; } .projects { padding: 70px 18px; } .heroContent { max-width: 100%; } .heroContent h1 { font-size: clamp(40px, 8vw, 68px); } .intro { font-size: 16px; } }
+
+/* Reserve distinct columns for the copy and animated storefront. */
+.hero.hero {
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
+  grid-template-areas: "top top" "copy visual" "cue cue";
+  align-items: center;
+  gap: 56px clamp(40px, 5vw, 96px);
+  min-height: 85svh;
+  padding: 150px 5vw 60px;
+}
+.hero .heroTop { grid-area: top; }
+.hero .heroContent { grid-area: copy; width: 100%; max-width: none; min-width: 0; padding-top: 0; }
+.hero .heroContent h1 { font-size: clamp(36px, 3.5vw, 64px); line-height: 1.08; letter-spacing: -.025em; overflow-wrap: anywhere; }
+.hero .intro { max-width: 100%; font-size: 17px; }
+.hero .visual { grid-area: visual; position: relative; top: auto; right: auto; width: 100%; height: clamp(300px, 30vw, 490px); max-height: none; margin: 0; opacity: 1; }
+.hero .scrollCue { grid-area: cue; margin: 0; }
+@media (max-width: 1000px) {
+  .hero.hero { grid-template-columns: minmax(0, 1fr); grid-template-areas: "top" "copy" "visual" "cue"; gap: 44px; min-height: auto; padding: 140px 6vw 48px; }
+  .hero .heroContent { max-width: 760px; }
+  .hero .heroContent h1 { font-size: clamp(34px, 5.5vw, 54px); }
+  .hero .visual { width: min(100%, 640px); height: clamp(280px, 52vw, 420px); justify-self: center; transform: none; }
+}
+@media (max-width: 560px) {
+  .hero.hero { padding: 130px 18px 42px; gap: 36px; }
+  .hero .heroContent h1 { font-size: clamp(32px, 8.2vw, 44px); }
+  .hero .intro { font-size: 16px; }
+  .hero .heroTop p { font-size: 12px; }
+  .hero .heroContent small { font-size: 13px; }
+}

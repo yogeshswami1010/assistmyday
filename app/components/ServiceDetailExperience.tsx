@@ -31,9 +31,9 @@ export default function ServiceDetailExperience({ detail, projects }: { detail: 
   }, []);
   const rail = [...detail.marquee, ...detail.marquee];
   return <div ref={rootRef} className={styles.experience}>
-    <section className={styles.hero} aria-labelledby={`service-${detail.number}`}>
-      <div className={styles.grid} aria-hidden="true" /><div className={styles.heroTop}><p>ASSISTMYDAY / SERVICES / {detail.number}</p><span>{detail.title.toUpperCase()}</span></div>
-      {detail.number === "02" && <div className={styles.webVisual} aria-hidden="true">
+    <section className={`${styles.hero} ${projects ? webStyles.hero : ""}`} aria-labelledby={`service-${detail.number}`}>
+      <div className={styles.grid} aria-hidden="true" /><div className={`${styles.heroTop} ${projects ? webStyles.heroTop : ""}`}><p>ASSISTMYDAY / SERVICES / {detail.number}</p><span>{detail.title.toUpperCase()}</span></div>
+      {detail.number === "02" && <div className={`${styles.webVisual} ${projects ? webStyles.visual : ""}`} aria-hidden="true">
         <div className={styles.webWindow}><div className={styles.webChrome}><i/><i/><i/><span>assistmyday / storefront</span></div><div className={styles.webPage}><div className={styles.webPageTop}><b>NEW EXPERIENCE</b><span>MENU ↗</span></div><strong>Designed to<br/>convert.</strong><div className={styles.webButton}>EXPLORE COLLECTION ↗</div><div className={styles.webTiles}><i/><i/><i/></div></div></div>
         <div className={styles.webMobile}><div className={styles.webMobileTop}/><strong>SHOP<br/>SMARTER.</strong><div className={styles.webMobileCard}/><div className={styles.webMobileButton}/></div>
       </div>}
@@ -51,7 +51,7 @@ export default function ServiceDetailExperience({ detail, projects }: { detail: 
         <div className={styles.brandBoardFoot}><span>VOICE</span><span>IDENTITY</span><span>CONTENT</span><span>SOCIAL</span></div>
       </div>}
       <div className={`${styles.heroContent} ${projects ? webStyles.heroContent : ""}`}><div><small>{detail.kicker}</small><h1 id={`service-${detail.number}`}>{detail.hero[0]}{" "}<br /><em>{detail.hero[1]}</em></h1>{projects && <><p className={webStyles.intro}>{detail.intro}</p><div className={webStyles.actions}><a href="/portfolio">View Our Website Projects <span aria-hidden="true">↗</span></a><a href="#service-contact">Discuss Your Website <span aria-hidden="true">↓</span></a></div></>}</div></div>
-      <div className={styles.scrollCue}><span>↓</span> EXPLORE THE SERVICE</div>
+      <div className={`${styles.scrollCue} ${projects ? webStyles.scrollCue : ""}`}><span>↓</span> EXPLORE THE SERVICE</div>
     </section>
     <div className={styles.marquee} aria-hidden="true"><div>{rail.map((item,index)=><span key={`${item}-${index}`}>{item} <i>✦</i> </span>)}</div></div>
     <section className={styles.intro} data-section-marker={detail.chapterMarker}><p className={styles.eyebrow}>THE RIGHT FIT</p><div className={`${styles.introCopy} ${styles.reveal}`}><h2>{detail.fitTitle[0]}<br /><em>{detail.fitTitle[1]}</em></h2><p>{detail.fitCopy}</p></div><div className={`${styles.outcomes} ${styles.reveal}`}>{detail.outcomes.map(([label,text,value],index)=><article key={label}><strong>0{index+1}</strong><span>{label}</span><p>{text}</p><b>{value}</b></article>)}</div></section>
