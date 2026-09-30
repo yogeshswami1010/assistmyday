@@ -31,16 +31,16 @@ export default function ServiceDetailExperience({ detail, projects }: { detail: 
   }, []);
   const rail = [...detail.marquee, ...detail.marquee];
   return <div ref={rootRef} className={styles.experience}>
-    <section className={`${styles.hero} ${projects ? webStyles.hero : ""}`} aria-labelledby={`service-${detail.number}`}>
-      <div className={styles.grid} aria-hidden="true" /><div className={`${styles.heroTop} ${projects ? webStyles.heroTop : ""}`}><p>ASSISTMYDAY / SERVICES / {detail.number}</p><span>{detail.title.toUpperCase()}</span></div>
-      {detail.number === "02" && <div className={`${styles.webVisual} ${projects ? webStyles.visual : ""}`} aria-hidden="true">
+    <section className={`${styles.hero} ${webStyles.hero}`} aria-labelledby={`service-${detail.number}`}>
+      <div className={styles.grid} aria-hidden="true" /><div className={`${styles.heroTop} ${webStyles.heroTop}`}><p>ASSISTMYDAY / SERVICES / {detail.number}</p><span>{detail.title.toUpperCase()}</span></div>
+      {detail.number === "02" && <div className={`${styles.webVisual} ${webStyles.visual}`} aria-hidden="true">
         <div className={styles.webWindow}><div className={styles.webChrome}><i/><i/><i/><span>assistmyday / storefront</span></div><div className={styles.webPage}><div className={styles.webPageTop}><b>NEW EXPERIENCE</b><span>MENU ↗</span></div><strong>Designed to<br/>convert.</strong><div className={styles.webButton}>EXPLORE COLLECTION ↗</div><div className={styles.webTiles}><i/><i/><i/></div></div></div>
         <div className={styles.webMobile}><div className={styles.webMobileTop}/><strong>SHOP<br/>SMARTER.</strong><div className={styles.webMobileCard}/><div className={styles.webMobileButton}/></div>
       </div>}
-      {detail.number === "03" && <div className={styles.marketingVisual} aria-hidden="true">
+      {detail.number === "03" && <div className={`${styles.marketingVisual} ${webStyles.visual}`} aria-hidden="true">
         <div className={styles.marketingTop}><span>GROWTH SIGNAL</span><b>● LIVE</b></div><div className={styles.marketingChart}><div className={styles.marketingGrid}/><div className={styles.marketingBars}>{[28,42,36,54,49,67,62,76,71,88,82,100].map((height,index)=><i key={index} style={{height:`${height}%`,animationDelay:`${index*85}ms`}} />)}</div><div className={styles.marketingLine}/></div><div className={styles.marketingBottom}><span>SEARCH <b>↗</b></span><span>PAID <b>↗</b></span><span>CONVERSION <b>↗</b></span></div>
       </div>}
-      {detail.number === "04" && <div className={styles.brandVisual} aria-hidden="true">
+      {detail.number === "04" && <div className={`${styles.brandVisual} ${webStyles.visual}`} aria-hidden="true">
         <div className={styles.brandBoardTop}><span>BRAND SYSTEM / 04</span><b>ASSISTMYDAY®</b></div>
         <div className={styles.brandBoardGrid}>
           <div className={styles.brandMonogram}>A<span>+</span></div>
@@ -50,8 +50,8 @@ export default function ServiceDetailExperience({ detail, projects }: { detail: 
         </div>
         <div className={styles.brandBoardFoot}><span>VOICE</span><span>IDENTITY</span><span>CONTENT</span><span>SOCIAL</span></div>
       </div>}
-      <div className={`${styles.heroContent} ${projects ? webStyles.heroContent : ""}`}><div><small>{detail.kicker}</small><h1 id={`service-${detail.number}`}>{detail.hero[0]}{" "}<br /><em>{detail.hero[1]}</em></h1>{projects && <><p className={webStyles.intro}>{detail.intro}</p><div className={webStyles.actions}><a href="/portfolio">View Our Website Projects <span aria-hidden="true">↗</span></a><a href="#service-contact">Discuss Your Website <span aria-hidden="true">↓</span></a></div></>}</div></div>
-      <div className={`${styles.scrollCue} ${projects ? webStyles.scrollCue : ""}`}><span>↓</span> EXPLORE THE SERVICE</div>
+      <div className={`${styles.heroContent} ${webStyles.heroContent}`}><div><small>{detail.kicker}</small><h1 id={`service-${detail.number}`}>{detail.hero[0]}{" "}<br /><em>{detail.hero[1]}</em></h1>{projects && <><p className={webStyles.intro}>{detail.intro}</p><div className={webStyles.actions}><a href="/portfolio">View Our Website Projects <span aria-hidden="true">↗</span></a><a href="#service-contact">Discuss Your Website <span aria-hidden="true">↓</span></a></div></>}</div></div>
+      <div className={`${styles.scrollCue} ${webStyles.scrollCue}`}><span>↓</span> EXPLORE THE SERVICE</div>
     </section>
     <div className={styles.marquee} aria-hidden="true"><div>{rail.map((item,index)=><span key={`${item}-${index}`}>{item} <i>✦</i> </span>)}</div></div>
     <section className={styles.intro} data-section-marker={detail.chapterMarker}><p className={styles.eyebrow}>THE RIGHT FIT</p><div className={`${styles.introCopy} ${styles.reveal}`}><h2>{detail.fitTitle[0]}<br /><em>{detail.fitTitle[1]}</em></h2><p>{detail.fitCopy}</p></div><div className={`${styles.outcomes} ${styles.reveal}`}>{detail.outcomes.map(([label,text,value],index)=><article key={label}><strong>0{index+1}</strong><span>{label}</span><p>{text}</p><b>{value}</b></article>)}</div></section>
@@ -64,7 +64,7 @@ export default function ServiceDetailExperience({ detail, projects }: { detail: 
         <a href={project.projectUrl} aria-label={`View ${project.title}`}><div className={webStyles.image}><Image src={project.image} alt={project.title} fill sizes="(max-width: 800px) 100vw, 33vw" unoptimized /></div><h3>{project.title} <span aria-hidden="true">↗</span></h3></a>
         <p>{project.description}</p>
       </article>)}</div>
-      <div className={webStyles.actions}><a href="/portfolio">View Our Website Projects <span aria-hidden="true">↗</span></a><a href="#service-contact">Discuss Your Website <span aria-hidden="true">↓</span></a></div>
+      <div className={webStyles.actions}><a href="/portfolio">View Our Website Projects <span aria-hidden="true">↗</span></a><a href="/contact">Discuss Your Website <span aria-hidden="true">↗</span></a></div>
     </section>}
     <section id="service-contact" className={styles.contactSection}><div className={`${styles.contactIntro} ${styles.reveal}`}><p>{detail.contactKicker}</p><h2>{detail.contactTitle[0]}<br /><em>{detail.contactTitle[1]}</em></h2><span>{detail.contactCopy}</span><div><a href="mailto:info@assistmyday.com">info@assistmyday.com</a><a href="tel:+19053748878">+1 (905) 374-8878</a></div></div><div className={`${styles.contactFormWrap} ${styles.reveal}`}><ContactForm/></div></section>
   </div>;
