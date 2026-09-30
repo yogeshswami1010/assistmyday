@@ -242,7 +242,7 @@ const mapService = (row: ServiceRow): ServiceItem => ({
 });
 const mapBlog = (row: BlogRow): BlogArticle => ({
   id: row.id, slug: row.slug, category: row.category, title: row.title, image: row.image_url || "", excerpt: row.excerpt,
-  date: row.display_date, readTime: row.read_time, accent: row.accent, intro: row.intro, contentHtml: row.content_html ? sanitizeBlogHtml(row.content_html) : "",
+  date: row.display_date, readTime: row.read_time, accent: row.accent, intro: row.intro, contentHtml: row.content_html ? sanitizeBlogHtml(row.content_html, row.slug) : "",
   sections: safeJson(row.sections_json, []), sortOrder: row.sort_order, published: Boolean(row.published),
 });
 

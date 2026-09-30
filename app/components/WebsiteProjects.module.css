@@ -1,0 +1,19 @@
+.heroContent { max-width: min(1180px, 78vw); }
+.heroContent h1 { font-size: clamp(44px, 5.2vw, 94px); line-height: 1.04; }
+.intro { max-width: 760px; margin: 32px 0 0; color: #d0d4e4; font-size: 18px; line-height: 1.65; }
+.actions { display: flex; flex-wrap: wrap; gap: 18px; margin-top: 32px; }
+.actions a { display: inline-flex; align-items: center; justify-content: space-between; gap: 24px; min-height: 52px; padding: 15px 20px; border: 1px solid var(--blue); border-radius: 12px; color: var(--paper); font-size: 15px; }
+.actions a:first-child { background: var(--blue); color: var(--night); }
+.actions a:hover { background: var(--paper); color: var(--night); }
+.actions a:focus-visible, .grid a:focus-visible { outline: 3px solid var(--blue); outline-offset: 5px; }
+.projects { padding: 100px 5vw; background: #0c0e2d; }
+.projects header > p { color: var(--blue); font: 13px monospace; }
+.projects h2 { margin: 20px 0 45px; font-size: clamp(36px, 4vw, 64px); font-weight: 400; }
+.grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 28px; }
+.image { position: relative; aspect-ratio: 16 / 10; overflow: hidden; border-radius: 14px; background: var(--navy); }
+.image img { object-fit: cover; object-position: top; }
+.grid h3 { display: flex; justify-content: space-between; gap: 12px; font-size: 24px; font-weight: 400; }
+.grid h3 span { color: var(--blue); }
+.grid p { color: #c4c8da; line-height: 1.6; font-size: 16px; }
+:global(#service-contact) { scroll-margin-top: 130px; }
+@media (max-width: 800px) { .grid { grid-template-columns: 1fr; gap: 34px; } .projects { padding: 70px 18px; } .heroContent { max-width: 100%; } .heroContent h1 { font-size: clamp(40px, 8vw, 68px); } .intro { font-size: 16px; } }

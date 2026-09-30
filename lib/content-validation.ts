@@ -1,4 +1,5 @@
 import sanitizeHtml from "sanitize-html";
+import { migrateBlogHtml } from "./blog-migration";
 import type { ArticleSection, BlogArticle, ContentKind, PortfolioProject, ServiceItem } from "./content-types";
 
 function text(value: unknown, field: string, max = 500) {
@@ -59,9 +60,9 @@ function sections(value: unknown): ArticleSection[] {
   });
 }
 
-export function sanitizeBlogHtml(value: unknown) {
+export function sanitizeBlogHtml(value: unknown, articleSlug?: string) {
   if (typeof value !== "string" || !value.trim()) throw new Error("Description is required.");
-  const cleaned = sanitizeHtml(value.slice(0, 100000), {
+  const cleaned = sanitizeHtml(migrateBlogHtml(value.slice(0, 100000), articleSlug), {
     allowedTags: ["p", "br", "strong", "b", "em", "i", "h2", "h3", "ul", "ol", "li", "blockquote", "a"],
     allowedAttributes: { a: ["href", "target", "rel"] },
     allowedSchemes: ["http", "https", "mailto"],

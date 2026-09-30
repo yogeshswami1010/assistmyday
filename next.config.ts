@@ -1,9 +1,14 @@
 import type { NextConfig } from "next";
+import { legacyBlogSlugs } from "./lib/blog-migration";
 
 const nextConfig: NextConfig = {
   skipTrailingSlashRedirect: true,
   async redirects() {
     return [
+      ...legacyBlogSlugs.flatMap(slug => [
+        { source: `/${slug}/`, destination: `/blog/${slug}`, statusCode: 301 as const },
+        { source: `/${slug}`, destination: `/blog/${slug}`, statusCode: 301 as const },
+      ]),
       {
         source: "/portfolio_1/",
         destination: "/portfolio",

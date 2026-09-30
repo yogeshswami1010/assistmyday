@@ -1,6 +1,9 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import Image from "next/image";
+import type { PortfolioProject } from "../../lib/content-types";
+import webStyles from "./WebsiteProjects.module.css";
 import ContactForm from "../contact/ContactForm";
 import styles from "./CustomSoftwareExperience.module.css";
 
@@ -13,7 +16,7 @@ export type ServiceDetail = {
   contactKicker: string; contactTitle: [string, string]; contactCopy: string;
 };
 
-export default function ServiceDetailExperience({ detail }: { detail: ServiceDetail }) {
+export default function ServiceDetailExperience({ detail, projects }: { detail: ServiceDetail; projects?: PortfolioProject[] }) {
   const rootRef = useRef<HTMLDivElement>(null);
   useEffect(() => {
     const root = rootRef.current;
@@ -47,7 +50,7 @@ export default function ServiceDetailExperience({ detail }: { detail: ServiceDet
         </div>
         <div className={styles.brandBoardFoot}><span>VOICE</span><span>IDENTITY</span><span>CONTENT</span><span>SOCIAL</span></div>
       </div>}
-      <div className={styles.heroContent}><div><small>{detail.kicker}</small><h1 id={`service-${detail.number}`}>{detail.hero[0]}<br /><em>{detail.hero[1]}</em></h1></div></div>
+      <div className={`${styles.heroContent} ${projects ? webStyles.heroContent : ""}`}><div><small>{detail.kicker}</small><h1 id={`service-${detail.number}`}>{detail.hero[0]}{" "}<br /><em>{detail.hero[1]}</em></h1>{projects && <><p className={webStyles.intro}>{detail.intro}</p><div className={webStyles.actions}><a href="/portfolio">View Our Website Projects <span aria-hidden="true">↗</span></a><a href="#service-contact">Discuss Your Website <span aria-hidden="true">↓</span></a></div></>}</div></div>
       <div className={styles.scrollCue}><span>↓</span> EXPLORE THE SERVICE</div>
     </section>
     <div className={styles.marquee} aria-hidden="true"><div>{rail.map((item,index)=><span key={`${item}-${index}`}>{item} <i>✦</i> </span>)}</div></div>
@@ -55,6 +58,14 @@ export default function ServiceDetailExperience({ detail }: { detail: ServiceDet
     <section className={styles.capabilitySection}><header className={`${styles.sectionHeader} ${styles.reveal}`}><p>{detail.sectionLabel}</p><h2>{detail.sectionTitle[0]}<br /><em>{detail.sectionTitle[1]}</em></h2></header><div className={styles.capabilities}>{detail.capabilities.map(([number,title,copy],index)=><article className={`${styles.capability} ${styles.reveal}`} style={{transitionDelay:`${index*70}ms`}} key={number}><div><span>{number}</span><b>↗</b></div><div className={styles.capabilityGraphic} aria-hidden="true"><i/><i/><i/></div><h3>{title}</h3><p>{copy}</p></article>)}</div></section>
     <section className={styles.processSection}><header className={`${styles.processHeader} ${styles.reveal}`}><p>HOW WE DELIVER</p><h2>Clear milestones.<br /><em>Visible progress.</em></h2></header><div className={styles.process}>{detail.process.map(([number,title,copy])=><article className={styles.reveal} key={number}><span>{number}</span><div className={styles.dot}/><h3>{title}</h3><p>{copy}</p></article>)}</div></section>
     <section className={styles.stackSection}><div className={`${styles.stackIntro} ${styles.reveal}`}><p>{detail.stackLabel}</p><h2>{detail.stackTitle[0]}<br /><em>{detail.stackTitle[1]}</em></h2></div><div className={styles.stack}>{detail.stack.map((item,index)=><span className={styles.reveal} style={{transitionDelay:`${index%4*60}ms`}} key={item}><small>{String(index+1).padStart(2,"0")}</small>{item}</span>)}</div></section>
+    {projects && projects.length > 0 && <section className={webStyles.projects} aria-labelledby="website-projects-heading">
+      <header><p>SELECTED WORK</p><h2 id="website-projects-heading">Recent Website Projects</h2></header>
+      <div className={webStyles.grid}>{projects.map(project => <article key={project.slug}>
+        <a href={project.projectUrl} aria-label={`View ${project.title}`}><div className={webStyles.image}><Image src={project.image} alt={project.title} fill sizes="(max-width: 800px) 100vw, 33vw" unoptimized /></div><h3>{project.title} <span aria-hidden="true">↗</span></h3></a>
+        <p>{project.description}</p>
+      </article>)}</div>
+      <div className={webStyles.actions}><a href="/portfolio">View Our Website Projects <span aria-hidden="true">↗</span></a><a href="#service-contact">Discuss Your Website <span aria-hidden="true">↓</span></a></div>
+    </section>}
     <section id="service-contact" className={styles.contactSection}><div className={`${styles.contactIntro} ${styles.reveal}`}><p>{detail.contactKicker}</p><h2>{detail.contactTitle[0]}<br /><em>{detail.contactTitle[1]}</em></h2><span>{detail.contactCopy}</span><div><a href="mailto:info@assistmyday.com">info@assistmyday.com</a><a href="tel:+19053748878">+1 (905) 374-8878</a></div></div><div className={`${styles.contactFormWrap} ${styles.reveal}`}><ContactForm/></div></section>
   </div>;
 }

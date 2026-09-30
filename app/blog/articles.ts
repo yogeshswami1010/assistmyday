@@ -99,7 +99,7 @@ const articleSeeds: Omit<BlogArticle, "sortOrder" | "published">[] = [
 
 const importedArticles = (importedArticleData as BlogArticle[]).map((article) => ({
   ...article,
-  contentHtml: article.contentHtml ? sanitizeBlogHtml(article.contentHtml) : "",
+  contentHtml: article.contentHtml ? sanitizeBlogHtml(article.contentHtml, article.slug) : "",
 }));
 
 export const articles: BlogArticle[] = [
