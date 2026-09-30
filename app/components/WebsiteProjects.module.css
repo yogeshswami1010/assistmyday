@@ -15,5 +15,5 @@
 .grid h3 { display: flex; justify-content: space-between; gap: 12px; font-size: 24px; font-weight: 400; }
 .grid h3 span { color: var(--blue); }
 .grid p { color: #c4c8da; line-height: 1.6; font-size: 16px; }
-:global(#service-contact) { scroll-margin-top: 130px; }
+
 @media (max-width: 800px) { .grid { grid-template-columns: 1fr; gap: 34px; } .projects { padding: 70px 18px; } .heroContent { max-width: 100%; } .heroContent h1 { font-size: clamp(40px, 8vw, 68px); } .intro { font-size: 16px; } }
