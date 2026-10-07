@@ -2,6 +2,12 @@
 
 import { FormEvent, useState } from "react";
 
+declare global {
+  interface Window {
+    gtag?: (...args: unknown[]) => void;
+  }
+}
+
 export default function ContactForm() {
   const [status, setStatus] = useState<"idle" | "sending" | "success" | "error">("idle");
   const [message, setMessage] = useState("");
@@ -24,6 +30,11 @@ export default function ContactForm() {
       form.reset();
       setStatus("success");
       setMessage("Thank you. Your project details were sent successfully.");
+      window.gtag?.("event", "conversion", {
+        send_to: "AW-16698948314/u2MjCPP0wpQdENr11po-",
+        value: 1.0,
+        currency: "CAD",
+      });
     } catch (error) {
       setStatus("error");
       setMessage(error instanceof Error ? error.message : "Unable to send your message. Please try again.");
