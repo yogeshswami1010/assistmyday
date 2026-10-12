@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Script from "next/script";
 import FooterNavigation from "./FooterNavigation";
 import styles from "./SiteFooter.module.css";
 
@@ -39,6 +40,12 @@ export default function SiteFooter({ id, topHref = "#" }: { id?: string; topHref
         <a href="https://assistmyhr.com/" target="_blank" rel="noopener noreferrer">AssistmyHR <span aria-hidden="true">↗</span></a>
         <a href={topHref}>BACK TO TOP <span>↑</span></a>
       </div>
+      <Script
+        src="https://widgets.leadconnectorhq.com/loader.js"
+        data-resources-url="https://widgets.leadconnectorhq.com/chat-widget/loader.js"
+        data-widget-id="6acce6d844d50e1f79102e07"
+        strategy="afterInteractive"
+      />
     </footer>
   );
 }
