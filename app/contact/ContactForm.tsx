@@ -48,6 +48,10 @@ export default function ContactForm() {
       <label>COMPANY<input type="text" name="company" autoComplete="organization" maxLength={180} /></label>
       <label>PHONE<input type="tel" name="phone" autoComplete="tel" maxLength={60} /></label>
       <label>HOW CAN WE HELP?<textarea name="message" rows={6} minLength={10} maxLength={5000} required /></label>
+      <label className="contact-consent">
+        <input type="checkbox" name="consent" value="yes" required />
+        <span>I agree to the <a href="/privacy-policy">Privacy Policy</a> and consent to receive messages from Assistmyday about my enquiry.</span>
+      </label>
       <label aria-hidden="true" style={{ position: "absolute", left: "-9999px" }}>WEBSITE<input type="text" name="website" tabIndex={-1} autoComplete="off" /></label>
       <p className={`contact-form-note contact-form-note-${status}`} role="status" aria-live="polite">
         {message || "Your details are sent securely to the Assistmyday team."}

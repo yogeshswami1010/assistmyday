@@ -85,3 +85,5 @@
 }
 @media(max-width:760px){.mobileSubmenuToggle{top:calc(4.5vh - 18px)}}
 @media(prefers-reduced-motion:reduce){.mobileSubmenu{transition:none}}
+
+.shell :global(.contact-form .contact-consent){grid-column:1/-1;display:flex;align-items:flex-start;gap:10px;font:13px/1.45 var(--font-geist-sans),sans-serif;color:#555b74}.shell :global(.contact-form .contact-consent input){width:17px;height:17px;flex:0 0 17px;margin:1px 0 0;padding:0;border:1px solid #aeb3c4;accent-color:var(--violet)}.shell :global(.contact-form .contact-consent a){color:var(--violet);text-decoration:underline;text-underline-offset:3px}

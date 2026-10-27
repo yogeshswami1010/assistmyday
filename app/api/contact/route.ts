@@ -26,6 +26,10 @@ export async function POST(request: NextRequest) {
 
   if (clean(payload.website, 200)) return NextResponse.json({ ok: true });
 
+  if (payload.consent !== "yes" && payload.consent !== true && payload.consent !== "on") {
+    return NextResponse.json({ error: "Please agree to the Privacy Policy and message consent before sending your enquiry." }, { status: 422 });
+  }
+
   const submission = {
     name: clean(payload.name, 160),
     email: clean(payload.email, 254).toLowerCase(),
