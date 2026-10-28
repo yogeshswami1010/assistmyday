@@ -52,6 +52,14 @@ export default function ContactForm() {
         <input type="checkbox" name="consent" value="yes" required />
         <span>I agree to the <a href="/privacy-policy">Privacy Policy</a> and consent to receive messages from Assistmyday about my enquiry.</span>
       </label>
+      <label className="contact-consent">
+        <input type="checkbox" name="marketingSmsConsent" value="yes" />
+        <span>I consent to receive marketing text messages from Assistmyday at the phone number provided. Frequency may vary. Message &amp; data rates may apply. Text HELP for assistance, reply STOP to opt out.</span>
+      </label>
+      <label className="contact-consent">
+        <input type="checkbox" name="transactionalSmsConsent" value="yes" />
+        <span>I consent to receive non-marketing text messages from Assistmyday about my order updates, appointment reminders, etc. Message &amp; data rates may apply. Text HELP for assistance, reply STOP to opt out.</span>
+      </label>
       <label aria-hidden="true" style={{ position: "absolute", left: "-9999px" }}>WEBSITE<input type="text" name="website" tabIndex={-1} autoComplete="off" /></label>
       <p className={`contact-form-note contact-form-note-${status}`} role="status" aria-live="polite">
         {message || "Your details are sent securely to the Assistmyday team."}

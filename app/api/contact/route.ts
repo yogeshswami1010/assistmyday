@@ -39,6 +39,8 @@ export async function POST(request: NextRequest) {
     ipAddress: clean(request.headers.get("x-forwarded-for")?.split(",")[0], 64),
     userAgent: clean(request.headers.get("user-agent"), 500),
   };
+  const marketingSmsConsent = payload.marketingSmsConsent === "yes" || payload.marketingSmsConsent === true || payload.marketingSmsConsent === "on";
+  const transactionalSmsConsent = payload.transactionalSmsConsent === "yes" || payload.transactionalSmsConsent === true || payload.transactionalSmsConsent === "on";
 
   if (!submission.name || !EMAIL_PATTERN.test(submission.email) || submission.message.length < 10) {
     return NextResponse.json({ error: "Please enter your name, a valid email, and a message of at least 10 characters." }, { status: 422 });
@@ -77,6 +79,8 @@ export async function POST(request: NextRequest) {
     <p><strong>Email:</strong> ${escapeHtml(submission.email)}</p>
     <p><strong>Company:</strong> ${escapeHtml(submission.company || "Not provided")}</p>
     <p><strong>Phone:</strong> ${escapeHtml(submission.phone || "Not provided")}</p>
+    <p><strong>Marketing SMS consent:</strong> ${marketingSmsConsent ? "Yes" : "No"}</p>
+    <p><strong>Non-marketing SMS consent:</strong> ${transactionalSmsConsent ? "Yes" : "No"}</p>
     <p><strong>Message:</strong></p><p>${escapeHtml(submission.message).replace(/\n/g, "<br>")}</p>`;
 
   try {
@@ -85,7 +89,7 @@ export async function POST(request: NextRequest) {
       to,
       replyTo: submission.email,
       subject,
-      text: `New Assistmyday contact enquiry\n\nName: ${submission.name}\nEmail: ${submission.email}\nCompany: ${submission.company || "Not provided"}\nPhone: ${submission.phone || "Not provided"}\n\nMessage:\n${submission.message}`,
+      text: `New Assistmyday contact enquiry\n\nName: ${submission.name}\nEmail: ${submission.email}\nCompany: ${submission.company || "Not provided"}\nPhone: ${submission.phone || "Not provided"}\nMarketing SMS consent: ${marketingSmsConsent ? "Yes" : "No"}\nNon-marketing SMS consent: ${transactionalSmsConsent ? "Yes" : "No"}\n\nMessage:\n${submission.message}`,
       html,
     });
     await setContactSubmissionEmailStatus(submissionId, true);
