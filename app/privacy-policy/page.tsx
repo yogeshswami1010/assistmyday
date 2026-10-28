@@ -12,7 +12,7 @@ const sections = [
   ["cookies", "Cookies and tracking"], ["use", "How we use information"],
   ["sharing", "How we share information"], ["retention", "Retention and transfers"],
   ["disclosure", "Disclosure and security"], ["rights", "Your rights"],
-  ["links", "External links"], ["changes", "Policy changes"], ["contact", "Contact us"],
+  ["links", "External links"], ["sms", "SMS privacy"], ["changes", "Policy changes"], ["contact", "Contact us"],
 ] as const;
 
 export default function PrivacyPolicyPage() {
@@ -87,9 +87,11 @@ export default function PrivacyPolicyPage() {
 
           <section id="links"><span>09</span><h2>Links to other websites</h2><p>Our service may link to websites that we do not operate. We recommend reviewing each third party’s privacy policy. We do not control and are not responsible for third-party content, policies, or practices.</p></section>
 
-          <section id="changes"><span>10</span><h2>Changes to this policy</h2><p>We may update this Privacy Policy from time to time. Changes will be posted on this page, and the “Last updated” date will be revised. Where appropriate, we may also provide notice by email or through a prominent service notice before a change takes effect.</p></section>
+          <section id="sms"><span>10</span><h2>SMS privacy and messaging</h2><p>Message frequency may vary. Message and data rates may apply; check with your carrier for details. To stop receiving messages, reply <strong>STOP</strong> to any text message. Text <strong>HELP</strong> for assistance. Carriers are not liable for delayed or undelivered messages, and the SMS service is intended only for people 18 years of age or older.</p><p>No mobile information will be shared with third parties or affiliates for marketing or promotional purposes. Information sharing with subcontractors supporting our services, such as customer service, is permitted.</p></section>
 
-          <section id="contact" className={styles.contact}><span>11</span><h2>Contact us</h2><p>If you have questions about this Privacy Policy, contact Assist My Day:</p><ul><li>Email: <a href="mailto:assistmyday@gmail.com">assistmyday@gmail.com</a></li><li>Phone: <a href="tel:+19053748878">+1 (905) 374-8878</a></li><li>Online: <a href="/contact">Contact us</a></li></ul></section>
+          <section id="changes"><span>11</span><h2>Changes to this policy</h2><p>We may update this Privacy Policy from time to time. Changes will be posted on this page, and the “Last updated” date will be revised. Where appropriate, we may also provide notice by email or through a prominent service notice before a change takes effect.</p></section>
+
+          <section id="contact" className={styles.contact}><span>12</span><h2>Contact us</h2><p>If you have questions about this Privacy Policy, contact Assist My Day:</p><ul><li>Email: <a href="mailto:assistmyday@gmail.com">assistmyday@gmail.com</a></li><li>Phone: <a href="tel:+19053748878">+1 (905) 374-8878</a></li><li>Online: <a href="/contact">Contact us</a></li></ul></section>
         </article>
       </section>
     </InnerPages>
