@@ -330,3 +330,6 @@ body{font-size:var(--type-body);line-height:var(--type-leading);font-family:var(
 .footer-has-nav{grid-template-rows:auto auto 1fr auto auto}
 @media(max-width:760px){.footer-has-nav{grid-template-rows:auto auto auto auto auto}}
 #service-contact{scroll-margin-top:130px}
+
+/* Keep legal-page section headings readable across viewport sizes. */
+.policy h2{max-width:900px;margin-bottom:28px;font-size:clamp(34px,4vw,60px);line-height:1.05}
