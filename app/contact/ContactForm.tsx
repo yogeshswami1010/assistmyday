@@ -1,6 +1,7 @@
 "use client";
 
 import { FormEvent, useState } from "react";
+import { useRouter } from "next/navigation";
 
 declare global {
   interface Window {
@@ -8,7 +9,8 @@ declare global {
   }
 }
 
-export default function ContactForm() {
+export default function ContactForm({ redirectOnSuccess = false }: { redirectOnSuccess?: boolean }) {
+  const router = useRouter();
   const [status, setStatus] = useState<"idle" | "sending" | "success" | "error">("idle");
   const [message, setMessage] = useState("");
 
@@ -35,6 +37,7 @@ export default function ContactForm() {
         value: 1.0,
         currency: "CAD",
       });
+      if (redirectOnSuccess) router.replace("/thank-you");
     } catch (error) {
       setStatus("error");
       setMessage(error instanceof Error ? error.message : "Unable to send your message. Please try again.");
@@ -64,7 +67,7 @@ export default function ContactForm() {
       <p className={`contact-form-note contact-form-note-${status}`} role="status" aria-live="polite">
         {message || "Your details are sent securely to the Assistmyday team."}
       </p>
-      <button type="submit" disabled={status === "sending"}>{status === "sending" ? "SENDING…" : "SEND PROJECT DETAILS ↗"}</button>
+      <button type="submit" disabled={status === "sending" || (redirectOnSuccess && status === "success")}>{status === "sending" ? "SENDING…" : status === "success" && redirectOnSuccess ? "MESSAGE SENT" : "SEND PROJECT DETAILS ↗"}</button>
     </form>
   );
 }

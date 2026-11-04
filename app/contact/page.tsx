@@ -22,7 +22,7 @@ export default function ContactPage() {
             <p><strong>Call</strong><br /><a href="tel:+19053748878">+1 (905) 374-8878</a></p>
             <p><strong>Visit</strong><br />73 Ontario Street, Unit 103 A<br />St. Catharines, ON L2R 5J5</p>
           </div>
-          <ContactForm />
+          <ContactForm redirectOnSuccess />
         </div>
       </section>
     </InnerPages>
